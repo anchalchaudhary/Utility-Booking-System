@@ -2,7 +2,60 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<style>
+    .error{
+        color:red;
+    }
+</style>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <h2>Index</h2>
+@Html.Raw(TempData["AddedUser"])
+
 @Html.ActionLink("Logout", "Logout", "Admin")
 
+<div><!--These are the links of actions that admin can perform-->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registerUserModal">Add User</button>
+     @Html.ActionLink("ViewRegisteredUsers", "Admin")
+</div>
+
+<!--Register User Modal-->
+<div id="registerUserModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ADD USER</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Index", "Admin", FormMethod.Post))
+                {
+                    <div>
+                        @Html.TextBoxFor(model => model.users.name, new { @placeholder = "Name" })
+                        @Html.ValidationMessageFor(model => model.users.name,"", new {@class="error" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model=>model.users.email, new { @placeholder = "Email" })
+                        @Html.ValidationMessageFor(model=>model.users.email, "", new { @class = "error" })
+                    </div>
+                    <div>
+                        @Html.PasswordFor(model => model.users.password, new { @placeholder = "Password" })
+                        @Html.ValidationMessageFor(model => model.users.password, "", new { @class = "error" })
+                    </div>
+                    <div>
+                        @Html.DropDownListFor(model => model.users.deptID, ViewBag.deptList as SelectList, "--Select Department--")
+                        @Html.ValidationMessageFor(model => model.users.deptID, "", new { @class = "error" })
+                    </div>
+                    <button id="btnSubmit" >Submit</button>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -18,7 +18,7 @@ namespace UtilityBookingSystem.Models
         public string name { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        public Nullable<int> departmentID { get; set; }
+        public Nullable<int> deptID { get; set; }
     
         public virtual tblDepartment tblDepartment { get; set; }
     }

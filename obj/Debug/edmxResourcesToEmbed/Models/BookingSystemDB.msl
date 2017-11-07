@@ -16,7 +16,7 @@
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+          <ScalarProperty Name="deptID" ColumnName="deptID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

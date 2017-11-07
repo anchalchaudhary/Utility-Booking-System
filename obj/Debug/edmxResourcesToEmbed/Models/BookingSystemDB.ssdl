@@ -15,7 +15,7 @@
     <Property Name="name" Type="nvarchar(max)" />
     <Property Name="email" Type="nvarchar(max)" />
     <Property Name="password" Type="nvarchar(max)" />
-    <Property Name="departmentID" Type="int" />
+    <Property Name="deptID" Type="int" />
   </EntityType>
   <Association Name="FK__tblUser__departm__0519C6AF">
     <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1" />
@@ -25,7 +25,7 @@
         <PropertyRef Name="deptID" />
       </Principal>
       <Dependent Role="tblUser">
-        <PropertyRef Name="departmentID" />
+        <PropertyRef Name="deptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

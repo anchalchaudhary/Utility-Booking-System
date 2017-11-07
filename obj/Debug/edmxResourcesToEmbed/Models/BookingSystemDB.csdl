@@ -16,7 +16,7 @@
     <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="departmentID" Type="Int32" />
+    <Property Name="deptID" Type="Int32" />
     <NavigationProperty Name="tblDepartment" Relationship="Self.FK__tblUser__departm__0519C6AF" FromRole="tblUser" ToRole="tblDepartment" />
   </EntityType>
   <Association Name="FK__tblUser__departm__0519C6AF">
@@ -27,7 +27,7 @@
         <PropertyRef Name="deptID" />
       </Principal>
       <Dependent Role="tblUser">
-        <PropertyRef Name="departmentID" />
+        <PropertyRef Name="deptID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

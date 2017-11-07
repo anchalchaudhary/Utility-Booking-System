@@ -7,14 +7,14 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <h2>Login</h2>
 
-@using (Html.BeginForm("Login", "Admin"))
+@using (Html.BeginForm("Login", "Admin", FormMethod.Post))
 {
-    <div class="input-field">
+    <div>
         @Html.TextBoxFor(model => model.login.loginID, new { @class = "form-control", @placeholder = "Your LoginID here..." })
         @Html.ValidationMessageFor(model => model.login.loginID, "", new { @class = "error" })
     </div>
 
-    <div class="input-field">
+    <div>
         @Html.PasswordFor(model => model.login.password, new { @class = "form-control", @placeholder = "Your password here..." })
         @Html.ValidationMessageFor(model => model.login.password, "", new { @class = "error" })
     </div>
