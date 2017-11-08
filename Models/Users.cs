@@ -20,11 +20,32 @@ namespace UtilityBookingSystem.Models
         [Required(ErrorMessage = "Select a Department")]
         public Nullable<int> deptID { get; set; }
 
+        [RegularExpression(@"([6-9][0-9]{9})",ErrorMessage = "Invalid phone number" )]
+        [Required(ErrorMessage = "Enter Contact Number")]
+        public string contact { get; set; }
+
         AdminPanelRepository objAdminPanelRepository = new AdminPanelRepository();
-        public bool AddNewUser(Users model) //Adds new User
+        UserPanelRepository objUserPanelRepository = new UserPanelRepository();
+        public bool AddNewUser(BigViewModel model) //Adds new User
         {
-            bool isAdded = objAdminPanelRepository.SaveUserDetails(model);
+            Users objUsers = new Users();
+            objUsers.name = model.users.name;
+            objUsers.email = model.users.email;
+            objUsers.deptID = model.users.deptID;
+            objUsers.password = model.users.password;
+            objUsers.contact = model.users.contact;
+            bool isAdded = objAdminPanelRepository.SaveUserDetails(objUsers);
             return isAdded;
+        }
+
+        public bool UserLogin(BigViewModel model)
+        {
+            Users objUsers = new Users();
+            objUsers.email = model.login.loginID;
+            objUsers.password = model.login.password;
+            bool isLoggedIn = objUserPanelRepository.UserLogin(objUsers);
+
+            return isLoggedIn;
         }
     }
 }

@@ -8,6 +8,10 @@
         <EntityTypeShape EntityType="BookingSystemDBModel.tblDepartment" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BookingSystemDBModel.tblUser" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="BookingSystemDBModel.FK__tblUser__departm__0519C6AF" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblBooking" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblPurpose" Width="1.5" PointX="3" PointY="5.375" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBookin__purpo__117F9D94" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBookin__userI__108B795B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

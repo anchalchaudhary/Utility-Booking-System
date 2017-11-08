@@ -13,9 +13,10 @@ namespace UtilityBookingSystem.Controllers
         // GET: Admin
         AdminPanelRepository objAdminPanelRepository = new AdminPanelRepository();
         Users objUsers = new Users();
+        Departments objDepartments = new Departments();
         public ActionResult Login()
         {
-            if(Convert.ToInt32(Session["loggedIn"])==1)
+            if(Convert.ToInt32(Session["LoggedIn"])==1)
             {
                 return RedirectToAction("Index");
             }
@@ -27,7 +28,7 @@ namespace UtilityBookingSystem.Controllers
         {
             if (model.login.loginID == "admin" && model.login.password == "admin123")
             {
-                Session["loggedIn"] = 1;
+                Session["LoggedIn"] = 1;
                 return RedirectToAction("Index");
             }
             ViewBag.InvalidCredentials = "Invalid Credentials";
@@ -37,7 +38,7 @@ namespace UtilityBookingSystem.Controllers
         {
             if (Convert.ToInt32(Session["LoggedIn"]) == 1)
             {
-                ViewBag.deptList= new SelectList(objAdminPanelRepository.getDepartmentsList(), "deptID", "department");
+                ViewBag.deptList= new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department");
                 return View();
             }
             return RedirectToAction("Login");
@@ -45,16 +46,9 @@ namespace UtilityBookingSystem.Controllers
         [HttpPost]
         public ActionResult Index(BigViewModel model)
         {
-            bool detailsSaved;
+            bool detailsSaved = objUsers.AddNewUser(model); //Saves New User data to DB
 
-            objUsers.name = model.users.name;
-            objUsers.email = model.users.email;
-            objUsers.deptID = model.users.deptID;
-            objUsers.password = model.users.password;
-
-            detailsSaved = objUsers.AddNewUser(objUsers); //Saves New User data to DB
-
-            ViewBag.deptList = new SelectList(objAdminPanelRepository.getDepartmentsList(), "deptID", "department"); //Creates list of departments
+            ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Creates list of departments
 
             if (detailsSaved == true)
                 TempData["AddedUser"] = "<script> alert('User Added');</script>";
@@ -65,7 +59,7 @@ namespace UtilityBookingSystem.Controllers
         }
         public ActionResult Logout()
         {
-            Session["loggedIn"] = null;
+            Session["LoggedIn"] = null;
             return RedirectToAction("Login");
         }
     }

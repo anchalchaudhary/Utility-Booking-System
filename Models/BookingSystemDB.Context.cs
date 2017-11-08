@@ -27,5 +27,7 @@ namespace UtilityBookingSystem.Models
     
         public DbSet<tblDepartment> tblDepartments { get; set; }
         public DbSet<tblUser> tblUsers { get; set; }
+        public DbSet<tblBooking> tblBookings { get; set; }
+        public DbSet<tblPurpose> tblPurposes { get; set; }
     }
 }

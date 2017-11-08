@@ -7,15 +7,6 @@ namespace UtilityBookingSystem.Repository
 {
     public class AdminPanelRepository
     {
-        public List<tblDepartment> getDepartmentsList()
-        {
-            List<tblDepartment> deptList;
-            using (BookingSystemDBEntities db = new BookingSystemDBEntities())
-            {
-                deptList = db.tblDepartments.ToList();
-            }
-            return deptList;
-        }
         public bool SaveUserDetails(Users model)    //Save User details
         {
             bool checkEmailCount;

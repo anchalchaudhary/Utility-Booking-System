@@ -18,6 +18,8 @@
     <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="deptID" Type="Int32" />
     <NavigationProperty Name="tblDepartment" Relationship="Self.FK__tblUser__departm__0519C6AF" FromRole="tblUser" ToRole="tblDepartment" />
+    <Property Name="contact" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblBookings" Relationship="BookingSystemDBModel.FK__tblBookin__userI__108B795B" FromRole="tblUser" ToRole="tblBooking" />
   </EntityType>
   <Association Name="FK__tblUser__departm__0519C6AF">
     <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1" />
@@ -38,5 +40,58 @@
       <End Role="tblDepartment" EntitySet="tblDepartments" />
       <End Role="tblUser" EntitySet="tblUsers" />
     </AssociationSet>
+    <EntitySet Name="tblBookings" EntityType="BookingSystemDBModel.tblBooking" />
+    <EntitySet Name="tblPurposes" EntityType="BookingSystemDBModel.tblPurpose" />
+    <AssociationSet Name="FK__tblBookin__purpo__117F9D94" Association="BookingSystemDBModel.FK__tblBookin__purpo__117F9D94">
+      <End Role="tblPurpose" EntitySet="tblPurposes" />
+      <End Role="tblBooking" EntitySet="tblBookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblBookin__userI__108B795B" Association="BookingSystemDBModel.FK__tblBookin__userI__108B795B">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblBooking" EntitySet="tblBookings" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="tblBooking">
+    <Key>
+      <PropertyRef Name="bookingID" />
+    </Key>
+    <Property Name="bookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="purposeID" Type="Int32" />
+    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblPurpose" Relationship="BookingSystemDBModel.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
+    <NavigationProperty Name="tblUser" Relationship="BookingSystemDBModel.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblPurpose">
+    <Key>
+      <PropertyRef Name="purposeID" />
+    </Key>
+    <Property Name="purposeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblBookings" Relationship="BookingSystemDBModel.FK__tblBookin__purpo__117F9D94" FromRole="tblPurpose" ToRole="tblBooking" />
+  </EntityType>
+  <Association Name="FK__tblBookin__purpo__117F9D94">
+    <End Type="BookingSystemDBModel.tblPurpose" Role="tblPurpose" Multiplicity="0..1" />
+    <End Type="BookingSystemDBModel.tblBooking" Role="tblBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPurpose">
+        <PropertyRef Name="purposeID" />
+      </Principal>
+      <Dependent Role="tblBooking">
+        <PropertyRef Name="purposeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblBookin__userI__108B795B">
+    <End Type="BookingSystemDBModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+    <End Type="BookingSystemDBModel.tblBooking" Role="tblBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="tblBooking">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

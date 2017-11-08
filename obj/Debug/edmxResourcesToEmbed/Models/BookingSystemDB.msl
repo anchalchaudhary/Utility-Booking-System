@@ -12,11 +12,30 @@
     <EntitySetMapping Name="tblUsers">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblUser">
         <MappingFragment StoreEntitySet="tblUser">
+          <ScalarProperty Name="contact" ColumnName="contact" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="deptID" ColumnName="deptID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBookings">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblBooking">
+        <MappingFragment StoreEntitySet="tblBooking">
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="purposeID" ColumnName="purposeID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPurposes">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblPurpose">
+        <MappingFragment StoreEntitySet="tblPurpose">
+          <ScalarProperty Name="purpose" ColumnName="purpose" />
+          <ScalarProperty Name="purposeID" ColumnName="purposeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

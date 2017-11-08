@@ -10,5 +10,15 @@ namespace UtilityBookingSystem.Models
     {
         public int deptID { get; set; }
         public string department { get; set; }
+
+        public List<tblDepartment> GetDepartmentsList()
+        {
+            List<tblDepartment> deptList;
+            using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+            {
+                deptList = db.tblDepartments.ToList();
+            }
+            return deptList;
+        }
     }
 }

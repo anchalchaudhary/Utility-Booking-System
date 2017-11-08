@@ -38,8 +38,12 @@
                         @Html.ValidationMessageFor(model => model.users.name,"", new {@class="error" })
                     </div>
                     <div>
-                        @Html.TextBoxFor(model=>model.users.email, new { @placeholder = "Email" })
-                        @Html.ValidationMessageFor(model=>model.users.email, "", new { @class = "error" })
+                        @Html.TextBoxFor(model => model.users.contact, new { @placeholder = "Contact Number" })
+                        @Html.ValidationMessageFor(model => model.users.contact, "", new { @class = "error" })
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.users.email, new { @placeholder = "Email" })
+                        @Html.ValidationMessageFor(model => model.users.email, "", new { @class = "error" })
                     </div>
                     <div>
                         @Html.PasswordFor(model => model.users.password, new { @placeholder = "Password" })

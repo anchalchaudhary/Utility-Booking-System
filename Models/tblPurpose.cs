@@ -12,21 +12,16 @@ namespace UtilityBookingSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblUser
+    public partial class tblPurpose
     {
-        public tblUser()
+        public tblPurpose()
         {
             this.tblBookings = new HashSet<tblBooking>();
         }
     
-        public int userID { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public Nullable<int> deptID { get; set; }
-        public string contact { get; set; }
+        public int purposeID { get; set; }
+        public string purpose { get; set; }
     
-        public virtual tblDepartment tblDepartment { get; set; }
         public virtual ICollection<tblBooking> tblBookings { get; set; }
     }
 }
