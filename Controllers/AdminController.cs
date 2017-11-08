@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using UtilityBookingSystem.Models;
 using UtilityBookingSystem.Repository;
+using UtilityBookingSystem.Extra_Classes;
 
 namespace UtilityBookingSystem.Controllers
 {
@@ -50,11 +51,24 @@ namespace UtilityBookingSystem.Controllers
 
             ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Creates list of departments
 
+            string mailSubject, mailBody;
+
             if (detailsSaved == true)
+            {
+                mailSubject = "Added";
+                mailBody = "Hello "+model.users.name + ".You have been added.";
+                Mail.Send_Mail(model.users.email, mailBody, mailSubject);
+
                 TempData["AddedUser"] = "<script> alert('User Added');</script>";
+            }
             else
                 TempData["AddedUser"] = "<script> alert('Try again');</script>";
 
+            return View();
+        }
+        public ActionResult ViewRegisteredUsers()
+        {
+            ViewBag.RegisteredUsersList = objUsers.GetRegisteredUsers();
             return View();
         }
         public ActionResult Logout()

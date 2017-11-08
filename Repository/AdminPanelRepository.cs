@@ -21,6 +21,7 @@ namespace UtilityBookingSystem.Repository
                     tblUser objtblUser = new tblUser();
                     objtblUser.name = model.name;
                     objtblUser.email = model.email;
+                    objtblUser.contact = model.contact;
                     objtblUser.password = model.password;
                     objtblUser.deptID = model.deptID;
                     db.tblUsers.Add(objtblUser);
@@ -29,6 +30,22 @@ namespace UtilityBookingSystem.Repository
                 }
             }
             return false;
+        }
+        public List<Users> GetRegisteredUsers()
+        {
+            List<Users> registeredUsersList;
+            using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+            {
+                registeredUsersList = db.tblUsers.Select(x => new Users
+                {
+                    userID = x.userID,
+                    name = x.name,
+                    email = x.email,
+                    contact = x.contact,
+                    dept = x.tblDepartment.department
+                }).ToList();
+            }
+            return registeredUsersList;
         }
     }
 }

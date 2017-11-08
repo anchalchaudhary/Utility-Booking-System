@@ -135,11 +135,14 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Admin\ViewRegisteredUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Extra_Classes\Encryption.cs" />
+    <Compile Include="Extra_Classes\Mail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

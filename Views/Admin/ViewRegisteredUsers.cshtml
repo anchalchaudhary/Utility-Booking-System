@@ -1,0 +1,25 @@
+﻿@model UtilityBookingSystem.Models.Users
+@{
+    ViewBag.Title = "ViewRegisteredUsers";
+}
+
+<h2>Registered Users</h2>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Department</th>
+    </tr>
+    @foreach(var item in ViewBag.RegisteredUsersList)
+    {
+        <tr>
+            <td>@item.name</td>
+            <td>@item.email</td>
+            <td>@item.contact</td>
+            <td>@item.dept</td>
+        </tr>
+    }
+</table>
+
