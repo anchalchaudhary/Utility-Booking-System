@@ -4,14 +4,32 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dc9b315d4f684695b0141cf2b9cc7635" Name="Diagram1">
-        <EntityTypeShape EntityType="BookingSystemDBModel.tblDepartment" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookingSystemDBModel.tblUser" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="dc9b315d4f684695b0141cf2b9cc7635" Name="Diagram1" ZoomLevel="84">
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblDepartment" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblUser" Width="1.5" PointX="2.375" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="BookingSystemDBModel.FK__tblUser__departm__0519C6AF" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="BookingSystemDBModel.tblBooking" Width="1.5" PointX="5.25" PointY="1.125" />
-        <EntityTypeShape EntityType="BookingSystemDBModel.tblPurpose" Width="1.5" PointX="3" PointY="5.375" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblBooking" Width="1.5" PointX="4.25" PointY="0.875" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblPurpose" Width="1.5" PointX="2" PointY="3.625" />
         <AssociationConnector Association="BookingSystemDBModel.FK__tblBookin__purpo__117F9D94" />
         <AssociationConnector Association="BookingSystemDBModel.FK__tblBookin__userI__108B795B" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblBookedDate" Width="1.5" PointX="3.75" PointY="5.875" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblBookedHall" Width="1.5" PointX="8" PointY="3.5" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblBookedRequirement" Width="1.5" PointX="6.25" PointY="0.875" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblBookedSlot" Width="1.5" PointX="8.125" PointY="0.875" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblHall" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblRequirement" Width="1.5" PointX="4.25" PointY="4" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblSlot" Width="1.5" PointX="9" PointY="5.875" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__booki__239E4DCF" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__dateI__29572725" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__booke__31EC6D26" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__hallI__286302EC" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__booki__37A5467C" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__hallI__38996AB5" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblBooked__slotI__32E0915F" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblRequirementForHall" Width="1.5" PointX="10.5" PointY="2.625" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblRequir__hallI__3D5E1FD2" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblRequir__requi__3E52440B" />
+        <AssociationConnector Association="BookingSystemDBModel.FK_tblBookedRequirement_tblRequirement" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

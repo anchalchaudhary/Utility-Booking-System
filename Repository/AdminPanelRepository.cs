@@ -7,6 +7,7 @@ namespace UtilityBookingSystem.Repository
 {
     public class AdminPanelRepository
     {
+        #region Save New User Details
         public bool SaveUserDetails(Users model)    //Save User details
         {
             bool checkEmailCount;
@@ -31,6 +32,9 @@ namespace UtilityBookingSystem.Repository
             }
             return false;
         }
+        #endregion
+
+        #region Gets Registered Users List
         public List<Users> GetRegisteredUsers()
         {
             List<Users> registeredUsersList;
@@ -47,5 +51,6 @@ namespace UtilityBookingSystem.Repository
             }
             return registeredUsersList;
         }
+        #endregion
     }
 }

@@ -12,22 +12,18 @@ namespace UtilityBookingSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblBooking
+    public partial class tblRequirement
     {
-        public tblBooking()
+        public tblRequirement()
         {
-            this.tblBookedDates = new HashSet<tblBookedDate>();
+            this.tblRequirementForHalls = new HashSet<tblRequirementForHall>();
             this.tblBookedRequirements = new HashSet<tblBookedRequirement>();
         }
     
-        public int bookingID { get; set; }
-        public Nullable<int> userID { get; set; }
-        public Nullable<int> purposeID { get; set; }
-        public string title { get; set; }
+        public int requirementID { get; set; }
+        public string requirementName { get; set; }
     
-        public virtual tblPurpose tblPurpose { get; set; }
-        public virtual tblUser tblUser { get; set; }
-        public virtual ICollection<tblBookedDate> tblBookedDates { get; set; }
+        public virtual ICollection<tblRequirementForHall> tblRequirementForHalls { get; set; }
         public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
     }
 }

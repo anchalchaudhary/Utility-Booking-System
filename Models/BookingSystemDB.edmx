@@ -5,6 +5,39 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BookingSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBookedDate">
+          <Key>
+            <PropertyRef Name="dateID" />
+          </Key>
+          <Property Name="dateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateChosen" Type="date" />
+          <Property Name="bookingID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblBookedHall">
+          <Key>
+            <PropertyRef Name="bookedHallID" />
+          </Key>
+          <Property Name="bookedHallID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hallID" Type="int" />
+          <Property Name="dateID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblBookedRequirement">
+          <Key>
+            <PropertyRef Name="bookedReqID" />
+          </Key>
+          <Property Name="bookedReqID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bookingID" Type="int" />
+          <Property Name="hallID" Type="int" />
+          <Property Name="requirementID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblBookedSlot">
+          <Key>
+            <PropertyRef Name="bookedSlotID" />
+          </Key>
+          <Property Name="bookedSlotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bookedHallID" Type="int" />
+          <Property Name="slotID" Type="int" />
+        </EntityType>
         <EntityType Name="tblBooking">
           <Key>
             <PropertyRef Name="bookingID" />
@@ -21,12 +54,41 @@
           <Property Name="deptID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="department" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="tblHall">
+          <Key>
+            <PropertyRef Name="hallID" />
+          </Key>
+          <Property Name="hallID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hallName" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="tblPurpose">
           <Key>
             <PropertyRef Name="purposeID" />
           </Key>
           <Property Name="purposeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="purpose" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblRequirement">
+          <Key>
+            <PropertyRef Name="requirementID" />
+          </Key>
+          <Property Name="requirementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="requirementName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="tblRequirementForHall">
+          <Key>
+            <PropertyRef Name="reqHallID" />
+          </Key>
+          <Property Name="reqHallID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hallID" Type="int" />
+          <Property Name="requirementID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSlot">
+          <Key>
+            <PropertyRef Name="slotID" />
+          </Key>
+          <Property Name="slotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="slot" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblUser">
           <Key>
@@ -39,6 +101,90 @@
           <Property Name="password" Type="nvarchar(max)" />
           <Property Name="deptID" Type="int" />
         </EntityType>
+        <Association Name="FK__tblBooked__booke__31EC6D26">
+          <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="0..1" />
+          <End Role="tblBookedSlot" Type="Self.tblBookedSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBookedHall">
+              <PropertyRef Name="bookedHallID" />
+            </Principal>
+            <Dependent Role="tblBookedSlot">
+              <PropertyRef Name="bookedHallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__booki__239E4DCF">
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
+          <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooking">
+              <PropertyRef Name="bookingID" />
+            </Principal>
+            <Dependent Role="tblBookedDate">
+              <PropertyRef Name="bookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__booki__37A5467C">
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
+          <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooking">
+              <PropertyRef Name="bookingID" />
+            </Principal>
+            <Dependent Role="tblBookedRequirement">
+              <PropertyRef Name="bookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__dateI__29572725">
+          <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="0..1" />
+          <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBookedDate">
+              <PropertyRef Name="dateID" />
+            </Principal>
+            <Dependent Role="tblBookedHall">
+              <PropertyRef Name="dateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__hallI__286302EC">
+          <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1" />
+          <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHall">
+              <PropertyRef Name="hallID" />
+            </Principal>
+            <Dependent Role="tblBookedHall">
+              <PropertyRef Name="hallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__hallI__38996AB5">
+          <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1" />
+          <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHall">
+              <PropertyRef Name="hallID" />
+            </Principal>
+            <Dependent Role="tblBookedRequirement">
+              <PropertyRef Name="hallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__slotI__32E0915F">
+          <End Role="tblSlot" Type="Self.tblSlot" Multiplicity="0..1" />
+          <End Role="tblBookedSlot" Type="Self.tblBookedSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSlot">
+              <PropertyRef Name="slotID" />
+            </Principal>
+            <Dependent Role="tblBookedSlot">
+              <PropertyRef Name="slotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__tblBookin__purpo__117F9D94">
           <End Role="tblPurpose" Type="Self.tblPurpose" Multiplicity="0..1" />
           <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
@@ -63,6 +209,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__tblRequir__hallI__3D5E1FD2">
+          <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1" />
+          <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHall">
+              <PropertyRef Name="hallID" />
+            </Principal>
+            <Dependent Role="tblRequirementForHall">
+              <PropertyRef Name="hallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblRequir__requi__3E52440B">
+          <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1" />
+          <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRequirement">
+              <PropertyRef Name="requirementID" />
+            </Principal>
+            <Dependent Role="tblRequirementForHall">
+              <PropertyRef Name="requirementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__tblUser__departm__0519C6AF">
           <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1" />
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
@@ -75,11 +245,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblBookedRequirement_tblRequirement">
+          <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1" />
+          <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRequirement">
+              <PropertyRef Name="requirementID" />
+            </Principal>
+            <Dependent Role="tblBookedRequirement">
+              <PropertyRef Name="requirementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BookingSystemDBModelStoreContainer">
+          <EntitySet Name="tblBookedDate" EntityType="Self.tblBookedDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBookedHall" EntityType="Self.tblBookedHall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBookedRequirement" EntityType="Self.tblBookedRequirement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBookedSlot" EntityType="Self.tblBookedSlot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBooking" EntityType="Self.tblBooking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDepartment" EntityType="Self.tblDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblHall" EntityType="Self.tblHall" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPurpose" EntityType="Self.tblPurpose" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRequirement" EntityType="Self.tblRequirement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRequirementForHall" EntityType="Self.tblRequirementForHall" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSlot" EntityType="Self.tblSlot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblBooked__booke__31EC6D26" Association="Self.FK__tblBooked__booke__31EC6D26">
+            <End Role="tblBookedHall" EntitySet="tblBookedHall" />
+            <End Role="tblBookedSlot" EntitySet="tblBookedSlot" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__booki__239E4DCF" Association="Self.FK__tblBooked__booki__239E4DCF">
+            <End Role="tblBooking" EntitySet="tblBooking" />
+            <End Role="tblBookedDate" EntitySet="tblBookedDate" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__booki__37A5467C" Association="Self.FK__tblBooked__booki__37A5467C">
+            <End Role="tblBooking" EntitySet="tblBooking" />
+            <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__dateI__29572725" Association="Self.FK__tblBooked__dateI__29572725">
+            <End Role="tblBookedDate" EntitySet="tblBookedDate" />
+            <End Role="tblBookedHall" EntitySet="tblBookedHall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__hallI__286302EC" Association="Self.FK__tblBooked__hallI__286302EC">
+            <End Role="tblHall" EntitySet="tblHall" />
+            <End Role="tblBookedHall" EntitySet="tblBookedHall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__hallI__38996AB5" Association="Self.FK__tblBooked__hallI__38996AB5">
+            <End Role="tblHall" EntitySet="tblHall" />
+            <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__slotI__32E0915F" Association="Self.FK__tblBooked__slotI__32E0915F">
+            <End Role="tblSlot" EntitySet="tblSlot" />
+            <End Role="tblBookedSlot" EntitySet="tblBookedSlot" />
+          </AssociationSet>
           <AssociationSet Name="FK__tblBookin__purpo__117F9D94" Association="Self.FK__tblBookin__purpo__117F9D94">
             <End Role="tblPurpose" EntitySet="tblPurpose" />
             <End Role="tblBooking" EntitySet="tblBooking" />
@@ -88,9 +306,21 @@
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblBooking" EntitySet="tblBooking" />
           </AssociationSet>
+          <AssociationSet Name="FK__tblRequir__hallI__3D5E1FD2" Association="Self.FK__tblRequir__hallI__3D5E1FD2">
+            <End Role="tblHall" EntitySet="tblHall" />
+            <End Role="tblRequirementForHall" EntitySet="tblRequirementForHall" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblRequir__requi__3E52440B" Association="Self.FK__tblRequir__requi__3E52440B">
+            <End Role="tblRequirement" EntitySet="tblRequirement" />
+            <End Role="tblRequirementForHall" EntitySet="tblRequirementForHall" />
+          </AssociationSet>
           <AssociationSet Name="FK__tblUser__departm__0519C6AF" Association="Self.FK__tblUser__departm__0519C6AF">
             <End Role="tblDepartment" EntitySet="tblDepartment" />
             <End Role="tblUser" EntitySet="tblUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBookedRequirement_tblRequirement" Association="Self.FK_tblBookedRequirement_tblRequirement">
+            <End Role="tblRequirement" EntitySet="tblRequirement" />
+            <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -147,6 +377,54 @@
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblBooking" EntitySet="tblBookings" />
           </AssociationSet>
+          <EntitySet Name="tblBookedDates" EntityType="BookingSystemDBModel.tblBookedDate" />
+          <EntitySet Name="tblBookedHalls" EntityType="BookingSystemDBModel.tblBookedHall" />
+          <EntitySet Name="tblBookedRequirements" EntityType="BookingSystemDBModel.tblBookedRequirement" />
+          <EntitySet Name="tblBookedSlots" EntityType="BookingSystemDBModel.tblBookedSlot" />
+          <EntitySet Name="tblHalls" EntityType="BookingSystemDBModel.tblHall" />
+          <EntitySet Name="tblRequirements" EntityType="BookingSystemDBModel.tblRequirement" />
+          <EntitySet Name="tblSlots" EntityType="BookingSystemDBModel.tblSlot" />
+          <AssociationSet Name="FK__tblBooked__booki__239E4DCF" Association="BookingSystemDBModel.FK__tblBooked__booki__239E4DCF">
+            <End Role="tblBooking" EntitySet="tblBookings" />
+            <End Role="tblBookedDate" EntitySet="tblBookedDates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__dateI__29572725" Association="BookingSystemDBModel.FK__tblBooked__dateI__29572725">
+            <End Role="tblBookedDate" EntitySet="tblBookedDates" />
+            <End Role="tblBookedHall" EntitySet="tblBookedHalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__booke__31EC6D26" Association="BookingSystemDBModel.FK__tblBooked__booke__31EC6D26">
+            <End Role="tblBookedHall" EntitySet="tblBookedHalls" />
+            <End Role="tblBookedSlot" EntitySet="tblBookedSlots" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__hallI__286302EC" Association="BookingSystemDBModel.FK__tblBooked__hallI__286302EC">
+            <End Role="tblHall" EntitySet="tblHalls" />
+            <End Role="tblBookedHall" EntitySet="tblBookedHalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__booki__37A5467C" Association="BookingSystemDBModel.FK__tblBooked__booki__37A5467C">
+            <End Role="tblBooking" EntitySet="tblBookings" />
+            <End Role="tblBookedRequirement" EntitySet="tblBookedRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__hallI__38996AB5" Association="BookingSystemDBModel.FK__tblBooked__hallI__38996AB5">
+            <End Role="tblHall" EntitySet="tblHalls" />
+            <End Role="tblBookedRequirement" EntitySet="tblBookedRequirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblBooked__slotI__32E0915F" Association="BookingSystemDBModel.FK__tblBooked__slotI__32E0915F">
+            <End Role="tblSlot" EntitySet="tblSlots" />
+            <End Role="tblBookedSlot" EntitySet="tblBookedSlots" />
+          </AssociationSet>
+          <EntitySet Name="tblRequirementForHalls" EntityType="BookingSystemDBModel.tblRequirementForHall" />
+          <AssociationSet Name="FK__tblRequir__hallI__3D5E1FD2" Association="BookingSystemDBModel.FK__tblRequir__hallI__3D5E1FD2">
+            <End Role="tblHall" EntitySet="tblHalls" />
+            <End Role="tblRequirementForHall" EntitySet="tblRequirementForHalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblRequir__requi__3E52440B" Association="BookingSystemDBModel.FK__tblRequir__requi__3E52440B">
+            <End Role="tblRequirement" EntitySet="tblRequirements" />
+            <End Role="tblRequirementForHall" EntitySet="tblRequirementForHalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBookedRequirement_tblRequirement" Association="BookingSystemDBModel.FK_tblBookedRequirement_tblRequirement">
+            <End Role="tblRequirement" EntitySet="tblRequirements" />
+            <End Role="tblBookedRequirement" EntitySet="tblBookedRequirements" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tblBooking">
           <Key>
@@ -158,6 +436,8 @@
           <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblPurpose" Relationship="BookingSystemDBModel.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
           <NavigationProperty Name="tblUser" Relationship="BookingSystemDBModel.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
+          <NavigationProperty Name="tblBookedDates" Relationship="BookingSystemDBModel.FK__tblBooked__booki__239E4DCF" FromRole="tblBooking" ToRole="tblBookedDate" />
+          <NavigationProperty Name="tblBookedRequirements" Relationship="BookingSystemDBModel.FK__tblBooked__booki__37A5467C" FromRole="tblBooking" ToRole="tblBookedRequirement" />
         </EntityType>
         <EntityType Name="tblPurpose">
           <Key>
@@ -188,6 +468,206 @@
             </Principal>
             <Dependent Role="tblBooking">
               <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblBookedDate">
+          <Key>
+            <PropertyRef Name="dateID" />
+          </Key>
+          <Property Name="dateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateChosen" Type="DateTime" Precision="0" />
+          <Property Name="bookingID" Type="Int32" />
+          <NavigationProperty Name="tblBooking" Relationship="BookingSystemDBModel.FK__tblBooked__booki__239E4DCF" FromRole="tblBookedDate" ToRole="tblBooking" />
+          <NavigationProperty Name="tblBookedHalls" Relationship="BookingSystemDBModel.FK__tblBooked__dateI__29572725" FromRole="tblBookedDate" ToRole="tblBookedHall" />
+        </EntityType>
+        <EntityType Name="tblBookedHall">
+          <Key>
+            <PropertyRef Name="bookedHallID" />
+          </Key>
+          <Property Name="bookedHallID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hallID" Type="Int32" />
+          <Property Name="dateID" Type="Int32" />
+          <NavigationProperty Name="tblBookedDate" Relationship="BookingSystemDBModel.FK__tblBooked__dateI__29572725" FromRole="tblBookedHall" ToRole="tblBookedDate" />
+          <NavigationProperty Name="tblBookedSlots" Relationship="BookingSystemDBModel.FK__tblBooked__booke__31EC6D26" FromRole="tblBookedHall" ToRole="tblBookedSlot" />
+          <NavigationProperty Name="tblHall" Relationship="BookingSystemDBModel.FK__tblBooked__hallI__286302EC" FromRole="tblBookedHall" ToRole="tblHall" />
+        </EntityType>
+        <EntityType Name="tblBookedRequirement">
+          <Key>
+            <PropertyRef Name="bookedReqID" />
+          </Key>
+          <Property Name="bookedReqID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bookingID" Type="Int32" />
+          <Property Name="hallID" Type="Int32" />
+          <NavigationProperty Name="tblBooking" Relationship="BookingSystemDBModel.FK__tblBooked__booki__37A5467C" FromRole="tblBookedRequirement" ToRole="tblBooking" />
+          <NavigationProperty Name="tblHall" Relationship="BookingSystemDBModel.FK__tblBooked__hallI__38996AB5" FromRole="tblBookedRequirement" ToRole="tblHall" />
+          <Property Name="requirementID" Type="Int32" />
+          <NavigationProperty Name="tblRequirement" Relationship="BookingSystemDBModel.FK_tblBookedRequirement_tblRequirement" FromRole="tblBookedRequirement" ToRole="tblRequirement" />
+        </EntityType>
+        <EntityType Name="tblBookedSlot">
+          <Key>
+            <PropertyRef Name="bookedSlotID" />
+          </Key>
+          <Property Name="bookedSlotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bookedHallID" Type="Int32" />
+          <Property Name="slotID" Type="Int32" />
+          <NavigationProperty Name="tblBookedHall" Relationship="BookingSystemDBModel.FK__tblBooked__booke__31EC6D26" FromRole="tblBookedSlot" ToRole="tblBookedHall" />
+          <NavigationProperty Name="tblSlot" Relationship="BookingSystemDBModel.FK__tblBooked__slotI__32E0915F" FromRole="tblBookedSlot" ToRole="tblSlot" />
+        </EntityType>
+        <EntityType Name="tblHall">
+          <Key>
+            <PropertyRef Name="hallID" />
+          </Key>
+          <Property Name="hallID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hallName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblBookedHalls" Relationship="BookingSystemDBModel.FK__tblBooked__hallI__286302EC" FromRole="tblHall" ToRole="tblBookedHall" />
+          <NavigationProperty Name="tblBookedRequirements" Relationship="BookingSystemDBModel.FK__tblBooked__hallI__38996AB5" FromRole="tblHall" ToRole="tblBookedRequirement" />
+          <NavigationProperty Name="tblRequirementForHalls" Relationship="BookingSystemDBModel.FK__tblRequir__hallI__3D5E1FD2" FromRole="tblHall" ToRole="tblRequirementForHall" />
+        </EntityType>
+        <EntityType Name="tblRequirement">
+          <Key>
+            <PropertyRef Name="requirementID" />
+          </Key>
+          <Property Name="requirementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="requirementName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblRequirementForHalls" Relationship="BookingSystemDBModel.FK__tblRequir__requi__3E52440B" FromRole="tblRequirement" ToRole="tblRequirementForHall" />
+          <NavigationProperty Name="tblBookedRequirements" Relationship="BookingSystemDBModel.FK_tblBookedRequirement_tblRequirement" FromRole="tblRequirement" ToRole="tblBookedRequirement" />
+        </EntityType>
+        <EntityType Name="tblSlot">
+          <Key>
+            <PropertyRef Name="slotID" />
+          </Key>
+          <Property Name="slotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="slot" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblBookedSlots" Relationship="BookingSystemDBModel.FK__tblBooked__slotI__32E0915F" FromRole="tblSlot" ToRole="tblBookedSlot" />
+        </EntityType>
+        <Association Name="FK__tblBooked__booki__239E4DCF">
+          <End Type="BookingSystemDBModel.tblBooking" Role="tblBooking" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedDate" Role="tblBookedDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooking">
+              <PropertyRef Name="bookingID" />
+            </Principal>
+            <Dependent Role="tblBookedDate">
+              <PropertyRef Name="bookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__dateI__29572725">
+          <End Type="BookingSystemDBModel.tblBookedDate" Role="tblBookedDate" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedHall" Role="tblBookedHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBookedDate">
+              <PropertyRef Name="dateID" />
+            </Principal>
+            <Dependent Role="tblBookedHall">
+              <PropertyRef Name="dateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__booke__31EC6D26">
+          <End Type="BookingSystemDBModel.tblBookedHall" Role="tblBookedHall" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedSlot" Role="tblBookedSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBookedHall">
+              <PropertyRef Name="bookedHallID" />
+            </Principal>
+            <Dependent Role="tblBookedSlot">
+              <PropertyRef Name="bookedHallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__hallI__286302EC">
+          <End Type="BookingSystemDBModel.tblHall" Role="tblHall" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedHall" Role="tblBookedHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHall">
+              <PropertyRef Name="hallID" />
+            </Principal>
+            <Dependent Role="tblBookedHall">
+              <PropertyRef Name="hallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__booki__37A5467C">
+          <End Type="BookingSystemDBModel.tblBooking" Role="tblBooking" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedRequirement" Role="tblBookedRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBooking">
+              <PropertyRef Name="bookingID" />
+            </Principal>
+            <Dependent Role="tblBookedRequirement">
+              <PropertyRef Name="bookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__hallI__38996AB5">
+          <End Type="BookingSystemDBModel.tblHall" Role="tblHall" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedRequirement" Role="tblBookedRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHall">
+              <PropertyRef Name="hallID" />
+            </Principal>
+            <Dependent Role="tblBookedRequirement">
+              <PropertyRef Name="hallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblBooked__slotI__32E0915F">
+          <End Type="BookingSystemDBModel.tblSlot" Role="tblSlot" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedSlot" Role="tblBookedSlot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSlot">
+              <PropertyRef Name="slotID" />
+            </Principal>
+            <Dependent Role="tblBookedSlot">
+              <PropertyRef Name="slotID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblRequirementForHall">
+          <Key>
+            <PropertyRef Name="reqHallID" />
+          </Key>
+          <Property Name="reqHallID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hallID" Type="Int32" />
+          <Property Name="requirementID" Type="Int32" />
+          <NavigationProperty Name="tblHall" Relationship="BookingSystemDBModel.FK__tblRequir__hallI__3D5E1FD2" FromRole="tblRequirementForHall" ToRole="tblHall" />
+          <NavigationProperty Name="tblRequirement" Relationship="BookingSystemDBModel.FK__tblRequir__requi__3E52440B" FromRole="tblRequirementForHall" ToRole="tblRequirement" />
+        </EntityType>
+        <Association Name="FK__tblRequir__hallI__3D5E1FD2">
+          <End Type="BookingSystemDBModel.tblHall" Role="tblHall" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblRequirementForHall" Role="tblRequirementForHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblHall">
+              <PropertyRef Name="hallID" />
+            </Principal>
+            <Dependent Role="tblRequirementForHall">
+              <PropertyRef Name="hallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblRequir__requi__3E52440B">
+          <End Type="BookingSystemDBModel.tblRequirement" Role="tblRequirement" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblRequirementForHall" Role="tblRequirementForHall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRequirement">
+              <PropertyRef Name="requirementID" />
+            </Principal>
+            <Dependent Role="tblRequirementForHall">
+              <PropertyRef Name="requirementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBookedRequirement_tblRequirement">
+          <End Type="BookingSystemDBModel.tblRequirement" Role="tblRequirement" Multiplicity="0..1" />
+          <End Type="BookingSystemDBModel.tblBookedRequirement" Role="tblBookedRequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRequirement">
+              <PropertyRef Name="requirementID" />
+            </Principal>
+            <Dependent Role="tblBookedRequirement">
+              <PropertyRef Name="requirementID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -232,6 +712,76 @@
               <MappingFragment StoreEntitySet="tblPurpose">
                 <ScalarProperty Name="purpose" ColumnName="purpose" />
                 <ScalarProperty Name="purposeID" ColumnName="purposeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBookedDates">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedDate">
+              <MappingFragment StoreEntitySet="tblBookedDate">
+                <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+                <ScalarProperty Name="dateChosen" ColumnName="dateChosen" />
+                <ScalarProperty Name="dateID" ColumnName="dateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBookedHalls">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedHall">
+              <MappingFragment StoreEntitySet="tblBookedHall">
+                <ScalarProperty Name="dateID" ColumnName="dateID" />
+                <ScalarProperty Name="hallID" ColumnName="hallID" />
+                <ScalarProperty Name="bookedHallID" ColumnName="bookedHallID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBookedRequirements">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedRequirement">
+              <MappingFragment StoreEntitySet="tblBookedRequirement">
+                <ScalarProperty Name="requirementID" ColumnName="requirementID" />
+                <ScalarProperty Name="hallID" ColumnName="hallID" />
+                <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+                <ScalarProperty Name="bookedReqID" ColumnName="bookedReqID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBookedSlots">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedSlot">
+              <MappingFragment StoreEntitySet="tblBookedSlot">
+                <ScalarProperty Name="slotID" ColumnName="slotID" />
+                <ScalarProperty Name="bookedHallID" ColumnName="bookedHallID" />
+                <ScalarProperty Name="bookedSlotID" ColumnName="bookedSlotID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblHalls">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblHall">
+              <MappingFragment StoreEntitySet="tblHall">
+                <ScalarProperty Name="hallName" ColumnName="hallName" />
+                <ScalarProperty Name="hallID" ColumnName="hallID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRequirements">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblRequirement">
+              <MappingFragment StoreEntitySet="tblRequirement">
+                <ScalarProperty Name="requirementName" ColumnName="requirementName" />
+                <ScalarProperty Name="requirementID" ColumnName="requirementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSlots">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblSlot">
+              <MappingFragment StoreEntitySet="tblSlot">
+                <ScalarProperty Name="slot" ColumnName="slot" />
+                <ScalarProperty Name="slotID" ColumnName="slotID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRequirementForHalls">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.tblRequirementForHall">
+              <MappingFragment StoreEntitySet="tblRequirementForHall">
+                <ScalarProperty Name="requirementID" ColumnName="requirementID" />
+                <ScalarProperty Name="hallID" ColumnName="hallID" />
+                <ScalarProperty Name="reqHallID" ColumnName="reqHallID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

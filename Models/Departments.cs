@@ -8,9 +8,12 @@ namespace UtilityBookingSystem.Models
 {
     public class Departments
     {
+        #region tblDepartment attributes
         public int deptID { get; set; }
         public string department { get; set; }
+        #endregion
 
+        #region Gets Departments List
         public List<tblDepartment> GetDepartmentsList()
         {
             List<tblDepartment> deptList;
@@ -20,5 +23,6 @@ namespace UtilityBookingSystem.Models
             }
             return deptList;
         }
+        #endregion
     }
 }

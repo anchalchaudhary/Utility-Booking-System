@@ -8,18 +8,22 @@ namespace UtilityBookingSystem.Repository
 {
     public class UserPanelRepository
     {
-        public bool UserLogin(Users objUser)
+        #region Verify User Login Details
+        public int UserLogin(Users objUser)
         {
-            bool isLoggedIn = false;
+            //bool isLoggedIn = false;
+            int userID=0;
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
-                tblUser objtblUser = db.tblUsers.SingleOrDefault(x => x.email == objUser.email && x.password == objUser.password);
+                tblUser objtblUser = db.tblUsers.SingleOrDefault(x => x.email == objUser.email && x.password == objUser.password); //Verifies Login details with DB
                 if (objtblUser != null)
                 {
-                    isLoggedIn = true;
+                    //isLoggedIn = true;
+                    userID = objtblUser.userID; //fetches logged in userID
                 }
             }
-            return isLoggedIn;
+            return userID;
         }
+        #endregion
     }
 }

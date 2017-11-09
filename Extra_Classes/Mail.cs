@@ -19,7 +19,7 @@ namespace UtilityBookingSystem.Extra_Classes
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
-                NetworkCredential NetworkCred = new NetworkCredential("someemail", "password");
+                NetworkCredential NetworkCred = new NetworkCredential("anchal.chaudhary329@gmail.com", "@nch@l123");
                 smtp.UseDefaultCredentials = true;
                 smtp.Credentials = NetworkCred;
                 smtp.Port = 587;

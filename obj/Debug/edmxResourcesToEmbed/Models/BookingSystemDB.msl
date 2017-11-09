@@ -39,5 +39,66 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblBookedDates">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedDate">
+        <MappingFragment StoreEntitySet="tblBookedDate">
+          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+          <ScalarProperty Name="dateChosen" ColumnName="dateChosen" />
+          <ScalarProperty Name="dateID" ColumnName="dateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBookedHalls">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedHall">
+        <MappingFragment StoreEntitySet="tblBookedHall">
+          <ScalarProperty Name="dateID" ColumnName="dateID" />
+          <ScalarProperty Name="hallID" ColumnName="hallID" />
+          <ScalarProperty Name="bookedHallID" ColumnName="bookedHallID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBookedRequirements">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedRequirement">
+        <MappingFragment StoreEntitySet="tblBookedRequirement">
+          <ScalarProperty Name="hallID" ColumnName="hallID" />
+          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+          <ScalarProperty Name="bookedReqID" ColumnName="bookedReqID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBookedSlots">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedSlot">
+        <MappingFragment StoreEntitySet="tblBookedSlot">
+          <ScalarProperty Name="slotID" ColumnName="slotID" />
+          <ScalarProperty Name="bookedHallID" ColumnName="bookedHallID" />
+          <ScalarProperty Name="bookedSlotID" ColumnName="bookedSlotID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblHalls">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblHall">
+        <MappingFragment StoreEntitySet="tblHall">
+          <ScalarProperty Name="requirementID" ColumnName="requirementID" />
+          <ScalarProperty Name="hallName" ColumnName="hallName" />
+          <ScalarProperty Name="hallID" ColumnName="hallID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblRequirements">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblRequirement">
+        <MappingFragment StoreEntitySet="tblRequirement">
+          <ScalarProperty Name="requirementName" ColumnName="requirementName" />
+          <ScalarProperty Name="requirementID" ColumnName="requirementID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblSlots">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblSlot">
+        <MappingFragment StoreEntitySet="tblSlot">
+          <ScalarProperty Name="slot" ColumnName="slot" />
+          <ScalarProperty Name="slotID" ColumnName="slotID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

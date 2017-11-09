@@ -9,6 +9,7 @@ namespace UtilityBookingSystem.Models
 {
     public class Users
     {
+        #region tblUser attributes
         public int userID { get; set; }
         [Required(ErrorMessage="Name is required")]
         //[RegularExpression(@"[A-Z]'?[- a-zA-Z]( [a-zA-Z])*", ErrorMessage ="Invalid Name")]
@@ -26,33 +27,49 @@ namespace UtilityBookingSystem.Models
         public string contact { get; set; }
 
         public string dept { get; set; }
+        #endregion
 
+        #region Repository objects
         AdminPanelRepository objAdminPanelRepository = new AdminPanelRepository();
         UserPanelRepository objUserPanelRepository = new UserPanelRepository();
-        public bool AddNewUser(BigViewModel model) //Adds new User
+        #endregion
+
+        #region Add new User
+        public bool AddNewUser(BigViewModel model)
         {
             Users objUsers = new Users();
             objUsers.name = model.users.name;
             objUsers.email = model.users.email;
             objUsers.deptID = model.users.deptID;
-            objUsers.password = Encryption.Encrypt(model.users.password);
+            objUsers.password = Encryption.Encrypt(model.users.password); //Encrypts the password
             objUsers.contact = model.users.contact;
-            bool isAdded = objAdminPanelRepository.SaveUserDetails(objUsers);
+
+            bool isAdded = objAdminPanelRepository.SaveUserDetails(objUsers); //Adds details of New user to DB (AdminPanel Repository)
+
             return isAdded;
         }
+        #endregion
+
+        #region List of Registered Users
         public List<Users> GetRegisteredUsers()
         {
-            List<Users> registeredUsersList = objAdminPanelRepository.GetRegisteredUsers();
+            List<Users> registeredUsersList = objAdminPanelRepository.GetRegisteredUsers(); //Gets List of Registered Users from AdminPanel Repository
             return registeredUsersList;
         }
-        public bool UserLogin(BigViewModel model)
+        #endregion
+
+        #region User Login
+        public int UserLogin(BigViewModel model)
         {
             Users objUsers = new Users();
             objUsers.email = model.login.loginID;
-            objUsers.password = Encryption.Encrypt(model.login.password);
-            bool isLoggedIn = objUserPanelRepository.UserLogin(objUsers);
+            objUsers.password = Encryption.Encrypt(model.login.password); //encrypts the password
 
-            return isLoggedIn;
+            //bool isLoggedIn = objUserPanelRepository.UserLogin(objUsers);
+            int userID = objUserPanelRepository.UserLogin(objUsers); //Verifies User's login details from UserPanel Repository and fetches his userID
+
+            return userID;
         }
+        #endregion
     }
 }

@@ -29,5 +29,13 @@ namespace UtilityBookingSystem.Models
         public DbSet<tblUser> tblUsers { get; set; }
         public DbSet<tblBooking> tblBookings { get; set; }
         public DbSet<tblPurpose> tblPurposes { get; set; }
+        public DbSet<tblBookedDate> tblBookedDates { get; set; }
+        public DbSet<tblBookedHall> tblBookedHalls { get; set; }
+        public DbSet<tblBookedRequirement> tblBookedRequirements { get; set; }
+        public DbSet<tblBookedSlot> tblBookedSlots { get; set; }
+        public DbSet<tblHall> tblHalls { get; set; }
+        public DbSet<tblRequirement> tblRequirements { get; set; }
+        public DbSet<tblSlot> tblSlots { get; set; }
+        public DbSet<tblRequirementForHall> tblRequirementForHalls { get; set; }
     }
 }

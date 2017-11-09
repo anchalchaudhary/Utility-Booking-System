@@ -7,9 +7,12 @@ namespace UtilityBookingSystem.Models
 {
     public class Purpose
     {
+        #region tblPurpose attributes
         public int purposeID { get; set; }
         public string purpose { get; set; }
+        #endregion
 
+        #region Gets Purpose List
         public List<tblPurpose> GetPurposeList()
         {
             List<tblPurpose> purposeList;
@@ -19,5 +22,6 @@ namespace UtilityBookingSystem.Models
             }
             return purposeList;
         }
+        #endregion
     }
 }
