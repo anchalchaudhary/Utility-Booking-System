@@ -4,25 +4,53 @@
 }
 <h2>Index</h2>
 @Html.TextBoxFor(model=>model.bookedDate.dateChosen, new { @id="datechosen", @onchange="dateChosen();", @type="date"} )
-
+<table id="hallsCheckbox">
+    <tbody>
+    </tbody>
+    <tbody></tbody>
+</table>
 <script type="text/javascript">
+    //Correct code. Take reference
+    //var dateChosen = function () {
+    //    debugger
+    //    //var data = document.getElementById("datechosen").value;
+    //    $.ajax({
+    //        type: "POST",
+    //        //data: { date: data },
+    //        dataType: 'JSON',
+    //        url: "/BookUtility/GetHallsList",
+    //        success: function (hallsList) {
+    //            debugger;
+    //            console.log(hallsList[0].hallName);
+    //        },
+    //        error: function (xhr,status, exception) {
+    //            debugger;
+    //            console.log("Error: " + exception + ", Status: " + status);
+    //        }
+    //    });
+    //}
+
     var dateChosen = function () {
-        debugger
-        //var data = document.getElementById("datechosen").value;
+        $("#hallsCheckbox tbody tr").remove();
+
         $.ajax({
-            type: "POST",
-            //data: { date: data },
-            dataType: 'JSON',
-            url: "/BookUtility/GetHallsList",
-            success: function (hallsList) {
-                debugger;
-                console.log(hallsList[0].hallName);
-            },
-            error: function (xhr,status, exception) {
-                debugger;
-                console.log("Error: " + exception + ", Status: " + status);
-            }
-        });
+                    type: "POST",
+                    dataType: 'JSON',
+                    url: "/BookUtility/GetHallsList",
+                    success: function (hallsList) {
+                        var items = '';
+                        $.each(hallsList, function (i, item) {
+                            var rows = "<tr>"
+                                            + "<td><input type=\"checkbox\" name=\"halls\" value=\"" + item.hallID + "\">"+item.hallName+"</td>"
+                                        + "</tr>";
+                            $('#hallsCheckbox tbody').append(rows);
+                        });
+                    },
+                    error: function (xhr,status, exception) {
+                        debugger;
+                        console.log("Error: " + exception + ", Status: " + status);
+                    }
+                });
     }
 </script>
 
