@@ -1,0 +1,28 @@
+﻿@model UtilityBookingSystem.Models.BigViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+@Html.TextBoxFor(model=>model.bookedDate.dateChosen, new { @id="datechosen", @onchange="dateChosen();", @type="date"} )
+
+<script type="text/javascript">
+    var dateChosen = function () {
+        debugger
+        //var data = document.getElementById("datechosen").value;
+        $.ajax({
+            type: "POST",
+            //data: { date: data },
+            dataType: 'JSON',
+            url: "/BookUtility/GetHallsList",
+            success: function (hallsList) {
+                debugger;
+                console.log(hallsList[0].hallName);
+            },
+            error: function (xhr,status, exception) {
+                debugger;
+                console.log("Error: " + exception + ", Status: " + status);
+            }
+        });
+    }
+</script>
+

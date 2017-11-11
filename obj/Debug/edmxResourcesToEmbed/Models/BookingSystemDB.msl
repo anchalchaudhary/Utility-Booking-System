@@ -60,6 +60,7 @@
     <EntitySetMapping Name="tblBookedRequirements">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedRequirement">
         <MappingFragment StoreEntitySet="tblBookedRequirement">
+          <ScalarProperty Name="requirementID" ColumnName="requirementID" />
           <ScalarProperty Name="hallID" ColumnName="hallID" />
           <ScalarProperty Name="bookingID" ColumnName="bookingID" />
           <ScalarProperty Name="bookedReqID" ColumnName="bookedReqID" />
@@ -78,7 +79,6 @@
     <EntitySetMapping Name="tblHalls">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblHall">
         <MappingFragment StoreEntitySet="tblHall">
-          <ScalarProperty Name="requirementID" ColumnName="requirementID" />
           <ScalarProperty Name="hallName" ColumnName="hallName" />
           <ScalarProperty Name="hallID" ColumnName="hallID" />
         </MappingFragment>
@@ -97,6 +97,15 @@
         <MappingFragment StoreEntitySet="tblSlot">
           <ScalarProperty Name="slot" ColumnName="slot" />
           <ScalarProperty Name="slotID" ColumnName="slotID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblRequirementForHalls">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblRequirementForHall">
+        <MappingFragment StoreEntitySet="tblRequirementForHall">
+          <ScalarProperty Name="requirementID" ColumnName="requirementID" />
+          <ScalarProperty Name="hallID" ColumnName="hallID" />
+          <ScalarProperty Name="reqHallID" ColumnName="reqHallID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
