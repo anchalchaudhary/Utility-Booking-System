@@ -3,12 +3,20 @@
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
-@Html.TextBoxFor(model=>model.bookedDate.dateChosen, new { @id="datechosen", @onchange="dateChosen();", @type="date"} )
-<table id="hallsCheckbox">
-    <tbody>
-    </tbody>
-    <tbody></tbody>
-</table>
+@using (Html.BeginForm("Index", "BookUtility", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.bookedDate.dateChosen, new { @id = "datechosen", @onchange = "dateChosen();", @type = "date" })
+    <table id="hallsCheckbox">
+        <tbody>
+        </tbody>
+        <tbody></tbody>
+    </table>
+    <table id="requirementsCheckbox">
+        <tbody></tbody>
+        <tbody></tbody>
+    </table>
+    <button id="btnSubmit">Submit</button>
+}
 <script type="text/javascript">
     //Correct code. Take reference
     //var dateChosen = function () {
@@ -38,19 +46,45 @@
                     dataType: 'JSON',
                     url: "/BookUtility/GetHallsList",
                     success: function (hallsList) {
-                        var items = '';
+                        var item = '';
                         $.each(hallsList, function (i, item) {
                             var rows = "<tr>"
-                                            + "<td><input type=\"checkbox\" name=\"halls\" value=\"" + item.hallID + "\">"+item.hallName+"</td>"
+                                            + "<td><input type=\"checkbox\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected("+item.hallID+");\">"+item.hallName+"</td>"
                                         + "</tr>";
                             $('#hallsCheckbox tbody').append(rows);
                         });
                     },
                     error: function (xhr,status, exception) {
-                        debugger;
                         console.log("Error: " + exception + ", Status: " + status);
                     }
                 });
     }
+    var hallSelected = function (hallID) {
+        var data = hallID;
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            data: { hallID: data },
+            url: "/BookUtility/GetRequirementsList",
+            success: function (requirementsList) {
+                var requirementItem = '';
+                $.each(requirementsList, function (i, requirementItem) {
+                    var requirementsRows = "<tr>"
+                                                + "<td><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.requirementID + "\">" + requirementItem.requirementName + "</td>"
+                                           + "</tr>";
+                    $('#requirementsCheckbox tbody').append(requirementsRows);
+                });
+            },
+            error: function (xhr, status, exception) {
+                console.log("Error: " + exception + ", Status: " + status);
+            }
+        });
+        selectSlot(hallID);
+    }
+    //var selectSlot = function (hallID) {
+    //    var data = hallID;
+    //    var date = document.getElementById("datechosen").value;
+
+    //}
 </script>
 

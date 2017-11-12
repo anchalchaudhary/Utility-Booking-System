@@ -11,7 +11,13 @@ namespace UtilityBookingSystem.Controllers
     {
         // GET: BookUtility
         Hall objHall = new Hall();
+        Requirement objRequirement = new Requirement();
         public ActionResult Index()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Index(BigViewModel model)
         {
             return View();
         }
@@ -20,6 +26,11 @@ namespace UtilityBookingSystem.Controllers
         {
             List<tblHall> hallsList = objHall.GetHallsList();
             return Json(hallsList);
+        }
+        public JsonResult GetRequirementsList(int hallID)
+        {
+            List<Requirement> requirementsList = objRequirement.GetRequirementsList(hallID);
+            return Json(requirementsList);
         }
     }
 }
