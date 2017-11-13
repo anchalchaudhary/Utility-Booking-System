@@ -207,6 +207,7 @@
       <DependentUpon>BookingSystemDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Departments.cs" />
+    <Compile Include="Models\GetAllSlots.cs" />
     <Compile Include="Models\Hall.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Purpose.cs" />

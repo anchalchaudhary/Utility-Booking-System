@@ -51,7 +51,7 @@
                             var rows = "<tr>"
                                             + "<td><input type=\"checkbox\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected("+item.hallID+");\">"+item.hallName+"</td>"
                                         + "</tr>";
-                            $('#hallsCheckbox tbody').append(rows);
+                            $('#hallsCheckbox').append(rows);
                         });
                     },
                     error: function (xhr,status, exception) {
@@ -72,7 +72,7 @@
                     var requirementsRows = "<tr>"
                                                 + "<td><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.requirementID + "\">" + requirementItem.requirementName + "</td>"
                                            + "</tr>";
-                    $('#requirementsCheckbox tbody').append(requirementsRows);
+                    $('#requirementsCheckbox').append(requirementsRows);
                 });
             },
             error: function (xhr, status, exception) {
@@ -81,10 +81,21 @@
         });
         selectSlot(hallID);
     }
-    //var selectSlot = function (hallID) {
-    //    var data = hallID;
-    //    var date = document.getElementById("datechosen").value;
+    var selectSlot = function (hallID) {
+        var date = document.getElementById("datechosen").value;
+        var data = {
+            'hallID': hallID,
+            'date': date
+        };
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            data: data,
+            url: "/BookUtility/GetSlotsList",
+            success: function (slotsList) {
 
-    //}
+            }
+        });
+    }
 </script>
 
