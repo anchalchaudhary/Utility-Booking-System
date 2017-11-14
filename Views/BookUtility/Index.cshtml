@@ -3,44 +3,26 @@
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
-@using (Html.BeginForm("Index", "BookUtility", FormMethod.Post))
-{
+<form method="post">
     @Html.TextBoxFor(model => model.bookedDate.dateChosen, new { @id = "datechosen", @onchange = "dateChosen();", @type = "date" })
     <table id="hallsCheckbox">
-        <tbody>
-        </tbody>
         <tbody></tbody>
     </table>
     <table id="requirementsCheckbox">
         <tbody></tbody>
+    </table>
+    <table id="slotsCheckbox">
         <tbody></tbody>
     </table>
-    <button id="btnSubmit">Submit</button>
-}
-<script type="text/javascript">
-    //Correct code. Take reference
-    //var dateChosen = function () {
-    //    debugger
-    //    //var data = document.getElementById("datechosen").value;
-    //    $.ajax({
-    //        type: "POST",
-    //        //data: { date: data },
-    //        dataType: 'JSON',
-    //        url: "/BookUtility/GetHallsList",
-    //        success: function (hallsList) {
-    //            debugger;
-    //            console.log(hallsList[0].hallName);
-    //        },
-    //        error: function (xhr,status, exception) {
-    //            debugger;
-    //            console.log("Error: " + exception + ", Status: " + status);
-    //        }
-    //    });
-    //}
+    <button id="btnSubmit" onclick="SubmitForm();">Submit</button>
+</form>
 
+<script type="text/javascript">
+    //Displays Halls
     var dateChosen = function () {
         $("#hallsCheckbox tbody tr").remove();
-
+        $("#requirementsCheckbox tbody tr").remove();
+        $("#slotsCheckbox tbody tr").remove();
         $.ajax({
                     type: "POST",
                     dataType: 'JSON',
@@ -49,7 +31,7 @@
                         var item = '';
                         $.each(hallsList, function (i, item) {
                             var rows = "<tr>"
-                                            + "<td><input type=\"checkbox\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected("+item.hallID+");\">"+item.hallName+"</td>"
+                                            + "<td><input type=\"checkbox\" id=\"hall"+item.hallID+"\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected("+item.hallID+");\">"+item.hallName+"</td>"
                                         + "</tr>";
                             $('#hallsCheckbox').append(rows);
                         });
@@ -59,28 +41,44 @@
                     }
                 });
     }
+    //Displays Requirements
     var hallSelected = function (hallID) {
-        var data = hallID;
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            data: { hallID: data },
-            url: "/BookUtility/GetRequirementsList",
-            success: function (requirementsList) {
-                var requirementItem = '';
-                $.each(requirementsList, function (i, requirementItem) {
-                    var requirementsRows = "<tr>"
-                                                + "<td><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.requirementID + "\">" + requirementItem.requirementName + "</td>"
-                                           + "</tr>";
-                    $('#requirementsCheckbox').append(requirementsRows);
-                });
-            },
-            error: function (xhr, status, exception) {
-                console.log("Error: " + exception + ", Status: " + status);
+        var checkboxID = "#hall" + hallID;
+        var noOfRows = 0;
+        //$.each($("input[name='halls']:checked"), function () {
+        if ($(checkboxID).prop('checked')) {
+            //var displayResources = function () {
+            var data = hallID;
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                data: { hallID: data },
+                url: "/BookUtility/GetRequirementsList",
+                success: function (requirementsList) {
+                    $.each(requirementsList, function (i, requirementItem) {
+                        var requirementsRows = "<tr id=\"rowRequirement" + hallID + "_" + i + "\">"
+                                                    + "<td><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.reqHallID + "\">" + requirementItem.requirementName + "</td>"
+                                               + "</tr>";
+                        $('#requirementsCheckbox').append(requirementsRows);
+                    });
+                },
+                error: function (xhr, status, exception) {
+                    console.log("Error: " + exception + ", Status: " + status);
+                }
+            });
+            selectSlot(hallID);
+            //});
+        }
+        else {
+            //somehow I need number of resource and slot  checkboxes for each hall
+            for (j = 0; j < noOfRows; j++) {
+                $("#rowRequirement" + hallID).remove();
+                //code to remove slots and resources checkboxes on unchecking a hall
             }
-        });
-        selectSlot(hallID);
+        }
     }
+    //}
+    //Displays Slots
     var selectSlot = function (hallID) {
         var date = document.getElementById("datechosen").value;
         var data = {
@@ -93,8 +91,35 @@
             data: data,
             url: "/BookUtility/GetSlotsList",
             success: function (slotsList) {
+                var slotsItem = '';
+                $.each(slotsList, function (i, slotsItem) {
+                    if (slotsItem.isChecked == false) {
+                        var slotsRows = "<tr>"
+                                             + "<td><input type=\"checkbox\" name=\"slots\" value=\"" + slotsItem.slotID + "\" disabled>" + slotsItem.slot + "</td>"
+                                         + "</tr>";
+                        $('#slotsCheckbox').append(slotsRows);
+                    }
+                });
+            },
+            error: function (xhr, status, exception) {
+                console.log("Error: " + exception + ", Status: " + status);
+            }            
+        });
+    }
 
-            }
+    var SubmitForm = function () {
+        var hallsArray = [];
+        var requirementsArray = [];
+        var slotsArray = [];
+        var date = document.getElementById("datechosen").value;
+        $.each($("input[name='halls']:checked"), function () {
+            hallsArray.push($(this).val());
+        });
+        $.each($("input[name='requirements']:checked"), function () {
+            requirementsArray.push($(this).val());
+        });
+        $.each($("input[name='slots']:checked"), function () {
+            slotsArray.push($(this).val());
         });
     }
 </script>

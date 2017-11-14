@@ -12,7 +12,7 @@ namespace UtilityBookingSystem.Controllers
         // GET: BookUtility
         #region model classes
         Hall objHall = new Hall();
-        Requirement objRequirement = new Requirement();
+        RequirementForHall objRequirementForHall = new RequirementForHall();
         BookedDate objBookedDate = new BookedDate();
         BookedHall objBookedHall = new BookedHall();
         BookedSlot objBookedSlot = new BookedSlot();
@@ -39,7 +39,7 @@ namespace UtilityBookingSystem.Controllers
         //[HttpPost]
         public JsonResult GetRequirementsList(int hallID)
         {
-            List<Requirement> requirementsList = objRequirement.GetRequirementsList(hallID);
+            List<RequirementForHall> requirementsList = objRequirementForHall.GetRequirementsList(hallID);
             return Json(requirementsList);
         }
         #endregion
@@ -49,7 +49,7 @@ namespace UtilityBookingSystem.Controllers
         {
             List<BookedDate> bookedDateList = objBookedDate.GetBookedDateList(date);
 
-            List<BookedHall> bookedHallsList = objBookedHall.GetBookedHallsList(bookedDateList);
+            List<BookedHall> bookedHallsList = objBookedHall.GetBookedHallsList(bookedDateList,hallID);
 
             List<BookedSlot> bookedSlotsList = objBookedSlot.GetBookedSlotsList(bookedHallsList);
 

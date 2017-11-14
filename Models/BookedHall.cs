@@ -14,7 +14,7 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> dateID { get; set; }
         #endregion
         #region Get Booked Halls List
-        public List<BookedHall> GetBookedHallsList(List<BookedDate> bookedDateList)
+        public List<BookedHall> GetBookedHallsList(List<BookedDate> bookedDateList, int hallID)
         {
             IEnumerable<BookedHall> bookedHalls =null;
             List<BookedHall> bookedHallsList = new List<BookedHall>();
@@ -24,7 +24,7 @@ namespace UtilityBookingSystem.Models
                 // context.Configuration.ProxyCreationEnabled = true;
                 foreach (var item in bookedDateList)
                 {
-                    bookedHalls = context.tblBookedHalls.Where(x => x.dateID == item.dateID).Select(x => new BookedHall
+                    bookedHalls = context.tblBookedHalls.Where(x => x.dateID == item.dateID && x.hallID==hallID).Select(x => new BookedHall
                     {
                         bookedHallID = x.bookedHallID,
                         hallID = x.hallID,

@@ -12,12 +12,18 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> bookedHallID { get; set; }
         public Nullable<int> slotID { get; set; }
         #endregion
+        public string slot { get; set; }
+        public bool isChecked { get; set; }
 
         #region Get Booked Slots
         public List<BookedSlot> GetBookedSlotsList(List<BookedHall> bookedHallsList)
         {
             List<BookedSlot> bookedSlotsList = new List<BookedSlot>();
+            List<BookedSlot> availableSlotsList = new List<BookedSlot>();
+            List<BookedSlot> allSlotsList = new List<BookedSlot>();
+
             IEnumerable<BookedSlot> bookedSlots = null;
+            IEnumerable<BookedSlot> availableSlots = null;
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
@@ -27,12 +33,25 @@ namespace UtilityBookingSystem.Models
                     {
                     //    bookedSlotID = x.bookedSlotID,
                     //    bookedHallID = x.bookedHallID,
-                        slotID = x.slotID
+                        slotID = x.slotID,
+                        isChecked = false,
+                        slot = x.tblSlot.slot
                     }).ToList();
                     bookedSlotsList.AddRange(bookedSlots);
                 }
+                allSlotsList = bookedSlotsList;
+                //foreach(var item in bookedSlotsList)
+                //{
+                //    availableSlots = context.tblSlots.Where(x => x.slotID != item.slotID).Select(x => new BookedSlot
+                //    {
+                //        slotID = x.slotID,
+                //        isChecked = true
+                //    }).ToList();
+                //    availableSlotsList.AddRange(availableSlots);
+                //}
+                //allSlotsList.AddRange(availableSlots);
             }
-            return bookedSlotsList;
+            return allSlotsList;
         }
         #endregion
     }

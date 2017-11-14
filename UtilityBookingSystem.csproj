@@ -212,6 +212,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Purpose.cs" />
     <Compile Include="Models\Requirement.cs" />
+    <Compile Include="Models\RequirementForHall.cs" />
     <Compile Include="Models\Slot.cs" />
     <Compile Include="Models\tblBookedDate.cs">
       <DependentUpon>BookingSystemDB.tt</DependentUpon>
