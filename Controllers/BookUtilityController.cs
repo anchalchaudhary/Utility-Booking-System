@@ -12,6 +12,7 @@ namespace UtilityBookingSystem.Controllers
         // GET: BookUtility
         #region model classes
         Hall objHall = new Hall();
+        Slot objSlot = new Slot();
         RequirementForHall objRequirementForHall = new RequirementForHall();
         BookedDate objBookedDate = new BookedDate();
         BookedHall objBookedHall = new BookedHall();
@@ -19,12 +20,13 @@ namespace UtilityBookingSystem.Controllers
         BookedRequirement objBookedRequirement = new BookedRequirement();
         #endregion
 
+        #region Start Booking
         public ActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Index(int[] hallsArray, int[] requirementsArray, DateTime date)
+        public ActionResult Index(int[] hallsArray, int[] requirementsArray, int[] slotsArray, DateTime date)
         {
             if (date != null)
             {
@@ -56,8 +58,17 @@ namespace UtilityBookingSystem.Controllers
         }
         #endregion
 
+        #region Get All Slots List
+        public JsonResult GetAllSlotsList()
+        {
+            List<tblSlot> allSlotsList = objSlot.GetAllSlotsList();
+
+            return Json(allSlotsList);
+        }
+        #endregion
+
         #region Get Slots List
-        public JsonResult GetSlotsList(int hallID, DateTime date)
+        public JsonResult GetBookedSlotsList(int hallID, DateTime date)
         {
             List<BookedDate> bookedDateList = objBookedDate.GetBookedDateList(date);
 
@@ -67,6 +78,8 @@ namespace UtilityBookingSystem.Controllers
 
             return Json(bookedSlotsList);
         }
+        #endregion
+
         #endregion
     }
 }

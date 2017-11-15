@@ -12,18 +12,19 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> bookedHallID { get; set; }
         public Nullable<int> slotID { get; set; }
         #endregion
+
+        #region added attributes
         public string slot { get; set; }
         public bool isChecked { get; set; }
+        #endregion
 
         #region Get Booked Slots
         public List<BookedSlot> GetBookedSlotsList(List<BookedHall> bookedHallsList)
         {
             List<BookedSlot> bookedSlotsList = new List<BookedSlot>();
-            List<BookedSlot> availableSlotsList = new List<BookedSlot>();
             List<BookedSlot> allSlotsList = new List<BookedSlot>();
 
             IEnumerable<BookedSlot> bookedSlots = null;
-            IEnumerable<BookedSlot> availableSlots = null;
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
@@ -40,16 +41,6 @@ namespace UtilityBookingSystem.Models
                     bookedSlotsList.AddRange(bookedSlots);
                 }
                 allSlotsList = bookedSlotsList;
-                //foreach(var item in bookedSlotsList)
-                //{
-                //    availableSlots = context.tblSlots.Where(x => x.slotID != item.slotID).Select(x => new BookedSlot
-                //    {
-                //        slotID = x.slotID,
-                //        isChecked = true
-                //    }).ToList();
-                //    availableSlotsList.AddRange(availableSlots);
-                //}
-                //allSlotsList.AddRange(availableSlots);
             }
             return allSlotsList;
         }

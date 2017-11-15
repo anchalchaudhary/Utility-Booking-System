@@ -21,8 +21,8 @@
     //Displays Halls
     var dateChosen = function () {
         $("#hallsCheckbox tbody tr").remove();
-        $("#requirementsCheckbox tbody tr").remove();
-        $("#slotsCheckbox tbody tr").remove();
+        //$("#requirementsCheckbox tbody tr").remove();
+        //$("#slotsCheckbox tbody tr").remove();
         $.ajax({
             type: "POST",
             dataType: 'JSON',
@@ -66,6 +66,7 @@
         }
         else {
             $(".reqHall" + hallID).remove();
+            $(".slotHall" + hallID).remove();
         }
     }
     //Displays Slots
@@ -79,18 +80,39 @@
             type: "POST",
             dataType: "JSON",
             data: data,
-            url: "/BookUtility/GetSlotsList",
-            success: function (slotsList) {
+            url: "/BookUtility/GetAllSlotsList",
+            success: function (allSlotsList) {
                 var slotsItem = '';
-                $.each(slotsList, function (i, slotsItem) {
-                    if (slotsItem.isChecked == false) {
-                        var slotsRows ="<td><input type=\"checkbox\" name=\"slots\" value=\"" + slotsItem.slotID + "\" disabled>" + slotsItem.slot + "</td>";
+                $.each(allSlotsList, function (i, slotsItem) {
+                    //if (slotsItem.isChecked == false) {
+                        var slotsRows ="<td class=\"slotHall"+hallID+"\"><input type=\"checkbox\" id=\"slot"+slotsItem.slotID+"\" name=\"slots\" value=\"" + slotsItem.slotID + "\">" + slotsItem.slot + "</td>";
                         $('#rowforslots'+hallID).append(slotsRows);
-                    }
+                    //}
                 });
+                getBookedSlots(hallID,date);
             },
             error: function (xhr, status, exception) {
                 console.log("Error: " + exception + ", Status: " + status);
+            }
+        });
+    }
+    var getBookedSlots = function (hallID, date) {
+        var data = {
+            'hallID': hallID,
+            'date': date
+        };
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            data: data,
+            url: "/BookUtility/GetBookedSlotsList",
+            success: function (bookedSlotsList) {
+                var bookedSlotsItem = '';
+                $.each(bookedSlotsList, function (i, bookedSlotsItem) {
+                   // if (bookedSlotsItem.isChecked == false) {
+                        $("#slot" + bookedSlotsItem.slotID).prop("disabled",true);
+                    //}
+                });
             }
         });
     }
