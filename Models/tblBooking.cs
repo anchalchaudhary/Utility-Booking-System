@@ -25,9 +25,9 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> purposeID { get; set; }
         public string title { get; set; }
     
-        public virtual tblPurpose tblPurpose { get; set; }
-        public virtual tblUser tblUser { get; set; }
         public virtual ICollection<tblBookedDate> tblBookedDates { get; set; }
         public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
+        public virtual tblPurpose tblPurpose { get; set; }
+        public virtual tblUser tblUser { get; set; }
     }
 }

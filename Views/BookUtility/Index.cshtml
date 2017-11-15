@@ -5,15 +5,15 @@
 <h2>Index</h2>
 <form method="post">
     @Html.TextBoxFor(model => model.bookedDate.dateChosen, new { @id = "datechosen", @onchange = "dateChosen();", @type = "date" })
-    <table id="hallsCheckbox">
+    <table id="hallsCheckbox" class="table table-bordered">
         <tbody></tbody>
     </table>
-    <table id="requirementsCheckbox">
+    @*<table id="requirementsCheckbox">
         <tbody></tbody>
     </table>
     <table id="slotsCheckbox">
         <tbody></tbody>
-    </table>
+    </table>*@
     <button id="btnSubmit" onclick="SubmitForm();">Submit</button>
 </form>
 
@@ -24,30 +24,28 @@
         $("#requirementsCheckbox tbody tr").remove();
         $("#slotsCheckbox tbody tr").remove();
         $.ajax({
-                    type: "POST",
-                    dataType: 'JSON',
-                    url: "/BookUtility/GetHallsList",
-                    success: function (hallsList) {
-                        var item = '';
-                        $.each(hallsList, function (i, item) {
-                            var rows = "<tr>"
-                                            + "<td><input type=\"checkbox\" id=\"hall"+item.hallID+"\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected("+item.hallID+");\">"+item.hallName+"</td>"
-                                        + "</tr>";
-                            $('#hallsCheckbox').append(rows);
-                        });
-                    },
-                    error: function (xhr,status, exception) {
-                        console.log("Error: " + exception + ", Status: " + status);
-                    }
+            type: "POST",
+            dataType: 'JSON',
+            url: "/BookUtility/GetHallsList",
+            success: function (hallsList) {
+                var item = '';
+                $.each(hallsList, function (i, item) {
+                    var rows = "<tr id=\"rowHall" + item.hallID + "\">"
+                                    + "<td><input type=\"checkbox\" id=\"hall" + item.hallID + "\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected(" + item.hallID + ");\">" + item.hallName + "</td>"
+                                + "</tr>"+"<tr id=\"rowforslots"+item.hallID+"\"><td></td></tr>";
+                    $('#hallsCheckbox').append(rows);
                 });
+            },
+            error: function (xhr, status, exception) {
+                console.log("Error: " + exception + ", Status: " + status);
+            }
+        });
     }
     //Displays Requirements
     var hallSelected = function (hallID) {
         var checkboxID = "#hall" + hallID;
         var noOfRows = 0;
-        //$.each($("input[name='halls']:checked"), function () {
         if ($(checkboxID).prop('checked')) {
-            //var displayResources = function () {
             var data = hallID;
             $.ajax({
                 type: "POST",
@@ -56,10 +54,8 @@
                 url: "/BookUtility/GetRequirementsList",
                 success: function (requirementsList) {
                     $.each(requirementsList, function (i, requirementItem) {
-                        var requirementsRows = "<tr id=\"rowRequirement" + hallID + "_" + i + "\">"
-                                                    + "<td><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.reqHallID + "\">" + requirementItem.requirementName + "</td>"
-                                               + "</tr>";
-                        $('#requirementsCheckbox').append(requirementsRows);
+                        var requirementsRows = "<td class=\"reqHall" + hallID + "\"><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.reqHallID + "\">" + requirementItem.requirementName + "</td>"
+                        $('#rowHall' + hallID).append(requirementsRows);
                     });
                 },
                 error: function (xhr, status, exception) {
@@ -67,17 +63,11 @@
                 }
             });
             selectSlot(hallID);
-            //});
         }
         else {
-            //somehow I need number of resource and slot  checkboxes for each hall
-            for (j = 0; j < noOfRows; j++) {
-                $("#rowRequirement" + hallID).remove();
-                //code to remove slots and resources checkboxes on unchecking a hall
-            }
+            $(".reqHall" + hallID).remove();
         }
     }
-    //}
     //Displays Slots
     var selectSlot = function (hallID) {
         var date = document.getElementById("datechosen").value;
@@ -94,16 +84,14 @@
                 var slotsItem = '';
                 $.each(slotsList, function (i, slotsItem) {
                     if (slotsItem.isChecked == false) {
-                        var slotsRows = "<tr>"
-                                             + "<td><input type=\"checkbox\" name=\"slots\" value=\"" + slotsItem.slotID + "\" disabled>" + slotsItem.slot + "</td>"
-                                         + "</tr>";
-                        $('#slotsCheckbox').append(slotsRows);
+                        var slotsRows ="<td><input type=\"checkbox\" name=\"slots\" value=\"" + slotsItem.slotID + "\" disabled>" + slotsItem.slot + "</td>";
+                        $('#rowforslots'+hallID).append(slotsRows);
                     }
                 });
             },
             error: function (xhr, status, exception) {
                 console.log("Error: " + exception + ", Status: " + status);
-            }            
+            }
         });
     }
 
@@ -121,6 +109,21 @@
         $.each($("input[name='slots']:checked"), function () {
             slotsArray.push($(this).val());
         });
+        var data = {
+            'hallsArray': hallsArray,
+            'requirementsArray': requirementsArray,
+            'slotsArray': slotsArray,
+            'date': date
+        };
+        $.ajax({
+            type: "POST",
+            dataType: "JSON",
+            data: data,
+            url: "/BookUtility/Index",
+            success: function (response) {
+                alert("Done");
+            }
+        })
     }
 </script>
 

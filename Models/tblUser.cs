@@ -21,12 +21,12 @@ namespace UtilityBookingSystem.Models
     
         public int userID { get; set; }
         public string name { get; set; }
+        public string contact { get; set; }
         public string email { get; set; }
         public string password { get; set; }
         public Nullable<int> deptID { get; set; }
-        public string contact { get; set; }
     
-        public virtual tblDepartment tblDepartment { get; set; }
         public virtual ICollection<tblBooking> tblBookings { get; set; }
+        public virtual tblDepartment tblDepartment { get; set; }
     }
 }

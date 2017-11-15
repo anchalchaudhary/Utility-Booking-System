@@ -22,8 +22,8 @@
     </Key>
     <Property Name="bookedReqID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="bookingID" Type="int" />
-    <Property Name="hallID" Type="int" />
-    <Property Name="requirementID" Type="int" />
+    <Property Name="dateID" Type="int" />
+    <Property Name="reqHallID" Type="int" />
   </EntityType>
   <EntityType Name="tblBookedSlot">
     <Key>
@@ -97,7 +97,9 @@
     <Property Name="deptID" Type="int" />
   </EntityType>
   <Association Name="FK__tblBooked__booke__31EC6D26">
-    <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="0..1" />
+    <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedSlot" Type="Self.tblBookedSlot" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblBookedHall">
@@ -109,7 +111,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblBooked__booki__239E4DCF">
-    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
+    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblBooking">
@@ -121,7 +125,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblBooked__booki__37A5467C">
-    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
+    <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblBooking">
@@ -133,7 +139,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblBooked__dateI__29572725">
-    <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="0..1" />
+    <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblBookedDate">
@@ -145,7 +153,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblBooked__hallI__286302EC">
-    <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1" />
+    <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedHall" Type="Self.tblBookedHall" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblHall">
@@ -156,20 +166,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__tblBooked__hallI__38996AB5">
-    <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1" />
-    <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tblHall">
-        <PropertyRef Name="hallID" />
-      </Principal>
-      <Dependent Role="tblBookedRequirement">
-        <PropertyRef Name="hallID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__tblBooked__slotI__32E0915F">
-    <End Role="tblSlot" Type="Self.tblSlot" Multiplicity="0..1" />
+    <End Role="tblSlot" Type="Self.tblSlot" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedSlot" Type="Self.tblBookedSlot" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblSlot">
@@ -181,7 +181,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblBookin__purpo__117F9D94">
-    <End Role="tblPurpose" Type="Self.tblPurpose" Multiplicity="0..1" />
+    <End Role="tblPurpose" Type="Self.tblPurpose" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblPurpose">
@@ -193,7 +195,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblBookin__userI__108B795B">
-    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblUser">
@@ -205,7 +209,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblRequir__hallI__3D5E1FD2">
-    <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1" />
+    <End Role="tblHall" Type="Self.tblHall" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblHall">
@@ -229,7 +235,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblUser__departm__0519C6AF">
-    <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1" />
+    <End Role="tblDepartment" Type="Self.tblDepartment" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblDepartment">
@@ -240,15 +248,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tblBookedRequirement_tblRequirement">
-    <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1" />
+  <Association Name="FK_tblBookedRequirement_tblBookedDate">
+    <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="0..1" />
     <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tblRequirement">
-        <PropertyRef Name="requirementID" />
+      <Principal Role="tblBookedDate">
+        <PropertyRef Name="dateID" />
       </Principal>
       <Dependent Role="tblBookedRequirement">
-        <PropertyRef Name="requirementID" />
+        <PropertyRef Name="dateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblBookedRequirement_tblRequirementForHall">
+    <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="0..1" />
+    <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRequirementForHall">
+        <PropertyRef Name="reqHallID" />
+      </Principal>
+      <Dependent Role="tblBookedRequirement">
+        <PropertyRef Name="reqHallID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -285,10 +305,6 @@
       <End Role="tblHall" EntitySet="tblHall" />
       <End Role="tblBookedHall" EntitySet="tblBookedHall" />
     </AssociationSet>
-    <AssociationSet Name="FK__tblBooked__hallI__38996AB5" Association="Self.FK__tblBooked__hallI__38996AB5">
-      <End Role="tblHall" EntitySet="tblHall" />
-      <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
-    </AssociationSet>
     <AssociationSet Name="FK__tblBooked__slotI__32E0915F" Association="Self.FK__tblBooked__slotI__32E0915F">
       <End Role="tblSlot" EntitySet="tblSlot" />
       <End Role="tblBookedSlot" EntitySet="tblBookedSlot" />
@@ -313,8 +329,12 @@
       <End Role="tblDepartment" EntitySet="tblDepartment" />
       <End Role="tblUser" EntitySet="tblUser" />
     </AssociationSet>
-    <AssociationSet Name="FK_tblBookedRequirement_tblRequirement" Association="Self.FK_tblBookedRequirement_tblRequirement">
-      <End Role="tblRequirement" EntitySet="tblRequirement" />
+    <AssociationSet Name="FK_tblBookedRequirement_tblBookedDate" Association="Self.FK_tblBookedRequirement_tblBookedDate">
+      <End Role="tblBookedDate" EntitySet="tblBookedDate" />
+      <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblBookedRequirement_tblRequirementForHall" Association="Self.FK_tblBookedRequirement_tblRequirementForHall">
+      <End Role="tblRequirementForHall" EntitySet="tblRequirementForHall" />
       <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
     </AssociationSet>
   </EntityContainer>

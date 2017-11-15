@@ -17,13 +17,11 @@ namespace UtilityBookingSystem.Models
         public tblRequirement()
         {
             this.tblRequirementForHalls = new HashSet<tblRequirementForHall>();
-            this.tblBookedRequirements = new HashSet<tblBookedRequirement>();
         }
     
         public int requirementID { get; set; }
         public string requirementName { get; set; }
     
         public virtual ICollection<tblRequirementForHall> tblRequirementForHalls { get; set; }
-        public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
     }
 }

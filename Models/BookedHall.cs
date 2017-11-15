@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using UtilityBookingSystem.Repository;
+
 
 namespace UtilityBookingSystem.Models
 {
@@ -13,6 +15,9 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> hallID { get; set; }
         public Nullable<int> dateID { get; set; }
         #endregion
+
+        BookingRepository objBookingRepository = new BookingRepository();
+
         #region Get Booked Halls List
         public List<BookedHall> GetBookedHallsList(List<BookedDate> bookedDateList, int hallID)
         {
@@ -34,6 +39,13 @@ namespace UtilityBookingSystem.Models
                 }
             }
             return bookedHallsList;
+        }
+        #endregion
+
+        #region Save Selected Hall
+        public void SaveSelectedHalls(int[] hallsArray, int dateID)
+        {
+            objBookingRepository.SaveSelectedHalls(hallsArray, dateID);
         }
         #endregion
     }

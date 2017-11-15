@@ -14,10 +14,16 @@ namespace UtilityBookingSystem.Models
     
     public partial class tblRequirementForHall
     {
+        public tblRequirementForHall()
+        {
+            this.tblBookedRequirements = new HashSet<tblBookedRequirement>();
+        }
+    
         public int reqHallID { get; set; }
         public Nullable<int> hallID { get; set; }
         public Nullable<int> requirementID { get; set; }
     
+        public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
         public virtual tblHall tblHall { get; set; }
         public virtual tblRequirement tblRequirement { get; set; }
     }

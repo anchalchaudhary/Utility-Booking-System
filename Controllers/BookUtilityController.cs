@@ -16,15 +16,27 @@ namespace UtilityBookingSystem.Controllers
         BookedDate objBookedDate = new BookedDate();
         BookedHall objBookedHall = new BookedHall();
         BookedSlot objBookedSlot = new BookedSlot();
+        BookedRequirement objBookedRequirement = new BookedRequirement();
         #endregion
+
         public ActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Index(BigViewModel model)
+        public ActionResult Index(int[] hallsArray, int[] requirementsArray, DateTime date)
         {
-            return View();
+            if (date != null)
+            {
+                int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+
+                int dateID = objBookedDate.SaveBookingDate(date, bookingID);
+
+                objBookedHall.SaveSelectedHalls(hallsArray, dateID);
+
+                objBookedRequirement.SaveSelectedRequirements(hallsArray, requirementsArray, bookingID, dateID);
+            }
+            return RedirectToAction("Index");
         }
         #region Get Halls List
         //[HttpPost]

@@ -17,7 +17,6 @@ namespace UtilityBookingSystem.Models
         public tblHall()
         {
             this.tblBookedHalls = new HashSet<tblBookedHall>();
-            this.tblBookedRequirements = new HashSet<tblBookedRequirement>();
             this.tblRequirementForHalls = new HashSet<tblRequirementForHall>();
         }
     
@@ -25,7 +24,6 @@ namespace UtilityBookingSystem.Models
         public string hallName { get; set; }
     
         public virtual ICollection<tblBookedHall> tblBookedHalls { get; set; }
-        public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
         public virtual ICollection<tblRequirementForHall> tblRequirementForHalls { get; set; }
     }
 }

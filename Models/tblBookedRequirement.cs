@@ -16,11 +16,11 @@ namespace UtilityBookingSystem.Models
     {
         public int bookedReqID { get; set; }
         public Nullable<int> bookingID { get; set; }
-        public Nullable<int> hallID { get; set; }
-        public Nullable<int> requirementID { get; set; }
+        public Nullable<int> dateID { get; set; }
+        public Nullable<int> reqHallID { get; set; }
     
+        public virtual tblBookedDate tblBookedDate { get; set; }
         public virtual tblBooking tblBooking { get; set; }
-        public virtual tblHall tblHall { get; set; }
-        public virtual tblRequirement tblRequirement { get; set; }
+        public virtual tblRequirementForHall tblRequirementForHall { get; set; }
     }
 }
