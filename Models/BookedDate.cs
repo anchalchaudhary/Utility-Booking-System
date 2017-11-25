@@ -31,12 +31,45 @@ namespace UtilityBookingSystem.Models
             return bookedDateList;
         }
         #endregion
-
+        #region Get All Booked Dates
+        public List<BookedDate> GetAllBookedDatesList()
+        {
+            List<BookedDate> allBookedDateList;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                allBookedDateList = context.tblBookedDates.Select(x => new BookedDate
+                {
+                    bookingID = x.bookingID,
+                    dateChosen = x.dateChosen,
+                    dateID = x.dateID
+                }).ToList();
+            }
+            return allBookedDateList;
+        }
+        #endregion
         #region Save new Date
         public int SaveBookingDate(DateTime date, int bookingID)
         {
             int dateID = objBookingRepository.SaveBookingDate(date, bookingID);
             return dateID;
+        }
+        #endregion
+        #region Get Booking's Dates
+        public List<BookedDate> GetBookingDateList(int bookingID)
+        {
+            List<BookedDate> bookedDateList;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                bookedDateList = context.tblBookedDates.Where(x => x.bookingID == bookingID).Select(x => new BookedDate
+                {
+                    bookingID = x.bookingID,
+                    dateID = x.dateID,
+                    dateChosen = x.dateChosen
+                }).ToList();
+            }
+            return bookedDateList;
         }
         #endregion
     }

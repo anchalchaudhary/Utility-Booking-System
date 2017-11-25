@@ -11,7 +11,7 @@ namespace UtilityBookingSystem.Models
     {
         #region tblUser attributes
         public int userID { get; set; }
-        [Required(ErrorMessage="Name is required")]
+        [Required(ErrorMessage = "Name is required")]
         //[RegularExpression(@"[A-Z]'?[- a-zA-Z]( [a-zA-Z])*", ErrorMessage ="Invalid Name")]
         public string name { get; set; }
         [Required(ErrorMessage = "Email is required")]
@@ -22,7 +22,7 @@ namespace UtilityBookingSystem.Models
         [Required(ErrorMessage = "Select a Department")]
         public Nullable<int> deptID { get; set; }
 
-        [RegularExpression(@"([6-9][0-9]{9})",ErrorMessage = "Invalid phone number" )]
+        [RegularExpression(@"([6-9][0-9]{9})", ErrorMessage = "Invalid phone number")]
         [Required(ErrorMessage = "Enter Contact Number")]
         public string contact { get; set; }
 
@@ -69,6 +69,24 @@ namespace UtilityBookingSystem.Models
             int userID = objUserPanelRepository.UserLogin(objUsers); //Verifies User's login details from UserPanel Repository and fetches his userID
 
             return userID;
+        }
+        #endregion
+
+        #region User Details
+        public List<Users> GetUserDetails(int userID)
+        {
+            List<Users> userDetailList = new List<Users>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                userDetailList = context.tblUsers.Where(x => x.userID == userID).Select(x => new Users
+                {
+                    userID = x.userID,
+                    name = x.name,
+                    dept = x.tblDepartment.department
+                }).ToList();
+            }
+            return userDetailList;
         }
         #endregion
     }

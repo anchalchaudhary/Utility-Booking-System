@@ -15,7 +15,8 @@ namespace UtilityBookingSystem.Models
         public string title { get; set; }
         public string purpose { get; set; }
         #endregion
-
+        public string name { get; set; }
+        public string department { get; set; }
         #region Repository objects
         UserPanelRepository objUserPanelRepository = new UserPanelRepository();
         BookingRepository objBookingRepository = new BookingRepository();
@@ -32,6 +33,27 @@ namespace UtilityBookingSystem.Models
             int bookingID= objBookingRepository.CreateNewBooking(objBooking); //Saves new Booking details to db (Booking repository) and fetches new bookingID
 
             return bookingID;
+        }
+        #endregion
+
+        #region Get All Bookings List
+        public List<Booking> GetAllBookingsList()
+        {
+            List<Booking> allBookingsList;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                allBookingsList = context.tblBookings.Select(x => new Booking
+                {
+                    bookingID = x.bookingID,
+                    userID = x.userID,
+                    name = x.tblUser.name,
+                    department = x.tblUser.tblDepartment.department,
+                    title = x.title,
+                    purpose = x.tblPurpose.purpose,
+                }).ToList();
+            }
+            return allBookingsList;
         }
         #endregion
     }

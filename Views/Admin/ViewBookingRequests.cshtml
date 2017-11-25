@@ -1,0 +1,32 @@
+﻿@model UtilityBookingSystem.Models.BigViewModel
+@{
+    ViewBag.Title = "ViewBookingRequests";
+}
+
+<h2>View Booking Requests</h2>
+
+<table>
+    <tr>
+        <th>Booked By</th>
+        <th>Department</th>
+        <th>Title</th>
+        <th>Purpose</th>
+    </tr>
+    @foreach (var item in ViewBag.allBookingsList)
+    {
+
+        <tr>
+            <td>@item.name</td>
+            <td>@item.department</td>
+            <td>@item.title</td>
+            <td>@item.purpose</td>
+            @*<td>@Ajax.ActionLink("View Application", "ViewApplication", "Admin", new { bookingID = item.bookingID }, new AjaxOptions { HttpMethod = "POST" })</td>*@
+            <td>
+                @using (Html.BeginForm("ViewApplication", "Admin", new { bookingID = item.bookingID, userID = item.userID }, FormMethod.Post))
+                {
+                    <button class="btn btn-success">View</button>
+                }
+            </td>
+        </tr>
+    }
+</table>

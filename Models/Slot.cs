@@ -10,6 +10,7 @@ namespace UtilityBookingSystem.Models
         #region tblSlot attributes
         public int slotID { get; set; }
         public string slot { get; set; }
+        public bool isSelected { get; set; }
         #endregion
 
         #region Get All Slots

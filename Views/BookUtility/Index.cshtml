@@ -1,151 +1,169 @@
-﻿@model UtilityBookingSystem.Models.BigViewModel
+﻿@model List<UtilityBookingSystem.Models.DetailsList>
 @{
     ViewBag.Title = "Index";
 }
-<h2>Index</h2>
-<form method="post">
-    @Html.TextBoxFor(model => model.bookedDate.dateChosen, new { @id = "datechosen", @onchange = "dateChosen();", @type = "date" })
-    <table id="hallsCheckbox" class="table table-bordered">
-        <tbody></tbody>
-    </table>
-    @*<table id="requirementsCheckbox">
-        <tbody></tbody>
-    </table>
-    <table id="slotsCheckbox">
-        <tbody></tbody>
-    </table>*@
-    <button id="btnSubmit" onclick="SubmitForm();">Submit</button>
-</form>
+@using (Html.BeginForm("Index", "BookUtility", FormMethod.Post))
+{
+    int hall = 0, slot = 0, requirement = 0;
+    <input type="date" name="detailsObjList[0].date" id="detailsObjList[0].date" required onchange="datechosen();" />
+    foreach (var item in ViewBag.HallDetail)
+    {
+        <hr />
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].hallID" value="@(hall+1)" />
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].hallName" value="@item.hallName" />
+        <label>@item.hallName</label>
+        <!--SLOTS-->
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slot+1)" />
+        <label>SLOT 1</label>
+        <input type="checkbox" name="detailsObjList[0].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot+1)_@(hall+1)" onchange="slotcheckchange(@(slot+1), @(hall+1));" />
 
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+1)].slotID" value="@(slot+2)" />
+        <label>SLOT 2</label>
+        <input type="checkbox" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+1)].isSelected" id="slotcheck@(slot+2)_@(hall+1)" onchange="slotcheckchange(@(slot+2), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+2)].slotID" value="@(slot+3)" />
+        <label>SLOT 3</label>
+        <input type="checkbox" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+2)].isSelected" id="slotcheck@(slot+3)_@(hall+1)" onchange="slotcheckchange(@(slot+3), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+3)].slotID" value="@(slot+4)" />
+        <label>SLOT 4</label>
+        <input type="checkbox" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+3)].isSelected" id="slotcheck@(slot+4)_@(hall+1)" onchange="slotcheckchange(@(slot+4), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+4)].slotID" value="@(slot+5)" />
+        <label>SLOT 5</label>
+        <input type="checkbox" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+4)].isSelected" id="slotcheck@(slot+5)_@(hall+1)" onchange="slotcheckchange(@(slot+5), @(hall+1);" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+5)].slotID" value="@(slot+6)" />
+        <label>SLOT 6</label>
+        <input type="checkbox" name="detailsObjList[0].hallsArray[@hall].slotsArray[@(slot+5)].isSelected" id="slotcheck@(slot+6)_@(hall+1)" onchange="slotcheckchange(@(slot+6), @(hall+1));" />
+        <br />
+        <!--REQUIREMENTS-->
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(requirement+1)" />
+        <label>Requirement 1</label>
+        <input type="checkbox" disabled name="detailsObjList[0].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement+1)_@(hall+1)" onchange="reqcheckchange(@(requirement+1), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+1)].requirementID" value="@(requirement+2)" />
+        <label>Requirement 2</label>
+        <input type="checkbox" disabled name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+1)].isSelected" id="reqcheck@(requirement+2)_@(hall+1)" onchange="reqcheckchange(@(requirement+2), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+2)].requirementID" value="@(requirement+3)" />
+        <label>Requirement 3</label>
+        <input type="checkbox" disabled name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+2)].isSelected" id="reqcheck@(requirement+3)_@(hall+1)" onchange="reqcheckchange(@(requirement+3), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+3)].requirementID" value="@(requirement+4)" />
+        <label>Requirement 4</label>
+        <input type="checkbox" disabled name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+3)].isSelected" id="reqcheck@(requirement+4)_@(hall+1)" onchange="reqcheckchange(@(requirement+4), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+4)].requirementID" value="@(requirement+5)" />
+        <label>Requirement 5</label>
+        <input type="checkbox" disabled name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+4)].isSelected" id="reqcheck@(requirement+5)_@(hall+1)" onchange="reqcheckchange(@(requirement+5), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+5)].requirementID" value="@(requirement+6)" />
+        <label>Requirement 6</label>
+        <input type="checkbox" disabled name="detailsObjList[0].hallsArray[@hall].requirementsArray[@(requirement+5)].isSelected" id="reqcheck@(requirement+6)_@(hall+1)" onchange="reqcheckchange(@(requirement+6), @(hall+1));" />
+
+        hall = hall + 1;
+
+    }
+    hall = 0;
+    <br />
+    <input type="date" name="detailsObjList[1].date" id="detailsObjList[1].date" required onchange="datechosen();"/>
+    foreach (var item in ViewBag.HallDetail)
+    {
+        <hr />
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].hallID" value="@(hall+1)" />
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].hallName" value="@item.hallName" />
+        <label>@item.hallName</label>
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slot+1)" />
+        <label>SLOT 1</label>
+        <input type="checkbox" name="detailsObjList[1].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot+1)_@(hall+1)" onchange="slotcheckchange(@(slot+1), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+1)].slotID" value="@(slot+2)" />
+        <label>SLOT 2</label>
+        <input type="checkbox" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+1)].isSelected" id="slotcheck@(slot+2)_@(hall+1)" onchange="slotcheckchange(@(slot+2), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+2)].slotID" value="@(slot+3)" />
+        <label>SLOT 3</label>
+        <input type="checkbox" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+2)].isSelected" id="slotcheck@(slot+3)_@(hall+1)" onchange="slotcheckchange(@(slot+3), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+3)].slotID" value="@(slot+4)" />
+        <label>SLOT 4</label>
+        <input type="checkbox" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+3)].isSelected" id="slotcheck@(slot+4)_@(hall+1)" onchange="slotcheckchange(@(slot+4), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+4)].slotID" value="@(slot+5)" />
+        <label>SLOT 5</label>
+        <input type="checkbox" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+4)].isSelected" id="slotcheck@(slot+5)_@(hall+1)" onchange="slotcheckchange(@(slot+5), @(hall+1);" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+5)].slotID" value="@(slot+6)" />
+        <label>SLOT 6</label>
+        <input type="checkbox" name="detailsObjList[1].hallsArray[@hall].slotsArray[@(slot+5)].isSelected" id="slotcheck@(slot+6)_@(hall+1)" onchange="slotcheckchange(@(slot+6), @(hall+1));" />
+        <br />
+        <!--REQUIREMENTS-->
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(requirement+1)" />
+        <label>Requirement 1</label>
+        <input type="checkbox" disabled name="detailsObjList[1].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement+1)_@(hall+1)" onchange="reqcheckchange(@(requirement+1), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+1)].requirementID" value="@(requirement+2)" />
+        <label>Requirement 2</label>
+        <input type="checkbox" disabled name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+1)].isSelected" id="reqcheck@(requirement+2)_@(hall+1)" onchange="reqcheckchange(@(requirement+2), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+2)].requirementID" value="@(requirement+3)" />
+        <label>Requirement 3</label>
+        <input type="checkbox" disabled name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+2)].isSelected" id="reqcheck@(requirement+3)_@(hall+1)" onchange="reqcheckchange(@(requirement+3), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+3)].requirementID" value="@(requirement+4)" />
+        <label>Requirement 4</label>
+        <input type="checkbox" disabled name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+3)].isSelected" id="reqcheck@(requirement+4)_@(hall+1)" onchange="reqcheckchange(@(requirement+4), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+4)].requirementID" value="@(requirement+5)" />
+        <label>Requirement 5</label>
+        <input type="checkbox" disabled name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+4)].isSelected" id="reqcheck@(requirement+5)_@(hall+1)" onchange="reqcheckchange(@(requirement+5), @(hall+1));" />
+
+        <input type="hidden" name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+5)].requirementID" value="@(requirement+6)" />
+        <label>Requirement 6</label>
+        <input type="checkbox" disabled name="detailsObjList[1].hallsArray[@hall].requirementsArray[@(requirement+5)].isSelected" id="reqcheck@(requirement+6)_@(hall+1)" onchange="reqcheckchange(@(requirement+6), @(hall+1));" />
+        
+        hall = hall + 1;
+    }
+    <input type="submit" value="Submit" />
+}
 <script type="text/javascript">
-    //Displays Halls
-    var dateChosen = function () {
-        $("#hallsCheckbox tbody tr").remove();
-        //$("#requirementsCheckbox tbody tr").remove();
-        //$("#slotsCheckbox tbody tr").remove();
+    var slotcheckchange = function (slotid, hallid) {
+        var id="#slotcheck"+slotid+"_"+hallid;
+        if ($(id).prop('checked')) {
+            $(id).val('true');
+        }
+    }
+    var reqcheckchange = function (reqid, hallid) {
+        var id = "#reqcheck" + reqid + "_" + hallid;
+        if ($(id).prop('checked')) {
+            $(id).val('true');
+        }
+    }
+    var datechosen = function () {
+        var date = document.getElementById("detailsObjList[1].date").value;
         $.ajax({
             type: "POST",
+            data: { 'date': date },
             dataType: 'JSON',
-            url: "/BookUtility/GetHallsList",
-            success: function (hallsList) {
-                var item = '';
-                $.each(hallsList, function (i, item) {
-                    var rows = "<tr id=\"rowHall" + item.hallID + "\">"
-                                    + "<td><input type=\"checkbox\" id=\"hall" + item.hallID + "\" name=\"halls\" value=\"" + item.hallID + "\" onchange= \"hallSelected(" + item.hallID + ");\">" + item.hallName + "</td>"
-                                + "</tr>"+"<tr id=\"rowforslots"+item.hallID+"\"><td></td></tr>";
-                    $('#hallsCheckbox').append(rows);
-                });
-            },
-            error: function (xhr, status, exception) {
-                console.log("Error: " + exception + ", Status: " + status);
-            }
-        });
-    }
-    //Displays Requirements
-    var hallSelected = function (hallID) {
-        var checkboxID = "#hall" + hallID;
-        var noOfRows = 0;
-        if ($(checkboxID).prop('checked')) {
-            var data = hallID;
-            $.ajax({
-                type: "POST",
-                dataType: "JSON",
-                data: { hallID: data },
-                url: "/BookUtility/GetRequirementsList",
-                success: function (requirementsList) {
-                    $.each(requirementsList, function (i, requirementItem) {
-                        var requirementsRows = "<td class=\"reqHall" + hallID + "\"><input type=\"checkbox\" name=\"requirements\" value=\"" + requirementItem.reqHallID + "\">" + requirementItem.requirementName + "</td>"
-                        $('#rowHall' + hallID).append(requirementsRows);
-                    });
-                },
-                error: function (xhr, status, exception) {
-                    console.log("Error: " + exception + ", Status: " + status);
-                }
-            });
-            selectSlot(hallID);
-        }
-        else {
-            $(".reqHall" + hallID).remove();
-            $(".slotHall" + hallID).remove();
-        }
-    }
-    //Displays Slots
-    var selectSlot = function (hallID) {
-        var date = document.getElementById("datechosen").value;
-        var data = {
-            'hallID': hallID,
-            'date': date
-        };
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            data: data,
-            url: "/BookUtility/GetAllSlotsList",
-            success: function (allSlotsList) {
-                var slotsItem = '';
-                $.each(allSlotsList, function (i, slotsItem) {
-                    //if (slotsItem.isChecked == false) {
-                        var slotsRows ="<td class=\"slotHall"+hallID+"\"><input type=\"checkbox\" id=\"slot"+slotsItem.slotID+"\" name=\"slots\" value=\"" + slotsItem.slotID + "\">" + slotsItem.slot + "</td>";
-                        $('#rowforslots'+hallID).append(slotsRows);
-                    //}
-                });
-                getBookedSlots(hallID,date);
-            },
-            error: function (xhr, status, exception) {
-                console.log("Error: " + exception + ", Status: " + status);
-            }
-        });
-    }
-    var getBookedSlots = function (hallID, date) {
-        var data = {
-            'hallID': hallID,
-            'date': date
-        };
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            data: data,
             url: "/BookUtility/GetBookedSlotsList",
             success: function (bookedSlotsList) {
                 var bookedSlotsItem = '';
                 $.each(bookedSlotsList, function (i, bookedSlotsItem) {
-                   // if (bookedSlotsItem.isChecked == false) {
-                        $("#slot" + bookedSlotsItem.slotID).prop("disabled",true);
-                    //}
+                    $("#slotcheck" + bookedSlotsItem.hallID+"_"+bookedSlotsItem.slotID).prop("disabled", true);
                 });
-            }
-        });
-    }
-
-    var SubmitForm = function () {
-        var hallsArray = [];
-        var requirementsArray = [];
-        var slotsArray = [];
-        var date = document.getElementById("datechosen").value;
-        $.each($("input[name='halls']:checked"), function () {
-            hallsArray.push($(this).val());
-        });
-        $.each($("input[name='requirements']:checked"), function () {
-            requirementsArray.push($(this).val());
-        });
-        $.each($("input[name='slots']:checked"), function () {
-            slotsArray.push($(this).val());
-        });
-        var data = {
-            'hallsArray': hallsArray,
-            'requirementsArray': requirementsArray,
-            'slotsArray': slotsArray,
-            'date': date
-        };
-        $.ajax({
-            type: "POST",
-            dataType: "JSON",
-            data: data,
-            url: "/BookUtility/Index",
-            success: function (response) {
-                alert("Done");
+                $.ajax({
+                    type:"GET",
+                    dataType: 'JSON',
+                    url: "/BookUtility/GetRequirementsList",
+                    success: function (requirementsList) {
+                        var requirementsItem ='';
+                        $.each(requirementsList,function(i, requirementsItem) {
+                            $("#reqcheck"+requirementsItem.requirementID+"_"+requirementsItem.hallID).removeAttr("disabled");
+                        })
+                    }
+                });
             }
         })
     }
 </script>
-

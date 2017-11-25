@@ -162,6 +162,8 @@
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -207,6 +209,7 @@
       <DependentUpon>BookingSystemDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Departments.cs" />
+    <Compile Include="Models\DetailsList.cs" />
     <Compile Include="Models\Hall.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Purpose.cs" />
@@ -267,6 +270,8 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\BookUtility\Index.cshtml" />
+    <Content Include="Views\Admin\ViewBookingRequests.cshtml" />
+    <Content Include="Views\Admin\ViewApplication.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -295,7 +300,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57171</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57171/</IISUrl>
+          <IISUrl>http://localhost:57172/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:57172/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

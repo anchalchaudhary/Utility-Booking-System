@@ -9,7 +9,8 @@ namespace UtilityBookingSystem.Models
     {
         public int requirementID { get; set; }
         public string requirementName { get; set; }
-        
+
+        public bool isSelected { get; set; }
         public List<Requirement> GetRequirementsList(int hallID)
         {
             List<Requirement> requirementsList;

@@ -12,6 +12,9 @@ namespace UtilityBookingSystem.Models
         public int hallID { get; set; }
         public string hallName { get; set; }
         public Nullable<int> requirementID { get; set; }
+
+        public List<Requirement> requirementsArray { get; set; }
+        public List<Slot> slotsArray { get; set; }
         #endregion
         #region Repository objects
         BookingRepository objBookingRepository = new BookingRepository();

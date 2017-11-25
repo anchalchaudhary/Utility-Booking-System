@@ -13,8 +13,11 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> slotID { get; set; }
         #endregion
 
+        public Nullable<int> hallID { get; set; }
+        public string hallName { get; set; }
+        public string slot { get; set;}
+
         #region added attributes
-        public string slot { get; set; }
         public bool isChecked { get; set; }
         #endregion
 
@@ -32,8 +35,9 @@ namespace UtilityBookingSystem.Models
                 {
                     bookedSlots = context.tblBookedSlots.Where(x => x.bookedHallID == item.bookedHallID).Select(x => new BookedSlot
                     {
-                    //    bookedSlotID = x.bookedSlotID,
-                    //    bookedHallID = x.bookedHallID,
+                        bookedSlotID = x.bookedSlotID,
+                        bookedHallID = x.bookedHallID,
+                        hallID = x.tblBookedHall.hallID,
                         slotID = x.slotID,
                         isChecked = false,
                         slot = x.tblSlot.slot
@@ -43,6 +47,30 @@ namespace UtilityBookingSystem.Models
                 allSlotsList = bookedSlotsList;
             }
             return allSlotsList;
+        }
+        #endregion
+
+        #region Booking's Slot
+        public List<BookedSlot> GetBookingSlotsList(List<BookedHall> bookedHallList)
+        {
+            List<BookedSlot> bookingSlotList = new List<BookedSlot>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                foreach(var item in bookedHallList)
+                {
+                    bookingSlotList = context.tblBookedSlots.Where(x => x.bookedHallID == item.bookedHallID).Select(x=> new BookedSlot
+                    {
+                        bookedHallID = x.bookedHallID,
+                        slotID = x.slotID,
+                        hallName = x.tblBookedHall.tblHall.hallName,
+                        slot = x.tblSlot.slot,
+                        bookedSlotID = x.bookedSlotID,
+                        hallID = x.tblBookedHall.hallID
+                    }).ToList();
+                }
+            }
+            return bookingSlotList;
         }
         #endregion
     }
