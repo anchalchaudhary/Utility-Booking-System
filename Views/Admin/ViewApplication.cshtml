@@ -5,7 +5,7 @@
 
 <h2>ViewApplication</h2>
 
-<table class="table table-hover">
+<table class="table table-bordered">
     @foreach (var item in ViewBag.userDetails)
     {
         <tr>
@@ -15,6 +15,46 @@
         <tr>
             <td>Department</td>
             <td>@item.dept</td>
+        </tr>
+        <tr>
+            <td>
+                @foreach (var itemDate in ViewBag.bookedDate)
+                {
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Date</th>
+                            <th>Halls</th>
+                            @*<th>Slots</th>
+                                <th>Requirements</th>*@
+                        </tr>
+                        <tr>
+                            <td>@itemDate.dateChosen</td>
+                                @foreach (var itemHall in ViewBag.bookedHall)
+                                {
+                                    <td>@itemHall.hallName</td>
+                                    <td>
+                                        @foreach (var itemReq in ViewBag.bookedReq)
+                                        {
+                                            if (itemReq.hallID == itemHall.hallID)
+                                            {
+                                                @itemReq.bookedReq <t></t>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach (var itemSlot in ViewBag.bookingSlot)
+                                        {
+                                            if (itemSlot.hallID == itemHall.hallID)
+                                            {
+                                                @itemSlot.slot <t></t>
+                                            }
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        </table>
+                }
+            </td>
         </tr>
     }
 </table>

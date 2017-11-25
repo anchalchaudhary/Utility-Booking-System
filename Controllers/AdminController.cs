@@ -107,10 +107,16 @@ namespace UtilityBookingSystem.Controllers
             ViewBag.userDetails = userDetailsList;
 
             List<BookedDate> bookingDateList= objBookedDate.GetBookingDateList(bookingID);
-            List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
-            List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
-            List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+            ViewBag.bookedDate = bookingDateList;
 
+            List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+            ViewBag.bookedHall = bookedHallList;
+
+            List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+            ViewBag.bookedReq = bookedReqList;
+
+            List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+            ViewBag.bookingSlot = bookingSlotList;
 
             return View();
         }
