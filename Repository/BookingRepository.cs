@@ -51,10 +51,7 @@ namespace UtilityBookingSystem.Repository
         public void SaveSelectedHalls(List<Hall> hallsArray, int dateID, int bookingID)
         {
             int i;
-            //tblBookedHall objtblBookedHall = new tblBookedHall();
-            //tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
             tblRequirementForHall objtblRequirementForHall = new tblRequirementForHall();
-            //tblBookedSlot objtblBookedSlot = new tblBookedSlot();
 
             using (var db = new BookingSystemDBEntities())
             {
@@ -64,18 +61,9 @@ namespace UtilityBookingSystem.Repository
                 foreach (var item in hallsArray)
                 {
                     flagHall = false;
-                    //tblBookedHall objtblBookedHall = new tblBookedHall();
 
                     if (hallsArray != null && item.hallID!=0)
                     {
-                        //objtblBookedHall.hallID = item.hallID;
-                        //objtblBookedHall.dateID = dateID;
-
-                        //db.tblBookedHalls.Add(objtblBookedHall);
-
-                        //db.SaveChanges();
-
-                        //int bookedHallID = objtblBookedHall.bookedHallID;
                         int bookedHallID=0;
                         if (item.requirementsArray != null)
                         {
@@ -144,8 +132,6 @@ namespace UtilityBookingSystem.Repository
             {
                 for (i = 0; i < requirementsArray.Length; i++)
                 {
-                    //objtblRequirementForHall.reqHallID = requirementsArray[i];
-
                     objtblBookedRequirement.dateID = dateID;
                     objtblBookedRequirement.bookingID = bookingID;
                     objtblBookedRequirement.reqHallID = requirementsArray[i];

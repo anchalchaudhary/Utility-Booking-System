@@ -73,22 +73,26 @@ namespace UtilityBookingSystem.Models
         #endregion
 
         #region User Details
-        public List<Users> GetUserDetails(int userID)
+        public Users GetUserDetails(int userID)
         {
-            List<Users> userDetailList = new List<Users>();
+            Users userDetail = new Users();
+            tblUser objtblUser = new tblUser();
+            tblDepartment objtblDepartment = new tblDepartment();
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                userDetailList = context.tblUsers.Where(x => x.userID == userID).Select(x => new Users
-                {
-                    userID = x.userID,
-                    email = x.email,
-                    contact = x.contact,
-                    name = x.name,
-                    dept = x.tblDepartment.department
-                }).ToList();
+                objtblUser = context.tblUsers.First(x => x.userID == userID);
             }
-            return userDetailList;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblDepartment = context.tblDepartments.First(x => x.deptID == objtblUser.deptID);
+            }
+            userDetail.name = objtblUser.name;
+            userDetail.email = objtblUser.email;
+            userDetail.contact = objtblUser.contact;
+            userDetail.dept = objtblDepartment.department;
+            return userDetail;
         }
         #endregion
 

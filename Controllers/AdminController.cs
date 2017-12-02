@@ -12,7 +12,7 @@ namespace UtilityBookingSystem.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        
+
         #region Model objects
         Users objUsers = new Users();
         Departments objDepartments = new Departments();
@@ -26,7 +26,7 @@ namespace UtilityBookingSystem.Controllers
         #region Admin Login
         public ActionResult Login()
         {
-            if(Convert.ToInt32(Session["LoggedIn"])==1)
+            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
             {
                 return RedirectToAction("Index");
             }
@@ -45,13 +45,13 @@ namespace UtilityBookingSystem.Controllers
             return View();
         }
         #endregion
-      
+
         #region Admin Home
         public ActionResult Index()
         {
             if (Convert.ToInt32(Session["LoggedIn"]) == 1)
             {
-                ViewBag.deptList= new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
+                ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
                 return View();
             }
             return RedirectToAction("Login");
@@ -69,13 +69,13 @@ namespace UtilityBookingSystem.Controllers
             if (detailsSaved == true)
             {
                 mailSubject = "Added";
-                mailBody = "Hello "+model.users.name + ".You have been added.";
+                mailBody = "Hello " + model.users.name + ".You have been added.";
                 Mail.Send_Mail(model.users.email, mailBody, mailSubject); //Sends Mail to the registered User.
 
-                TempData["AddedUser"] = "<script> alert('User Added and Mail sent.');</script>";
+                TempData["AddedUser"] = "<script> alert('User added');</script>";
             }
             else
-                TempData["AddedUser"] = "<script> alert('Try again');</script>";
+                TempData["AddedUser"] = "<script> alert('Email already registered with us');</script>";
 
             return View();
         }
@@ -120,7 +120,7 @@ namespace UtilityBookingSystem.Controllers
         {
             if (Convert.ToInt32(Session["LoggedIn"]) == 1)
             {
-                List<Users> userDetailsList = objUsers.GetUserDetails(userID);
+                Users userDetailsList = objUsers.GetUserDetails(userID);
                 ViewBag.userDetails = userDetailsList;
 
                 List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);

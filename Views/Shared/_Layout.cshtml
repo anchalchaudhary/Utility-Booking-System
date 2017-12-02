@@ -21,6 +21,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+                    {
+                        <div style="padding-left:350px">
+                            @Html.ActionLink("Add Users", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                            @Html.ActionLink("Registered Users", "ViewRegisteredUsers", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                            @Html.ActionLink("View Booking Requests", "ViewBookingRequests", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                            @Html.ActionLink("Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                        </div>
+                    }
                 </ul>
             </div>
         </div>
