@@ -52,5 +52,28 @@ namespace UtilityBookingSystem.Repository
             return registeredUsersList;
         }
         #endregion
+
+        public bool DeleteUser(int id)
+        {
+            try
+            {
+                tblUser objtblUser = new tblUser();
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    objtblUser = db.tblUsers.First(x => x.userID == id);
+                }
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    db.tblUsers.Attach(objtblUser);
+                    db.tblUsers.Remove(objtblUser);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -46,9 +46,9 @@ namespace UtilityBookingSystem.Models
         #endregion
 
         #region Save Selected Hall
-        public void SaveSelectedHalls(int[] hallsArray, int dateID)
+        public void SaveSelectedHalls(List<Hall> hallsArray, int dateID, int bookingID)
         {
-            objBookingRepository.SaveSelectedHalls(hallsArray, dateID);
+            objBookingRepository.SaveSelectedHalls(hallsArray, dateID, bookingID);
         }
         #endregion
     }

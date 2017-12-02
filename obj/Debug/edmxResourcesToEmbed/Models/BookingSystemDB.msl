@@ -41,6 +41,7 @@
     <EntitySetMapping Name="tblBookings">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblBooking">
         <MappingFragment StoreEntitySet="tblBooking">
+          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="bookingID" ColumnName="bookingID" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="purposeID" ColumnName="purposeID" />

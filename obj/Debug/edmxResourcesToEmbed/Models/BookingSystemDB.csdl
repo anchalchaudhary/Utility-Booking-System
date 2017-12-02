@@ -56,6 +56,7 @@
     <NavigationProperty Name="tblBookedRequirements" Relationship="Self.FK__tblBooked__booki__37A5467C" FromRole="tblBooking" ToRole="tblBookedRequirement" />
     <NavigationProperty Name="tblPurpose" Relationship="Self.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
     <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
+    <Property Name="status" Type="Boolean" />
   </EntityType>
   <EntityType Name="tblDepartment">
     <Key>

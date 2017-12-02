@@ -272,6 +272,7 @@
     <Content Include="Views\BookUtility\Index.cshtml" />
     <Content Include="Views\Admin\ViewBookingRequests.cshtml" />
     <Content Include="Views\Admin\ViewApplication.cshtml" />
+    <Content Include="Views\BookUtility\Testing.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

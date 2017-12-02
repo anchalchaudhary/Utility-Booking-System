@@ -82,6 +82,8 @@ namespace UtilityBookingSystem.Models
                 userDetailList = context.tblUsers.Where(x => x.userID == userID).Select(x => new Users
                 {
                     userID = x.userID,
+                    email = x.email,
+                    contact = x.contact,
                     name = x.name,
                     dept = x.tblDepartment.department
                 }).ToList();
@@ -89,5 +91,11 @@ namespace UtilityBookingSystem.Models
             return userDetailList;
         }
         #endregion
+
+        public bool DeleteUser(int id)
+        {
+            bool isDeleted = objAdminPanelRepository.DeleteUser(id);
+            return isDeleted;
+        }
     }
 }

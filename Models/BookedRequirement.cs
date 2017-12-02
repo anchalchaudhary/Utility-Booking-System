@@ -38,7 +38,8 @@ namespace UtilityBookingSystem.Models
                     bookingID = x.bookingID,
                     bookedReqID = x.bookedReqID,
                     bookedReq = x.tblRequirementForHall.tblRequirement.requirementName,
-                    hallID = x.reqHallID,
+                    //hallID = x.reqHallID,
+                    hallID = x.tblRequirementForHall.hallID,
                     hallName = x.tblRequirementForHall.tblHall.hallName,
                     dateID = x.dateID
                 }).ToList();

@@ -4,22 +4,29 @@
 }
 
 <h2>Registered Users</h2>
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Contact</th>
-        <th>Department</th>
-    </tr>
-    @foreach(var item in ViewBag.RegisteredUsersList)
-    {
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
         <tr>
-            <td>@item.name</td>
-            <td>@item.email</td>
-            <td>@item.contact</td>
-            <td>@item.dept</td>
+            <th>S No.</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Department</th>
+            <th>Delete</th>
         </tr>
-    }
-</table>
+        @{int count = 1;}
+        @foreach (var item in ViewBag.RegisteredUsersList)
+        {
+            <tr>
+                <td>@count</td>
+                <td>@item.name</td>
+                <td>@item.email</td>
+                <td>@item.contact</td>
+                <td>@item.dept</td>
+                <td>@Html.ActionLink("Delete", "DeleteUser", "Admin", new { userID = item.userID }, null)</td>
+            </tr>
+            count++;
+        }
+    </table>
+</div>
 

@@ -45,7 +45,7 @@ namespace UtilityBookingSystem.Controllers
             return View();
         }
         #endregion
-
+      
         #region Admin Home
         public ActionResult Index()
         {
@@ -84,42 +84,79 @@ namespace UtilityBookingSystem.Controllers
         #region View Registered Users
         public ActionResult ViewRegisteredUsers()
         {
-            ViewBag.RegisteredUsersList = objUsers.GetRegisteredUsers(); //Fetches Registered Users list from model Users
-            return View();
+            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            {
+                ViewBag.RegisteredUsersList = objUsers.GetRegisteredUsers(); //Fetches Registered Users list from model Users
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
         #endregion
 
         #region View Booking Requests
         public ActionResult ViewBookingRequests()
         {
-            List<Booking> allBookingsList = objBooking.GetAllBookingsList();
-            //List<BookedDate> allBookedDatesList = objBookedDate.GetAllBookedDatesList();
+            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            {
+                List<Booking> allBookingsList = objBooking.GetAllBookingsList();
+                //List<BookedDate> allBookedDatesList = objBookedDate.GetAllBookedDatesList();
 
-            ViewBag.allBookingsList = allBookingsList;
+                ViewBag.allBookingsList = allBookingsList;
 
-            return View(); 
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
         #endregion
-        [HttpPost]
+        #region View Application
+        [HttpGet]
         public ActionResult ViewApplication(int bookingID, int userID)
         {
-            List<Users> userDetailsList = objUsers.GetUserDetails(userID);
-            ViewBag.userDetails = userDetailsList;
+            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            {
+                List<Users> userDetailsList = objUsers.GetUserDetails(userID);
+                ViewBag.userDetails = userDetailsList;
 
-            List<BookedDate> bookingDateList= objBookedDate.GetBookingDateList(bookingID);
-            ViewBag.bookedDate = bookingDateList;
+                List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
+                ViewBag.bookedDate = bookingDateList;
 
-            List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
-            ViewBag.bookedHall = bookedHallList;
+                List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+                ViewBag.bookedHall = bookedHallList;
 
-            List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
-            ViewBag.bookedReq = bookedReqList;
+                List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+                ViewBag.bookedReq = bookedReqList;
 
-            List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
-            ViewBag.bookingSlot = bookingSlotList;
+                List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+                ViewBag.bookingSlot = bookingSlotList;
 
-            return View();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
+        #endregion
+        #region Approve Booking
+        public ActionResult ApproveBooking(int bookingID)
+        {
+            bool result = objBooking.ApproveBooking(bookingID);
+
+            return RedirectToAction("ViewBookingRequests", "Admin");
+        }
+        public ActionResult UnapproveBooking(int bookingID)
+        {
+            bool result = objBooking.UnapproveBooking(bookingID);
+
+            return RedirectToAction("ViewBookingRequests", "Admin");
+        }
+        #endregion
         #endregion
 
         #region Admin Logout
@@ -129,5 +166,11 @@ namespace UtilityBookingSystem.Controllers
             return RedirectToAction("Login");
         }
         #endregion
+
+        public ActionResult DeleteUser(int userID)
+        {
+            bool isDeleted = objUsers.DeleteUser(userID);
+            return RedirectToAction("ViewRegisteredUsers", "Admin");
+        }
     }
 }

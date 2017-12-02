@@ -41,6 +41,7 @@
     <Property Name="userID" Type="int" />
     <Property Name="purposeID" Type="int" />
     <Property Name="title" Type="nvarchar(max)" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <EntityType Name="tblDepartment">
     <Key>
@@ -223,7 +224,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__tblRequir__requi__3E52440B">
-    <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1" />
+    <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblRequirement">
@@ -261,7 +264,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_tblBookedRequirement_tblRequirementForHall">
-    <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="0..1" />
+    <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tblRequirementForHall">

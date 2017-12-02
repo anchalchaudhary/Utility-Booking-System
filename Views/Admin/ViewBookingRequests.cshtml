@@ -4,29 +4,38 @@
 }
 
 <h2>View Booking Requests</h2>
-
-<table>
-    <tr>
-        <th>Booked By</th>
-        <th>Department</th>
-        <th>Title</th>
-        <th>Purpose</th>
-    </tr>
-    @foreach (var item in ViewBag.allBookingsList)
-    {
-
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
         <tr>
-            <td>@item.name</td>
-            <td>@item.department</td>
-            <td>@item.title</td>
-            <td>@item.purpose</td>
-            @*<td>@Ajax.ActionLink("View Application", "ViewApplication", "Admin", new { bookingID = item.bookingID }, new AjaxOptions { HttpMethod = "POST" })</td>*@
-            <td>
-                @using (Html.BeginForm("ViewApplication", "Admin", new { bookingID = item.bookingID, userID = item.userID }, FormMethod.Post))
-                {
-                    <button class="btn btn-success">View</button>
-                }
-            </td>
+            <th>Booked By</th>
+            <th>Department</th>
+            <th>Title</th>
+            <th>Purpose</th>
+            <th>View Application</th>
+            <th>Approval</th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in ViewBag.allBookingsList)
+        {
+
+            <tr>
+                <td>@item.name</td>
+                <td>@item.department</td>
+                <td>@item.title</td>
+                <td>@item.purpose</td>
+                <td>@Html.ActionLink("Application", "ViewApplication", "Admin", new { bookingID = item.bookingID, userID = item.userID }, new { target = "_blank" })</td>
+                @if (item.status == false)
+                {
+                    <td>@Html.ActionLink("Approve", "ApproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
+                }
+                else
+                {
+                    <td>@Html.ActionLink("Unapprove", "UnapproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
+                }
+            </tr>
+
+        }
+
+    </table>
+</div>
+

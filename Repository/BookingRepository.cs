@@ -48,20 +48,53 @@ namespace UtilityBookingSystem.Repository
         #endregion
 
         #region Save Selected Hall
-        public void SaveSelectedHalls(int[] hallsArray, int dateID)
+        public void SaveSelectedHalls(List<Hall> hallsArray, int dateID, int bookingID)
         {
             int i;
             tblBookedHall objtblBookedHall = new tblBookedHall();
+            tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
+            tblRequirementForHall objtblRequirementForHall = new tblRequirementForHall();
+            tblBookedSlot objtblBookedSlot = new tblBookedSlot();
+
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
-                for(i=0;i<hallsArray.Length;i++)
+                if (hallsArray != null)
                 {
-                    objtblBookedHall.hallID = hallsArray[i];
-                    objtblBookedHall.dateID = dateID;
+                    foreach (var item in hallsArray)
+                    {
+                        objtblBookedHall.hallID = item.hallID;
+                        objtblBookedHall.dateID = dateID;
 
-                    db.tblBookedHalls.Add(objtblBookedHall);
+                        db.tblBookedHalls.Add(objtblBookedHall);
 
-                    db.SaveChanges();
+                        int bookedHallID = objtblBookedHall.bookedHallID;
+
+                        db.SaveChanges();
+
+                        if (item.requirementsArray != null)
+                        {
+                            foreach (var reqItem in item.requirementsArray)
+                            {
+                                objtblBookedRequirement.dateID = dateID;
+                                objtblBookedRequirement.bookingID = bookingID;
+                                objtblRequirementForHall = db.tblRequirementForHalls.Where(x => x.requirementID == reqItem.requirementID && x.hallID == item.hallID).Single();
+                                objtblBookedRequirement.reqHallID = objtblRequirementForHall.reqHallID;
+
+                                db.tblBookedRequirements.Add(objtblBookedRequirement);
+                                db.SaveChanges();
+                            }
+                        }
+                        if(item.slotsArray!=null)
+                        { 
+                            foreach (var slotItem in item.slotsArray)
+                            {
+                                objtblBookedSlot.bookedHallID = bookedHallID;
+                                objtblBookedSlot.slotID = slotItem.slotID;
+                                db.tblBookedSlots.Add(objtblBookedSlot);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -58,15 +58,6 @@ namespace UtilityBookingSystem.Controllers
             return Json(hallsList);
         }
         #endregion
-        
-        #region Get Requirements List
-        //[HttpPost]
-        //public JsonResult GetRequirementsList(int hallID)
-        //{
-        //    List<RequirementForHall> requirementsList = objRequirementForHall.GetRequirementsList(hallID);
-        //    return Json(requirementsList);
-        //}
-        #endregion
 
         #region Get All Slots List
         public JsonResult GetAllSlotsList()
@@ -81,23 +72,57 @@ namespace UtilityBookingSystem.Controllers
         [HttpPost]
         public JsonResult GetBookedSlotsList(DateTime date)
         {
-            List<BookedDate> bookedDateList = objBookedDate.GetBookedDateList(date);
+            List<BookedSlot> bookedSlotsList = new List<BookedSlot>();
+            List<BookedHall> bookedHallsList;
+            List<BookedDate> bookedDateList;
+            if (date != null)
+            {
+                bookedDateList = objBookedDate.GetBookedDateList(date);
 
-            List<BookedHall> bookedHallsList = objBookedHall.GetBookedHallsList(bookedDateList);
+                bookedHallsList = objBookedHall.GetBookedHallsList(bookedDateList);
 
-            List<BookedSlot> bookedSlotsList = objBookedSlot.GetBookedSlotsList(bookedHallsList);
-
+                bookedSlotsList = objBookedSlot.GetBookedSlotsList(bookedHallsList);
+            }
             return Json(bookedSlotsList);
         }
         #endregion
+
         #region Get Requirements List
         [HttpGet]
         public JsonResult GetRequirementsList()
         {
-            List<RequirementForHall> requirementsList = objRequirementForHall.GetRequirementsList();
+            List<RequirementForHall> requirementsList = new List<RequirementForHall>();
+            requirementsList = objRequirementForHall.GetRequirementsList();
             return Json(requirementsList, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #endregion
-    }
+
+        #region TESTING
+        public ActionResult Testing()
+        {
+            List<tblHall> listHall = new List<tblHall>();
+            listHall = objHall.GetHallsList();
+            ViewBag.HallDetail = listHall;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Testing(List<DetailsList> detailsObjList)
+        {
+            int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+
+            List<tblHall> listHall = new List<tblHall>();
+            listHall = objHall.GetHallsList();
+            ViewBag.HallDetail = listHall;
+
+            foreach(var item in detailsObjList)
+            {
+                int dateID = objBookedDate.SaveBookingDate(item.date, bookingID);
+                objBookedHall.SaveSelectedHalls(item.hallsArray, dateID, bookingID);
+            }
+
+            return View();
+        }
+            #endregion
+        }
 }

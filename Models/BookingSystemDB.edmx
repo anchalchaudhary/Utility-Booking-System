@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookingSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookingSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblBookedDate">
           <Key>
             <PropertyRef Name="dateID" />
@@ -46,6 +46,7 @@
           <Property Name="userID" Type="int" />
           <Property Name="purposeID" Type="int" />
           <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="status" Type="bit" />
         </EntityType>
         <EntityType Name="tblDepartment">
           <Key>
@@ -228,7 +229,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__tblRequir__requi__3E52440B">
-          <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1" />
+          <End Role="tblRequirement" Type="Self.tblRequirement" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblRequirement">
@@ -266,7 +269,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblBookedRequirement_tblRequirementForHall">
-          <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="0..1" />
+          <End Role="tblRequirementForHall" Type="Self.tblRequirementForHall" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblRequirementForHall">
@@ -343,8 +348,7 @@
             <End Role="tblBookedRequirement" EntitySet="tblBookedRequirement" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookingSystemDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -404,6 +408,7 @@
           <NavigationProperty Name="tblBookedRequirements" Relationship="Self.FK__tblBooked__booki__37A5467C" FromRole="tblBooking" ToRole="tblBookedRequirement" />
           <NavigationProperty Name="tblPurpose" Relationship="Self.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
+          <Property Name="status" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblDepartment">
           <Key>
@@ -758,6 +763,7 @@
           <EntitySetMapping Name="tblBookings">
             <EntityTypeMapping TypeName="BookingSystemDBModel.tblBooking">
               <MappingFragment StoreEntitySet="tblBooking">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="bookingID" ColumnName="bookingID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="purposeID" ColumnName="purposeID" />
