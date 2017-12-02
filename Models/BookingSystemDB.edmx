@@ -27,8 +27,8 @@
           </Key>
           <Property Name="bookedReqID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="bookingID" Type="int" />
-          <Property Name="dateID" Type="int" />
           <Property Name="reqHallID" Type="int" />
+          <Property Name="dateID" Type="int" />
         </EntityType>
         <EntityType Name="tblBookedSlot">
           <Key>
@@ -131,9 +131,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__tblBooked__booki__37A5467C">
-          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1" />
           <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblBooking">
@@ -257,7 +255,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblBookedRequirement_tblBookedDate">
-          <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="0..1" />
+          <End Role="tblBookedDate" Type="Self.tblBookedDate" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="tblBookedRequirement" Type="Self.tblBookedRequirement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblBookedDate">

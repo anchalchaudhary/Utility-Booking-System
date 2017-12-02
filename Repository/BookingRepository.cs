@@ -51,47 +51,81 @@ namespace UtilityBookingSystem.Repository
         public void SaveSelectedHalls(List<Hall> hallsArray, int dateID, int bookingID)
         {
             int i;
-            tblBookedHall objtblBookedHall = new tblBookedHall();
-            tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
+            //tblBookedHall objtblBookedHall = new tblBookedHall();
+            //tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
             tblRequirementForHall objtblRequirementForHall = new tblRequirementForHall();
-            tblBookedSlot objtblBookedSlot = new tblBookedSlot();
+            //tblBookedSlot objtblBookedSlot = new tblBookedSlot();
 
-            using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+            using (var db = new BookingSystemDBEntities())
             {
-                if (hallsArray != null)
+                db.Configuration.LazyLoadingEnabled = false;
+                bool flagReq = false, flagSlot=false, flagHall=false;
+
+                foreach (var item in hallsArray)
                 {
-                    foreach (var item in hallsArray)
+                    flagHall = false;
+                    //tblBookedHall objtblBookedHall = new tblBookedHall();
+
+                    if (hallsArray != null && item.hallID!=0)
                     {
-                        objtblBookedHall.hallID = item.hallID;
-                        objtblBookedHall.dateID = dateID;
+                        //objtblBookedHall.hallID = item.hallID;
+                        //objtblBookedHall.dateID = dateID;
 
-                        db.tblBookedHalls.Add(objtblBookedHall);
+                        //db.tblBookedHalls.Add(objtblBookedHall);
 
-                        int bookedHallID = objtblBookedHall.bookedHallID;
+                        //db.SaveChanges();
 
-                        db.SaveChanges();
-
+                        //int bookedHallID = objtblBookedHall.bookedHallID;
+                        int bookedHallID=0;
                         if (item.requirementsArray != null)
                         {
                             foreach (var reqItem in item.requirementsArray)
                             {
-                                objtblBookedRequirement.dateID = dateID;
-                                objtblBookedRequirement.bookingID = bookingID;
-                                objtblRequirementForHall = db.tblRequirementForHalls.Where(x => x.requirementID == reqItem.requirementID && x.hallID == item.hallID).Single();
-                                objtblBookedRequirement.reqHallID = objtblRequirementForHall.reqHallID;
+                                tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
+                                if (reqItem.isSelected == true)
+                                {
+                                    flagReq = true;
+                                    objtblBookedRequirement.dateID = dateID;
+                                    objtblBookedRequirement.bookingID = bookingID;
+                                    objtblRequirementForHall = db.tblRequirementForHalls.Where(x => x.requirementID == reqItem.requirementID && x.hallID == item.hallID).Single();
+                                    objtblBookedRequirement.reqHallID = objtblRequirementForHall.reqHallID;
 
-                                db.tblBookedRequirements.Add(objtblBookedRequirement);
-                                db.SaveChanges();
+                                    db.tblBookedRequirements.Add(objtblBookedRequirement);
+                                    db.SaveChanges();
+                                }
                             }
                         }
-                        if(item.slotsArray!=null)
-                        { 
+                        if (item.slotsArray != null)
+                        {
                             foreach (var slotItem in item.slotsArray)
                             {
-                                objtblBookedSlot.bookedHallID = bookedHallID;
-                                objtblBookedSlot.slotID = slotItem.slotID;
-                                db.tblBookedSlots.Add(objtblBookedSlot);
-                                db.SaveChanges();
+                                tblBookedSlot objtblBookedSlot = new tblBookedSlot();
+                                if (slotItem.isSelected == true)
+                                {
+                                    flagSlot = true;
+                                    if(flagReq==true && flagSlot==true && flagHall==false)
+                                    {
+                                        tblBookedHall objtblBookedHall = new tblBookedHall();
+
+                                        objtblBookedHall.hallID = item.hallID;
+                                        objtblBookedHall.dateID = dateID;
+
+                                        db.tblBookedHalls.Add(objtblBookedHall);
+
+                                        db.SaveChanges();
+
+                                        bookedHallID = objtblBookedHall.bookedHallID;
+
+                                        flagHall = true;
+                                    }
+                                    if (bookedHallID != 0)
+                                    {
+                                        objtblBookedSlot.bookedHallID = bookedHallID;
+                                        objtblBookedSlot.slotID = slotItem.slotID;
+                                        db.tblBookedSlots.Add(objtblBookedSlot);
+                                        db.SaveChanges();
+                                    }
+                                }
                             }
                         }
                     }

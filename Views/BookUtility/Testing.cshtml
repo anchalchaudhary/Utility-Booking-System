@@ -14,8 +14,8 @@
             foreach (var item in ViewBag.HallDetail)
             {
                 <hr />
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(hall + 1)" id="hiddenhall@(hall)"/>
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallName" value="@item.hallName" id="hiddenhallname@(hall)"/>
+                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(hall + 1)" id="hiddenhall@(hall)_"/>
+                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallName" value="@item.hallName" id="hiddenhallname@(hall)_"/>
                 <label>@item.hallName</label>
             <!--SLOTS-->
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slot + 1)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
@@ -36,7 +36,7 @@
 
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 4)].slotID" value="@(slot + 5)" id="hiddenslot@(slot + 5)_@(hall + 1)_" />
                 <label>SLOT 5</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 4)].isSelected" id="slotcheck@(slot + 5)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 5), @(hall + 1);" />
+                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 4)].isSelected" id="slotcheck@(slot + 5)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 5), @(hall + 1));" />
 
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 5)].slotID" value="@(slot + 6)" id="hiddenslot@(slot + 6)_@(hall + 1)_" />
                 <label>SLOT 6</label>
@@ -122,16 +122,20 @@
         //document.getElementById("bookingForm" + click).reset();
 
         var j = 1,k = 0;
-        
+        var iHall = hall;
         for (i = 1; i <= click; i++) {
             $("#date"+click).attr("name", "detailsObjList[" + i + "].date");
 
             for (j = 1; j <= 6; j++) {
+                iHall = hall;
                 for (p = 1; p <= 4; p++) {
-                    $("#slotcheck" + (slot + j) + "_" + (hall + p)+"_"+click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + hall + "].slotsArray[" + (slot + k) + "].isSelected");
-                    $("#hiddenslot" + (slot + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + hall + "].slotsArray[" + (slot + k) + "].slotID");
-                    $("#reqcheck" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + hall + "].requirementsArray[" + (requirement + k) + "].isSelected");
-                    $("#hiddenreq" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + hall + "].requirementsArray[" + (requirement + k) + "].requirementID");
+                    $("#hiddenhall" + (hall + p - 1) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].hallID");
+                    $("#hiddenhallname" + (hall + p - 1) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].hallName");
+                    $("#slotcheck" + (slot + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].slotsArray[" + (slot + k) + "].isSelected");
+                    $("#hiddenslot" + (slot + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].slotsArray[" + (slot + k) + "].slotID");
+                    $("#reqcheck" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].requirementsArray[" + (requirement + k) + "].isSelected");
+                    $("#hiddenreq" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].requirementsArray[" + (requirement + k) + "].requirementID");
+                    iHall++;
                 }
                 k++;
             }

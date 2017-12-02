@@ -117,8 +117,9 @@ namespace UtilityBookingSystem.Controllers
 
             foreach(var item in detailsObjList)
             {
+                BookedHall objBookedHall1 = new BookedHall();
                 int dateID = objBookedDate.SaveBookingDate(item.date, bookingID);
-                objBookedHall.SaveSelectedHalls(item.hallsArray, dateID, bookingID);
+                objBookedHall1.SaveSelectedHalls(item.hallsArray, dateID, bookingID);
             }
 
             return View();
