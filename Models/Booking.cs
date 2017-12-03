@@ -16,6 +16,8 @@ namespace UtilityBookingSystem.Models
         public string title { get; set; }
         public string purpose { get; set; }
         public Nullable<bool> status { get; set; }
+        public string bookingNo { get; set; }
+        public Nullable<System.DateTime> bookedAtTime { get; set; }
 
         #endregion
         public string name { get; set; }
@@ -49,11 +51,13 @@ namespace UtilityBookingSystem.Models
                 allBookingsList = context.tblBookings.Select(x => new Booking
                 {
                     bookingID = x.bookingID,
+                    bookingNo = x.bookingNo,
                     userID = x.userID,
                     name = x.tblUser.name,
                     department = x.tblUser.tblDepartment.department,
                     title = x.title,
                     purpose = x.tblPurpose.purpose,
+                    bookedAtTime = x.bookedAtTime,
                     status = x.status
                 }).ToList();
             }

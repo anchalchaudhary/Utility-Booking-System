@@ -18,11 +18,18 @@ namespace UtilityBookingSystem.Repository
                 objtblBooking.title = objBooking.title;
                 objtblBooking.purposeID = objBooking.purposeID;
                 objtblBooking.userID = objBooking.userID;
-
+                objtblBooking.bookedAtTime = DateTime.Now;
                 db.tblBookings.Add(objtblBooking);
                 db.SaveChanges();
 
                 bookingID = objtblBooking.bookingID; //fetches bookingID of new Booking
+
+                tblBooking objtblBookingUpdate = db.tblBookings.SingleOrDefault(x => x.bookingID == bookingID);
+                Random random = new Random();
+                objtblBooking.bookingNo = "UBS" + DateTime.Now.Day+DateTime.Now.Month+DateTime.Now.Year + random.Next(1,1000).ToString() + bookingID;
+
+                db.SaveChanges();
+
             }
             return bookingID;
         }

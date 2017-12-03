@@ -47,6 +47,8 @@
           <Property Name="purposeID" Type="int" />
           <Property Name="title" Type="nvarchar(max)" />
           <Property Name="status" Type="bit" />
+          <Property Name="bookingNo" Type="nvarchar(max)" />
+          <Property Name="bookedAtTime" Type="datetime" />
         </EntityType>
         <EntityType Name="tblDepartment">
           <Key>
@@ -409,6 +411,8 @@
           <NavigationProperty Name="tblPurpose" Relationship="Self.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
           <Property Name="status" Type="Boolean" />
+          <Property Name="bookingNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="bookedAtTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblDepartment">
           <Key>
@@ -763,6 +767,8 @@
           <EntitySetMapping Name="tblBookings">
             <EntityTypeMapping TypeName="BookingSystemDBModel.tblBooking">
               <MappingFragment StoreEntitySet="tblBooking">
+                <ScalarProperty Name="bookedAtTime" ColumnName="bookedAtTime" />
+                <ScalarProperty Name="bookingNo" ColumnName="bookingNo" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="bookingID" ColumnName="bookingID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />

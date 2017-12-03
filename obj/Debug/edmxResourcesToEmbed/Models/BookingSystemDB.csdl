@@ -57,6 +57,8 @@
     <NavigationProperty Name="tblPurpose" Relationship="Self.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
     <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
     <Property Name="status" Type="Boolean" />
+    <Property Name="bookingNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="bookedAtTime" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="tblDepartment">
     <Key>
