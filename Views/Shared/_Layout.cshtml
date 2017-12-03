@@ -21,7 +21,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+                    @{
+                        var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                    }
+                    @if (Convert.ToInt32(Session["LoggedIn"]) == 1 && controllerName=="admin")
                     {
                         <div style="padding-left:350px">
                             @Html.ActionLink("Add Users", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })

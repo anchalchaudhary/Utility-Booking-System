@@ -101,8 +101,8 @@ namespace UtilityBookingSystem.Controllers
         #region TESTING
         public ActionResult Testing()
         {
-            List<tblHall> listHall = new List<tblHall>();
-            listHall = objHall.GetHallsList();
+            List<Hall> listHall = new List<Hall>();
+            listHall = objHall.GetHallDetails();
             ViewBag.HallDetail = listHall;
             return View();
         }

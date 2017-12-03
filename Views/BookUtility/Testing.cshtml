@@ -11,66 +11,38 @@
         //using (Html.BeginForm("Testing", "BookUtility", FormMethod.Post, new { @id = "regForm" }))
         //{
             <input type="date"  name="detailsObjList[@index].date" id="date" required onchange="datechosen();" />
-            foreach (var item in ViewBag.HallDetail)
-            {
+        foreach (var item in ViewBag.HallDetail)
+        {
+            slot = 0;
+            requirement = 0;
                 <hr />
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(hall + 1)" id="hiddenhall@(hall)_"/>
+                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(item.hallID)" id="hiddenhall@(hall)_"/>
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallName" value="@item.hallName" id="hiddenhallname@(hall)_"/>
                 <label>@item.hallName</label>
             <!--SLOTS-->
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slot + 1)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
-                <label>SLOT 1</label>
+            foreach (var slotItem in item.slotsArray)
+            {
+                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slotItem.slotID)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
+                <label>@slotItem.slot</label>
                 <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 1)].slotID" value="@(slot + 2)" id="hiddenslot@(slot + 2)_@(hall + 1)_" />
-                <label>SLOT 2</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 1)].isSelected" id="slotcheck@(slot + 2)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 2), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 2)].slotID" value="@(slot + 3)" id="hiddenslot@(slot + 3)_@(hall + 1)_" />
-                <label>SLOT 3</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 2)].isSelected" id="slotcheck@(slot + 3)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 3), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 3)].slotID" value="@(slot + 4)" id="hiddenslot@(slot + 4)_@(hall + 1)_" />
-                <label>SLOT 4</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 3)].isSelected" id="slotcheck@(slot + 4)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 4), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 4)].slotID" value="@(slot + 5)" id="hiddenslot@(slot + 5)_@(hall + 1)_" />
-                <label>SLOT 5</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 4)].isSelected" id="slotcheck@(slot + 5)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 5), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 5)].slotID" value="@(slot + 6)" id="hiddenslot@(slot + 6)_@(hall + 1)_" />
-                <label>SLOT 6</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@(slot + 5)].isSelected" id="slotcheck@(slot + 6)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 6), @(hall + 1));" />
+                slot = slot + 1;
                 <br />
-            <!--REQUIREMENTS-->
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(requirement + 1)" id="hiddenreq@(requirement + 1)_@(hall + 1)_" />
-                <label>Requirement 1</label>
-                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement + 1)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 1), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 1)].requirementID" value="@(requirement + 2)" id="hiddenreq@(requirement + 2)_@(hall + 1)_" />
-                <label>Requirement 2</label>
-                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 1)].isSelected" id="reqcheck@(requirement + 2)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 2), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 2)].requirementID" value="@(requirement + 3)" id="hiddenreq@(requirement + 3)_@(hall + 1)_" />
-                <label>Requirement 3</label>
-                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 2)].isSelected" id="reqcheck@(requirement + 3)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 3), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 3)].requirementID" value="@(requirement + 4)" id="hiddenreq@(requirement + 4)_@(hall + 1)_" />
-                <label>Requirement 4</label>
-                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 3)].isSelected" id="reqcheck@(requirement + 4)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 4), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 4)].requirementID" value="@(requirement + 5)" id="hiddenreq@(requirement + 5)_@(hall + 1)_" />
-                <label>Requirement 5</label>
-                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 4)].isSelected" id="reqcheck@(requirement + 5)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 5), @(hall + 1));" />
-
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 5)].requirementID" value="@(requirement + 6)" id="hiddenreq@(requirement + 6)_@(hall + 1)_" />
-                <label>Requirement 6</label>
-                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@(requirement + 5)].isSelected" id="reqcheck@(requirement + 6)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 6), @(hall + 1));" />
-
-                hall = hall + 1;
-
             }
-            hall = 0; 
+            <!--REQUIREMENTS-->
+            foreach (var reqItem in item.requirementsArray)
+            {
+                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(reqItem.requirementID)" id="hiddenreq@(requirement + 1)_@(hall + 1)_" />
+                <label>@reqItem.requirementName</label>
+                <input type="checkbox" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement + 1)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 1), @(hall + 1));" />
+                requirement = requirement + 1;
+            }
+
+            hall = hall + 1;
+
+        }
+        hall = 0;
+        slot = 0;
+        requirement = 0;
             <br />
 
             @*<input type="submit" value="Submit" />*@

@@ -34,5 +34,54 @@ namespace UtilityBookingSystem.Models
             return hallsList;
         }
         #endregion
+        public List<Hall> GetHallDetails()
+        {
+            List<Hall> hallsList = new List<Hall>();
+            List<tblHall> listtblHall = new List<tblHall>();
+            List<tblSlot> listtblSlot = new List<tblSlot>();
+            List<tblRequirement> listtblRequirement = new List<tblRequirement>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                listtblHall = context.tblHalls.ToList();
+                listtblSlot = context.tblSlots.ToList();
+                listtblRequirement = context.tblRequirements.ToList();
+            }
+            foreach (var item in listtblHall)
+            {
+                hallsList.Add(new Hall()
+                {
+                    hallID=item.hallID,
+                    hallName = item.hallName,
+                });
+            }
+            foreach (var item in hallsList)
+            {
+                item.slotsArray = new List<Slot>();
+                foreach (var x in listtblSlot)
+                {
+                    item.slotsArray.Add(new Slot()
+                    {
+                        slotID = x.slotID,
+                        slot = x.slot
+                    });
+                }
+            }
+            foreach (var item in hallsList)
+            {
+                item.requirementsArray = new List<Requirement>();
+                foreach (var x in listtblRequirement)
+                {
+                    item.requirementsArray.Add(new Requirement()
+                    {
+                        requirementID = x.requirementID,
+                        requirementName = x.requirementName
+                    });
+                }
+            }
+            return hallsList;
+        }
+
+
     }
 }

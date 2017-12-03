@@ -44,6 +44,7 @@ namespace UtilityBookingSystem.Controllers
         #endregion
 
         #region User Home
+        [HttpGet]
         public ActionResult Index()
         {
             if (Session["LoggedInUserID"] != null)
@@ -64,7 +65,7 @@ namespace UtilityBookingSystem.Controllers
 
             ViewBag.purposeList = new SelectList(objPurpose.GetPurposeList(), "purposeID", "purpose"); //Fetches list of purpose for booking from Purpose Model
 
-            return View();
+            return RedirectToAction("Testing", "BookUtility");
         }
         #endregion
         #endregion
