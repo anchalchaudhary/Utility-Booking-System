@@ -12,6 +12,9 @@ namespace UtilityBookingSystem.Models
         public int dateID { get; set; }
         public Nullable<System.DateTime> dateChosen { get; set; }
         public Nullable<int> bookingID { get; set; }
+        //public List<BookedHall> bookedHalls { get; set; }
+        //public List<BookedSlot> bookedSlots { get; set; }
+        //public List<BookedRequirement> bookedRequirements { get; set; }
         #endregion
 
         BookingRepository objBookingRepository = new BookingRepository();
@@ -58,7 +61,10 @@ namespace UtilityBookingSystem.Models
         #region Get Booking's Dates
         public List<BookedDate> GetBookingDateList(int bookingID)
         {
-            List<BookedDate> bookedDateList;
+            List<BookedDate> bookedDateList = new List<BookedDate>();
+            //List<tblBookedHall> listtblBookedHall = new List<tblBookedHall>();
+            //List<tblBookedSlot> listtblBookedSlot = new List<tblBookedSlot>();
+            //List<tblBookedRequirement> listtblBookedRequirement = new List<tblBookedRequirement>();
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
@@ -68,7 +74,36 @@ namespace UtilityBookingSystem.Models
                     dateID = x.dateID,
                     dateChosen = x.dateChosen
                 }).ToList();
+                //listtblBookedSlot = context.tblBookedSlots.ToList();
+                //listtblBookedHall = context.tblBookedHalls.ToList();
+                //listtblBookedRequirement = context.tblBookedRequirements.ToList();
             }
+            //foreach (var item in bookedDateList)
+            //{
+            //    item.bookedSlots = new List<BookedSlot>();
+            //    foreach (var slotItem in listtblBookedSlot)
+            //    {
+            //        item.bookedSlots.Add(new BookedSlot()
+            //        {
+            //            slotID = slotItem.tblSlot.slotID,
+            //            slot = slotItem.tblSlot.slot,
+            //            hallID = slotItem.tblBookedHall.hallID,
+            //        });
+            //    }
+            //}
+            //foreach (var item in bookedDateList)
+            //{
+            //    item.bookedHalls = new List<BookedHall>();
+            //    foreach (var hallItem in listtblBookedHall)
+            //    {
+            //        item.bookedHalls.Add(new BookedHall()
+            //        {
+            //            dateID=hallItem.dateID,
+            //            hallID = hallItem.hallID,
+            //            hallName = hallItem.tblHall.hallName
+            //        });
+            //    }
+            //}
             return bookedDateList;
         }
         #endregion

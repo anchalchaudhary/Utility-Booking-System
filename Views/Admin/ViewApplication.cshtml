@@ -3,7 +3,7 @@
     ViewBag.Title = "ViewApplication";
 }
 
-<h2>ViewApplication</h2>
+<h2>Application for @ViewBag.bookingDetails.title</h2>
 <div class="container">
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered">
@@ -23,9 +23,64 @@
                 <td><b>Department</b></td>
                 <td><b>@ViewBag.userDetails.dept</b></td>
             </tr>
+            <tr>
+                <td><b>Title</b></td>
+                <td><b>@ViewBag.bookingDetails.title</b></td>
+            </tr>
+            <tr>
+                <td><b>Purpose</b></td>
+                <td><b>@ViewBag.bookingDetails.purpose</b></td>
+            </tr>
+            <tr>
+                <td><b>Booking No.</b></td>
+                <td><b>@ViewBag.bookingDetails.bookingNo</b></td>
+            </tr>
+            <tr>
+                <td><b>Booked At</b></td>
+                <td><b>@ViewBag.bookingDetails.bookedAtTime</b></td>
+            </tr>
         </table>
     </div>
+    <h3>Booking Details:</h3>
     <div class="table-responsive">
-        <table class="table table-striped table-hover"></table>
+        <table class="table table-striped table-hover table-bordered">
+            @foreach (var dateItem in ViewBag.bookedDate)
+            {
+                <tr>
+                    <td><b>Date</b></td>
+                    <td><b>@dateItem.dateChosen</b></td>
+                </tr>
+                foreach(var hallItem in ViewBag.bookedHall)
+                {
+                    if (hallItem.dateID == dateItem.dateID)
+                    {
+                        <tr>
+                            <td><b>Hall</b></td>
+                            <td>@hallItem.hallName</td>
+                        </tr>
+                        <tr>
+                            <td><b>Slots:</b></td>
+                            @foreach(var slotItem in ViewBag.bookingSlot)
+                            {
+                                if(slotItem.bookedHallID == hallItem.bookedHallID)
+                                {
+                                    <td><b>@slotItem.slot</b></td>
+                                }
+                            }
+                        </tr>
+                        <tr>
+                            <td><b>Requirements:</b></td>
+                            @foreach (var reqItem in ViewBag.bookedReq)
+                            {
+                                if (reqItem.hallID == hallItem.hallID && reqItem.dateID == dateItem.dateID)
+                                {
+                                    <td><b>@reqItem.bookedReq</b></td>
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            }
+        </table>
     </div>
 </div>

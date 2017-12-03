@@ -40,23 +40,20 @@
         </div>
     </div>
 </div>
-<br/>
+<br />
 <div class="row">
     <div class="col-md-4">
-        <h3>View Booking Requests</h3>
+        <h3>Booking Requests</h3>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-4" style="margin-top: 2%;">
         <input type="radio" name="selectBookings" value="approved"> Approved
         <input type="radio" name="selectBookings" value="pending"> Pending
         <input type="radio" name="selectBookings" value="all" checked> All
-    @*</div>*@
-    <div class="input-group" style="float:right;">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-            <input type="text" class="form-control" id="searchText" onkeyup="searchEnteredText()" placeholder="Search for Booking Number.." title="Type in a name">
     </div>
-        </div>
-        
-       
+    <div class="input-group col-md-4" style="float:right; margin-top: 1%;">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+        <input type="text" class="form-control" id="searchText" onkeyup="searchEnteredText()" placeholder="Search for Booking Number.." title="Type in a name">
+    </div>
 </div>
 <div class="table-responsive">
     <table class="table table-striped table-hover" id="requestsTable">
@@ -70,82 +67,64 @@
             <th>View Application</th>
             <th>Approval</th>
         </tr>
-        @{ 
+        @{
             int i = 1;
             foreach (var item in ViewBag.allBookingsList)
             {
 
-            <tr>
-                <td>@item.bookingNo</td>
-                <td>@item.name</td>
-                <td>@item.department</td>
-                <td>@item.title</td>
-                <td>@item.purpose</td>
-                <td>@item.bookedAtTime</td>
-                <td>@Html.ActionLink("Application", "ViewApplication", "Admin", new { bookingID = item.bookingID, userID = item.userID }, new { target = "_blank" })</td>
-                @if (item.status == false)
-                {
-                    // <td>@Html.ActionLink("Approve", "ApproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                    <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>
-                }
-                else
-                {
-                    //<td>@Html.ActionLink("Unapprove", "UnapproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                    <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>
-                }
-            </tr>
+                <tr>
+                    <td>@item.bookingNo</td>
+                    <td>@item.name</td>
+                    <td>@item.department</td>
+                    <td>@item.title</td>
+                    <td>@item.purpose</td>
+                    <td>@item.bookedAtTime</td>
+                    <td>@Html.ActionLink("Application", "ViewApplication", "Admin", new { bookingID = item.bookingID, userID = item.userID }, new { target = "_blank" })</td>
+                    @if (item.status == false)
+                    {
+                        // <td>@Html.ActionLink("Approve", "ApproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
+                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>
+                    }
+                    else
+                    {
+                        //<td>@Html.ActionLink("Unapprove", "UnapproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
+                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>
+                    }
+                </tr>
                 i++;
             }
-            }
+        }
 
     </table>
 </div>
 <script>
-var path_to_approve,path_to_unapprove;
+    var path_to_approve, path_to_unapprove;
 
-$(".approve").click(function (e) {
-    path_to_approve = $(this).data('path');
-});
-$('#btnContinueApprove').click(function () {
-    window.location = path_to_approve;
-});
+    $(".approve").click(function (e) {
+        path_to_approve = $(this).data('path');
+    });
+    $('#btnContinueApprove').click(function () {
+        window.location = path_to_approve;
+    });
 
-$(".unapprove").click(function (e) {
-    path_to_unapprove = $(this).data('path');
-    console.log(path_to_unapprove);
-});
-$('#btnContinueUnapprove').click(function () {
-    window.location = path_to_unapprove;
-});
+    $(".unapprove").click(function (e) {
+        path_to_unapprove = $(this).data('path');
+        console.log(path_to_unapprove);
+    });
+    $('#btnContinueUnapprove').click(function () {
+        window.location = path_to_unapprove;
+    });
 
-function searchEnteredText(){
-    var input, filter, table, tr, td, i;
-    input = document.getElementById("searchText");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("requestsTable");
-    tr = table.getElementsByTagName("tr");
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
-        }
-    }
-}
-$("input[name='selectBookings']").on("change", function () {
-    var selectedAction = this.value.toUpperCase();
-    table = document.getElementById("requestsTable");
-    tr = table.getElementsByTagName("tr");
-    if (selectedAction == "APPROVED") {
+    function searchEnteredText() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchText");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("requestsTable");
+        tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[7];
+            td = tr[i].getElementsByTagName("td")[0];
             if (td) {
-                //console.log($("#unapprove"+i).text());
-                var msgString = $("#unapprove"+i).text().toUpperCase();
-                if (msgString.indexOf("UNAPPROVE")!== -1) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
                 } else {
                     tr[i].style.display = "none";
@@ -153,28 +132,44 @@ $("input[name='selectBookings']").on("change", function () {
             }
         }
     }
-    else if (selectedAction == "PENDING") {
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[7];
-            if (td) {
-                var msgString = $("#approve" + i).text().toUpperCase();
-                if (msgString.indexOf("APPROVE") !== -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+    $("input[name='selectBookings']").on("change", function () {
+        var selectedAction = this.value.toUpperCase();
+        table = document.getElementById("requestsTable");
+        tr = table.getElementsByTagName("tr");
+        if (selectedAction == "APPROVED") {
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[7];
+                if (td) {
+                    //console.log($("#unapprove"+i).text());
+                    var msgString = $("#unapprove" + i).text().toUpperCase();
+                    if (msgString.indexOf("UNAPPROVE") !== -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
         }
-    }
-    else {
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[7];
-            if (td) {
-                tr[i].style.display = "";
+        else if (selectedAction == "PENDING") {
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[7];
+                if (td) {
+                    var msgString = $("#approve" + i).text().toUpperCase();
+                    if (msgString.indexOf("APPROVE") !== -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
             }
         }
-    }
-});
+        else {
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[7];
+                if (td) {
+                    tr[i].style.display = "";
+                }
+            }
+        }
+    });
 </script>
-
-

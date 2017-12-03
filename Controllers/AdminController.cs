@@ -123,6 +123,9 @@ namespace UtilityBookingSystem.Controllers
                 Users userDetailsList = objUsers.GetUserDetails(userID);
                 ViewBag.userDetails = userDetailsList;
 
+                Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
+                ViewBag.bookingDetails = bookingDetails;
+
                 List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
                 ViewBag.bookedDate = bookingDateList;
 

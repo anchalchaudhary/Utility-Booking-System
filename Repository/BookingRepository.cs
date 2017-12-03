@@ -43,7 +43,7 @@ namespace UtilityBookingSystem.Repository
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
                 objtblBookedDate.bookingID = bookingID;
-                objtblBookedDate.dateChosen = date;
+                objtblBookedDate.dateChosen = date.Date;
 
                 db.tblBookedDates.Add(objtblBookedDate);
 

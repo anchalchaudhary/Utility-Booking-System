@@ -115,5 +115,27 @@ namespace UtilityBookingSystem.Models
             }
         }
         #endregion
+
+        public Booking GetBookingDetails(int bookingID)
+        {
+            Booking bookingDetail = new Booking();
+            tblBooking objtblBooking = new tblBooking();
+            tblPurpose objtblPurpose = new tblPurpose();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblBooking = context.tblBookings.First(x => x.bookingID == bookingID);
+            }
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblPurpose = context.tblPurposes.First(x => x.purposeID == objtblBooking.purposeID);
+            }
+            bookingDetail.bookingNo = objtblBooking.bookingNo;
+            bookingDetail.title = objtblBooking.title;
+            bookingDetail.bookedAtTime = objtblBooking.bookedAtTime;
+            bookingDetail.purpose = objtblPurpose.purpose;
+            return bookingDetail;
+        }
     }
 }

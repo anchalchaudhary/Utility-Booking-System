@@ -111,11 +111,11 @@ namespace UtilityBookingSystem.Controllers
         {
             int bookingID = Convert.ToInt32(Session["NewBookingID"]);
 
-            List<tblHall> listHall = new List<tblHall>();
-            listHall = objHall.GetHallsList();
+            List<Hall> listHall = new List<Hall>();
+            listHall = objHall.GetHallDetails();
             ViewBag.HallDetail = listHall;
 
-            foreach(var item in detailsObjList)
+            foreach (var item in detailsObjList)
             {
                 BookedHall objBookedHall1 = new BookedHall();
                 int dateID = objBookedDate.SaveBookingDate(item.date, bookingID);

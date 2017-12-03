@@ -54,12 +54,15 @@ namespace UtilityBookingSystem.Models
         public List<BookedSlot> GetBookingSlotsList(List<BookedHall> bookedHallList)
         {
             List<BookedSlot> bookingSlotList = new List<BookedSlot>();
+            List<BookedSlot> allSlotsList = new List<BookedSlot>();
+
+            IEnumerable<BookedSlot> bookedSlots = null;
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
                 foreach(var item in bookedHallList)
                 {
-                    bookingSlotList = context.tblBookedSlots.Where(x => x.bookedHallID == item.bookedHallID).Select(x=> new BookedSlot
+                    bookedSlots = context.tblBookedSlots.Where(x => x.bookedHallID == item.bookedHallID).Select(x=> new BookedSlot
                     {
                         bookedHallID = x.bookedHallID,
                         slotID = x.slotID,
@@ -68,7 +71,9 @@ namespace UtilityBookingSystem.Models
                         bookedSlotID = x.bookedSlotID,
                         hallID = x.tblBookedHall.hallID
                     }).ToList();
+                    bookingSlotList.AddRange(bookedSlots);
                 }
+                allSlotsList = bookingSlotList;
             }
             return bookingSlotList;
         }
