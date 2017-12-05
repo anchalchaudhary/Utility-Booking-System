@@ -80,15 +80,17 @@
                     <td>@item.purpose</td>
                     <td>@item.bookedAtTime</td>
                     <td>@Html.ActionLink("Application", "ViewApplication", "Admin", new { bookingID = item.bookingID, userID = item.userID }, new { target = "_blank" })</td>
-                    @if (item.status == false)
+                    @if (item.status == true)
                     {
                         // <td>@Html.ActionLink("Approve", "ApproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>
+                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>
+                        @*<td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>*@
                     }
                     else
                     {
                         //<td>@Html.ActionLink("Unapprove", "UnapproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>
+                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>
+                        @*<td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>*@
                     }
                 </tr>
                 i++;

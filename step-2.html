@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hall Booking System</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Karla|Montserrat" rel="stylesheet">
+	<link href="css/datedropper.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<link href="css/my-style.css" rel="stylesheet" type="text/css" />
+	<!-- dateDropper lib -->
+	<script src="js/datedropper.js"></script>
+	<link href="css/datedropper.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+	<button onclick="topFunction()" id="myBtn" title="Go to top"><b>^</b></button>
+	<nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
+		<a href="http://www.akgec.in"><img src="images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
+		<a class="navbar-brand" href="index.php">
+			<div style="vertical-align: middle;font-family: 'Karla',sans-serif; font-size: 1.5em" class="d-inline-block">
+				HMS-Step 2.
+			</div>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<b class="navbar-toggler-icon"></b>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			<ul style="font-family:'Roboto', sans-serif; font-size: 1.2em" class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">Past Bookings<span class="sr-only"></span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Future bookings<span class="sr-only"></span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Logout<span class="sr-only"></span></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<div style="color:white;" class="container">
+
+		<!-- Div to be replicate is below -->
+		<div style="font-family: 'Roboto', sans-serif;margin-bottom:30px;" class="row">
+			<div class="col-md-4 col-sm-4 col-4">
+				<label><h2>Starting Date</h2></label><br>
+			</div>
+			<div class="col-md-7 col-sm-7 col-7">
+				<input style="width: 100%;" class="form-control start" name = "start" type="text" data-min-year="2017" data-theme="my-style"/>
+			</div>
+			<script>$('.start').dateDropper();</script>
+
+			<div style="font-family: 'Montserrat', sans-serif;" class="col-4">
+				<h3>Main Seminar Hall</h3>
+			</div>
+			<div style="align-content: center;" class="col-8"> 
+				<table  class="table table-responsive table-striped">
+					<tbody>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 6</span></label></th>
+						</tr>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 6</span></label></th>
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<div style="font-family: 'Montserrat', sans-serif;" class="col-4">
+				<h3>Mini Seminar Hall 1</h3>
+			</div>
+			<div style="align-content: center;" class="col-8"> 
+				<table  class="table table-responsive table-striped">
+					<tbody>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 6</span></label></th>
+						</tr>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 6</span></label></th>
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<div style="font-family: 'Montserrat', sans-serif;" class="col-4">
+				<h3>Mini Seminar Hall 2</h3>
+			</div>
+			<div style="align-content: center;" class="col-8"> 
+				<table  class="table table-responsive table-striped">
+					<tbody>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 6</span></label></th>
+						</tr>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 6</span></label></th>
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<div style="font-family: 'Montserrat', sans-serif;" class="col-4">
+				<h3>Language Lab</h3>
+			</div>
+			<div style="align-content: center;" class="col-8"> 
+				<table  class="table table-responsive table-striped">
+					<tbody>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Slot 6</span></label></th>
+						</tr>
+						<tr>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 1</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 2</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 3</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 4</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 5</span></label></th>
+							<th><label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description">Req 6</span></label></th>
+
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<div style="margin:auto;">
+				<button class="btn btn-danger"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add More</button>	
+				<button class="btn btn-success"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>	
+			</div>
+		</div>
+		
+
+
+
+
+		<!--<hr class="style1">
+		<br>
+		<hr class="style2">-->
+
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="js/scroll.js"></script>
+
+</body>
+</html>

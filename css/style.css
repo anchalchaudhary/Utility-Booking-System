@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans|Open+Sans");
+body{
+  background: url("../images/bg.jpg") no-repeat center fixed; 
+  background-size: cover;
+}
+.box-content{
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+.navbar
+{
+    background-color: black;
+    opacity: 1;
+    padding:0 0;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+.table .thead-dark th{
+  border-color: #181b1e;
+  background-color: #181b1e;
+  color:#00C0C0;
+  font-family: 'Fira Sans', sans-serif;
+}
+td{
+  font-family: 'Fira+Sans', sans-serif;
+}
+html {
+    margin: auto;
+    align-content: center;
+}
+
+.medium-small {
+    font-size: 0.9rem;
+    margin: 0;
+    padding: 0;
+}
+
+.login-form {
+    width: 280px;
+}
+
+.login-form-text {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+    color:white;
+}
+
+.login-text {
+    margin-top: -6px;
+    margin-left: -6px !important;
+    color:white;
+}
+
+.margin {
+    margin: 0 !important;
+}
+
+.pointer-events {
+	pointer-events: auto !important;
+}
+.input-field{
+    color:white;
+}
+
+.input-field >.material-icons  {
+	padding-top:10px;
+}
+
+.input-field div.error{
+    position: relative;
+    top: -1rem;
+    left: 3rem;
+    font-size: 0.8rem;
+    color:#FF4081;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  font-family: 'Permanent Marker';
+  font-size: 40px;
+  box-shadow: 0px 1px 20px black;
+  background-color: black;
+  opacity: 0.8;
+  color: white;
+  padding:5px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+#myBtn:hover{
+    background-color: black;
+    color: white;
+    box-shadow: 0px 1px 10px black;
+}
+
+.custom-checkbox .custom-control-indicator {
+    border-radius: 0.05rem;
+}
+.custom-control-input:checked~.custom-control-indicator{
+    background-color: #de620d;
+}
+.form-control{
+    border-radius: 0.05rem;
+    box-shadow: 5px 5px 5px black;
+}
+hr.style1 {
+    height: 10px;
+    border: 0;
+    box-shadow: 0 10px 10px -10px #ffffff inset;
+}
+
+
+hr.style2 { 
+  border: 0; 
+  height: 1px; 
+  background-image: -webkit-linear-gradient(left, #34383b, #ffffff, #34383b);
+  background-image: -moz-linear-gradient(left, #34383b, #ffffff, #34383b);
+  background-image: -ms-linear-gradient(left, #34383b, #ffffff, #34383b);
+  background-image: -o-linear-gradient(left, #34383b, #ffffff, #34383b); 
+}
+.btn{
+    cursor:pointer; 
+}
+#scrollstyle::-webkit-scrollbar {
+    width: 0.5em;
+}
+ 
+#scrollstyle::-webkit-scrollbar-track {
+  border-radius: 10px;
+    -webkit-box-shadow: inset 10px 0px 10px rgba(0,0,0,0.3);
+}
+ 
+#scrollstyle::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}

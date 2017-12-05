@@ -135,6 +135,8 @@ namespace UtilityBookingSystem.Models
             bookingDetail.title = objtblBooking.title;
             bookingDetail.bookedAtTime = objtblBooking.bookedAtTime;
             bookingDetail.purpose = objtblPurpose.purpose;
+            bookingDetail.status = objtblBooking.status;
+
             return bookingDetail;
         }
     }

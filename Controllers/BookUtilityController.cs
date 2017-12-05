@@ -13,6 +13,7 @@ namespace UtilityBookingSystem.Controllers
         #region model classes
         Hall objHall = new Hall();
         Slot objSlot = new Slot();
+        Users objUsers = new Users();
         RequirementForHall objRequirementForHall = new RequirementForHall();
         BookedDate objBookedDate = new BookedDate();
         BookedHall objBookedHall = new BookedHall();
@@ -95,6 +96,17 @@ namespace UtilityBookingSystem.Controllers
             requirementsList = objRequirementForHall.GetRequirementsList();
             return Json(requirementsList, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Tooltip
+        //[HttpPost]
+        //public JsonResult GetBookedByDetails(DateTime date)
+        //{
+        //    BookedDate objBookedDateDetails = objBookedDate.GetBookedDateList(date);
+        //    tblBooking objtblBooking
+        //    List<Users> userList = new List<Users>();
+        //    userList = objUsers.GetUserDetails()
+        //}
         #endregion
         #endregion
 

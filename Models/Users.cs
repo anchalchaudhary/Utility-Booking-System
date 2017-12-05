@@ -95,6 +95,26 @@ namespace UtilityBookingSystem.Models
             return userDetail;
         }
         #endregion
+        //public Users GetBookedByUser(DateTime date)
+        //{
+        //    List<BookedDate> bookedDateList = new List<BookedDate>();
+        //    List<Booking> booking = new List<Booking>();
+        //    List<Users> usersList = new List<Users>();
+        //    //tblBookedDate objtblBookedDate = new tblBookedDate();
+        //    using (var context = new BookingSystemDBEntities())
+        //    {
+        //        context.Configuration.LazyLoadingEnabled = false;
+        //        bookedDateList = context.tblBookedDates.Where(x=>x.dateChosen==date).Select(x=> new BookedDate {
+        //            dateID=x.dateID,
+        //            bookingID = x.bookingID,
+        //            dateChosen = x.dateChosen
+        //        }).ToList();
+        //        foreach(var dateItem in bookedDateList)
+        //        {
+                    
+        //        }
+        //    }
+        //}
 
         public bool DeleteUser(int id)
         {

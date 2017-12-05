@@ -3,7 +3,8 @@
     ViewBag.Title = "Index";
 }
 <script src="~/Scripts/jquery-3.2.1.js"></script>
-
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
 <div id="bookingForm" style="display:none;">
     @{
         int index = 0;
@@ -14,7 +15,7 @@
             slot = 0;
             requirement = 0;
             <hr />
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(item.hallID)" id="hiddenhall@(hall)_" />
+            <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(item.hallID)" id="hiddenhall@(hall)_" />
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallName" value="@item.hallName" id="hiddenhallname@(hall)_" />
                 <label>@item.hallName</label>
             <!--SLOTS-->
@@ -22,7 +23,7 @@
             {
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slotItem.slotID)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
                 <label>@slotItem.slot</label>
-                <input type="checkbox" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" />
+                <input type="checkbox" data-toggle="tooltip" title="this is booked" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" onhover="seeDetails(@(slot+1),@(hall+1)" />
                 slot = slot + 1;
                 <br />
             }
@@ -101,6 +102,29 @@
                 }
                 k++;
             }
+        }
+    }
+    var seeDetails = function(slot,hall)
+    {
+        if($("#slotcheck"+slot+"_"+hall+"_"+click).is(':disabled'))
+        {
+            var id = "date" + click;
+            var date = document.getElementById(id).value;
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            })
+            //$.ajax({
+            //    type: "POST",
+            //    data: { 'date': date },
+            //    dataType: 'JSON',
+            //    url: "/BookUtility/GetBookedByDetails",
+            //    success: function(bookingDetails){
+            //        $("#slotcheck"+slot+"_"+hall+"_"+click).attr("title",)
+            //        $(function () {
+            //            $('[data-toggle="tooltip"]').tooltip();
+            //        })
+            //    }
+            //});
         }
     }
 </script>
