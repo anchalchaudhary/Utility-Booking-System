@@ -22,8 +22,8 @@
             foreach (var slotItem in item.slotsArray)
             {
                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slotItem.slotID)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
-                <label>@slotItem.slot</label>
-                <input type="checkbox" data-toggle="tooltip" title="this is booked" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" onhover="seeDetails(@(slot+1),@(hall+1)" />
+                <label onmouseover="seeDetails(@(slot+1),@(hall+1))">@slotItem.slot</label>
+                <input type="checkbox" data-toggle="tooltip" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" />
                 slot = slot + 1;
                 <br />
             }
@@ -104,27 +104,29 @@
             }
         }
     }
-    var seeDetails = function(slot,hall)
+    var seeDetails = function(slotID,hallID)
     {
-        if($("#slotcheck"+slot+"_"+hall+"_"+click).is(':disabled'))
+        if($("#slotcheck"+slotID+"_"+hallID+"_"+click).is(':disabled'))
         {
             var id = "date" + click;
             var date = document.getElementById(id).value;
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            })
-            //$.ajax({
-            //    type: "POST",
-            //    data: { 'date': date },
-            //    dataType: 'JSON',
-            //    url: "/BookUtility/GetBookedByDetails",
-            //    success: function(bookingDetails){
-            //        $("#slotcheck"+slot+"_"+hall+"_"+click).attr("title",)
-            //        $(function () {
-            //            $('[data-toggle="tooltip"]').tooltip();
-            //        })
-            //    }
-            //});
+            $.ajax({
+                type: "POST",
+                data: { 'date': date,
+                        'slotID': slotID,
+                        'hallID': hallID
+                      },
+                dataType: 'JSON',
+                url: "/BookUtility/GetBookedByDetails",
+                success: function (department) {
+                    if (department != "") {
+                        var title = "Booked By " + department;
+                        $("#slotcheck" + slotID + "_" + hallID + "_" + click).attr("title", title).tooltip({ trigger: 'hover' });
+                       console.log(title);
+                        $('[data-toggle="tooltip"]').tooltip();
+                    }
+                }
+            });
         }
     }
 </script>

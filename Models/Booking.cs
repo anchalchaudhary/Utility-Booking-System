@@ -139,5 +139,54 @@ namespace UtilityBookingSystem.Models
 
             return bookingDetail;
         }
+        public string GetUserDetail(int bookingID)
+        {
+            if (bookingID != 0)
+            {
+                Booking objBooking = new Booking();
+                Users objUser = new Users();
+                tblBooking objtblBooking = new tblBooking();
+                using (var context = new BookingSystemDBEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    objtblBooking = context.tblBookings.FirstOrDefault(x => x.bookingID == bookingID);
+                }
+                int userID = Convert.ToInt32(objtblBooking.userID);
+                tblUser objtblUser = new tblUser();
+                tblDepartment objtblDepartment = new tblDepartment();
+                using (var context = new BookingSystemDBEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    objtblUser = context.tblUsers.First(x => x.userID == userID);
+                }
+                using (var context = new BookingSystemDBEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    objtblDepartment = context.tblDepartments.First(x => x.deptID == objtblUser.deptID);
+                }
+                string department = objtblDepartment.department;
+                return department;
+            }
+            else
+                return "";
+        }
+        public List<Booking> getUserBookingDetails(int userID)
+        {
+            List<Booking> listUserBooking = new List<Booking>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                listUserBooking = context.tblBookings.Where(x => x.userID == userID).Select(x=>new Booking
+                {
+                    bookingID=x.bookingID,
+                    userID = x.userID,
+                    bookingNo = x.bookingNo,
+                    title = x.title,
+                    bookedAtTime = x.bookedAtTime,
+                    status = x.status
+                }).ToList();
+            }
+            return listUserBooking;
+        }
     }
 }

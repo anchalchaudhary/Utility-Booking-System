@@ -78,5 +78,23 @@ namespace UtilityBookingSystem.Models
             return bookingSlotList;
         }
         #endregion
+
+        #region Get Booked HallID
+        public List<BookedSlot> GetBookedHallID(int slotID)
+        {
+            List<BookedSlot> listBookedHallID = new List<BookedSlot>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                listBookedHallID = context.tblBookedSlots.Where(x => x.slotID == slotID).Select(x => new BookedSlot
+                {
+                    bookedHallID = x.bookedHallID,
+                    bookedSlotID = x.bookedSlotID,
+                    slotID = x.slotID
+                }).ToList();
+            }
+            return listBookedHallID;
+        }
+        #endregion
     }
 }

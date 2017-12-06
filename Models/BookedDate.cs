@@ -107,5 +107,78 @@ namespace UtilityBookingSystem.Models
             return bookedDateList;
         }
         #endregion
+
+        #region Get Booking ID
+        public int GetBookingID(List<BookedHall> listBookedDateID, DateTime date)
+        {
+            int bookingID=0;
+            DateTime dateChosen = date.Date;
+            tblBookedDate objtblBookedDate = new tblBookedDate();
+            List<tblBookedDate> listtblBookedDate = new List<tblBookedDate>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                listtblBookedDate = context.tblBookedDates.ToList();
+                foreach(var item in listBookedDateID)
+                {
+                    foreach(var itemtbl in listtblBookedDate)
+                    {
+                        if(itemtbl.dateID == item.dateID && itemtbl.dateChosen == dateChosen)
+                        {
+                            bookingID = Convert.ToInt32(itemtbl.bookingID);
+                            break;
+                        }
+                    }
+                    if (bookingID != 0)
+                        break;
+                }
+               // bookingID = Convert.ToInt32(objtblBookedDate.bookingID);
+            }
+            return bookingID;
+        }
+        #endregion
+        public List<BookedDate> getUserPastBookedDate(List<Booking> listUserPastBookedDate)
+        {
+            IEnumerable<BookedDate> listBookedDate = null;
+            List<BookedDate> userBookedDateList = new List<BookedDate>();
+            DateTime dateToday = DateTime.Now.Date;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                foreach(var item in listUserPastBookedDate)
+                {
+                    listBookedDate = context.tblBookedDates.Where(x => x.bookingID == item.bookingID && x.dateChosen< dateToday).Select(x => new BookedDate
+                    {
+                        dateID = x.dateID,
+                        dateChosen = x.dateChosen,
+                        bookingID = x.bookingID
+                    }).ToList();
+                    userBookedDateList.AddRange(listBookedDate);
+                }
+            }
+            return userBookedDateList;
+        }
+        public List<BookedDate> getUserFutureBookedDate(List<Booking> listUserPastBookedDate)
+        {
+            IEnumerable<BookedDate> listBookedDate = null;
+            List<BookedDate> userBookedDateList = new List<BookedDate>();
+            DateTime dateToday = DateTime.Now.Date;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                foreach (var item in listUserPastBookedDate)
+                {
+                    listBookedDate = context.tblBookedDates.Where(x => x.bookingID == item.bookingID && x.dateChosen >= dateToday).Select(x => new BookedDate
+                    {
+                        dateID = x.dateID,
+                        dateChosen = x.dateChosen,
+                        bookingID = x.bookingID
+                    }).ToList();
+                    userBookedDateList.AddRange(listBookedDate);
+                }
+            }
+            return userBookedDateList;
+        }
+
     }
 }

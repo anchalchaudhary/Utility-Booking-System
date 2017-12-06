@@ -23,7 +23,7 @@ namespace UtilityBookingSystem.Models
         #region Get Booked Halls List
         public List<BookedHall> GetBookedHallsList(List<BookedDate> bookedDateList)
         {
-            IEnumerable<BookedHall> bookedHalls =null;
+            IEnumerable<BookedHall> bookedHalls = null;
             List<BookedHall> bookedHallsList = new List<BookedHall>();
             using (var context = new BookingSystemDBEntities())
             {
@@ -38,7 +38,7 @@ namespace UtilityBookingSystem.Models
                         dateID = x.dateID,
                         hallName = x.tblHall.hallName
                     }).ToList();
-                    bookedHallsList.AddRange(bookedHalls); 
+                    bookedHallsList.AddRange(bookedHalls);
                 }
             }
             return bookedHallsList;
@@ -49,6 +49,29 @@ namespace UtilityBookingSystem.Models
         public void SaveSelectedHalls(List<Hall> hallsArray, int dateID, int bookingID)
         {
             objBookingRepository.SaveSelectedHalls(hallsArray, dateID, bookingID);
+        }
+        #endregion
+
+        #region Get Booked DateID
+        public List<BookedHall> GetBookedDateID(List<BookedSlot> listBookedHallID, int hallID)
+        {
+            IEnumerable<BookedHall> bookedHalls = null;
+            List<BookedHall> listBookedDateID = new List<BookedHall>();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                foreach (var item in listBookedHallID)
+                {
+                    bookedHalls = context.tblBookedHalls.Where(x => x.bookedHallID == item.bookedHallID && x.hallID == hallID).Select(x => new BookedHall
+                    {
+                        bookedHallID = x.bookedHallID,
+                        hallID = x.hallID,
+                        dateID = x.dateID
+                    }).ToList();
+                    listBookedDateID.AddRange(bookedHalls);
+                }
+            }
+            return listBookedDateID;
         }
         #endregion
     }

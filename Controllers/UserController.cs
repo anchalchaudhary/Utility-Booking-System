@@ -15,6 +15,10 @@ namespace UtilityBookingSystem.Controllers
         Users objUsers = new Users();
         Purpose objPurpose = new Purpose();
         Booking objBooking = new Booking();
+        BookedHall objBookedHall = new BookedHall();
+        BookedDate objBookedDate = new BookedDate();
+        BookedRequirement objBookedRequirement = new BookedRequirement();
+        BookedSlot objBookedSlot = new BookedSlot();
         #endregion
 
         #region User Login
@@ -49,11 +53,52 @@ namespace UtilityBookingSystem.Controllers
         {
             if (Session["LoggedInUserID"] != null)
             {
+                int userID = Convert.ToInt32(Session["LoggedInUserID"]);
                 ViewBag.purposeList = new SelectList(objPurpose.GetPurposeList(), "purposeID", "purpose"); //Fetches list of purpose for booking from Purpose Model
+
+                List<Booking> listUserBooking = objBooking.getUserBookingDetails(userID);
+                ViewBag.userBookings = listUserBooking;
+
+                List<BookedDate> listUserPastBookedDate = objBookedDate.getUserPastBookedDate(listUserBooking);
+                ViewBag.userPastBookedDate = listUserPastBookedDate;
+
+                List<BookedDate> listUserFutureBookedDate = objBookedDate.getUserFutureBookedDate(listUserBooking);
+                ViewBag.userFutureBookedDate = listUserFutureBookedDate;
+
                 return View();
             }
             return RedirectToAction("Login");
         }
+
+        #region View Application
+        [HttpGet]
+        public ActionResult ViewApplication(int bookingID, int userID)
+        {
+            if (Session["LoggedInUserID"] != null)
+            {
+                Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
+                ViewBag.bookingDetails = bookingDetails;
+
+                List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
+                ViewBag.bookedDate = bookingDateList;
+
+                List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+                ViewBag.bookedHall = bookedHallList;
+
+                List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+                ViewBag.bookedReq = bookedReqList;
+
+                List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+                ViewBag.bookingSlot = bookingSlotList;
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        #endregion
         #region Make new Booking
         [HttpPost]
         public ActionResult Index(BigViewModel model)

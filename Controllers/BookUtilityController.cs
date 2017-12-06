@@ -19,7 +19,7 @@ namespace UtilityBookingSystem.Controllers
         BookedHall objBookedHall = new BookedHall();
         BookedSlot objBookedSlot = new BookedSlot();
         BookedRequirement objBookedRequirement = new BookedRequirement();
-
+        Booking objBooking = new Booking();
         #endregion
 
         #region Start Booking
@@ -33,22 +33,6 @@ namespace UtilityBookingSystem.Controllers
         [HttpPost]
         public ActionResult Index(List<DetailsList> detailsObjList)
         {
-            //if (detailsObjList != null)
-            //{
-            //    foreach (var item in detailsObjList)
-            //    {
-            //        if (item.date >= DateTime.Now)
-            //        {
-            //            int bookingID = Convert.ToInt32(Session["NewBookingID"]);
-
-            //            int dateID = objBookedDate.SaveBookingDate(item.date, bookingID);
-
-            //            objBookedHall.SaveSelectedHalls(item.hallsArray, dateID);
-
-            //            objBookedRequirement.SaveSelectedRequirements(item.hallsArray, item.requirementsArray, item.slotsArray, bookingID, dateID);
-            //        }
-            //    }
-       // }
             return RedirectToAction("Index");
         }
         #region Get Halls List
@@ -99,14 +83,16 @@ namespace UtilityBookingSystem.Controllers
         #endregion
 
         #region Tooltip
-        //[HttpPost]
-        //public JsonResult GetBookedByDetails(DateTime date)
-        //{
-        //    BookedDate objBookedDateDetails = objBookedDate.GetBookedDateList(date);
-        //    tblBooking objtblBooking
-        //    List<Users> userList = new List<Users>();
-        //    userList = objUsers.GetUserDetails()
-        //}
+        [HttpPost]
+        public JsonResult GetBookedByDetails(DateTime date, int slotID, int hallID)
+        {
+            List<BookedSlot> listBookedHallID = objBookedSlot.GetBookedHallID(slotID);
+            List<BookedHall> listBookedDateID = objBookedHall.GetBookedDateID(listBookedHallID, hallID);
+            int bookingID = objBookedDate.GetBookingID(listBookedDateID, date);
+            string department = objBooking.GetUserDetail(bookingID);
+
+            return Json(department);
+        }
         #endregion
         #endregion
 
