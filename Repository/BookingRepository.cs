@@ -27,7 +27,7 @@ namespace UtilityBookingSystem.Repository
 
                 tblBooking objtblBookingUpdate = db.tblBookings.SingleOrDefault(x => x.bookingID == bookingID);
                 Random random = new Random();
-                objtblBooking.bookingNo = "UBS" + DateTime.Now.Day+DateTime.Now.Month+DateTime.Now.Year + random.Next(1,1000).ToString() + bookingID;
+                objtblBooking.bookingNo = "UBS" + DateTime.Now.Day+DateTime.Now.Month+DateTime.Now.Year + bookingID;
 
                 db.SaveChanges();
 

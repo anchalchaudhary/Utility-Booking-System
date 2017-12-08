@@ -37,9 +37,9 @@
 
 <div style="color: #ffffff" class="container">
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-5">
+        @*<div class="col-12 col-sm-12 col-md-5">
             <div style="margin-top: 20px;">
-                <h1 style="font-family:'Roboto',sans-serif;color: #00C0C0;">Past Bookings.</h1>
+                <h1 style="font-family:'Roboto',sans-serif;color: #00C0C0;">Past Bookings</h1>
                 <div style="height: 180px;overflow-y: scroll;" id="scrollstyle">
                     <table class="table table-striped">
                         <thead class="thead-dark">
@@ -70,16 +70,15 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div style="margin-top: 50px;">
-                <h1 style="font-family:'Roboto',sans-serif;color: #00C0C0;">Furture Bookings.</h1>
+            </div>*@
+            <div style="margin-top: 20px;">
+                <h1 style="font-family:'Roboto',sans-serif;color: #00C0C0;">Future Bookings</h1>
                 <div style="height: 180px;overflow-y: scroll;" id="scrollstyle">
                     <table class="table table-striped">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Status</th>
                                 <th scope="col">Date</th>
                             </tr>
                         </thead>
@@ -89,19 +88,13 @@
                                 <tr>
                                     <th style="color:#fff" scope="row">@itemBooking.bookingNo</th>
                                     <td style="color:#fff">@itemBooking.title</td>
-                                    @if (itemBooking.status == true)
-                                    {
-                                        <td style="color:#fff">Approved</td>
-                                    }
-                                    else
-                                    {
-                                        <td style="color:#fff">Unapproved</td>
-                                    }
-                                    @foreach (var itemDate in ViewBag.userPastBookedDate)
+                                    @{int count = 0;}
+                                    @foreach (var itemDate in ViewBag.userFutureBookedDate)
                                     {
                                         if (itemDate.bookingID == itemBooking.bookingID)
                                         {
-                                            <td style="color:#fff">@itemDate.dateChosen</td>
+                                            count++;
+                                            <td style="color:#fff">@itemDate.dateChosen.ToShortDateString()</td>
                                         }
                                     }
                                     <td style="color:#fff">
@@ -118,7 +111,7 @@
             <h2>OR</h2>
         </div>
         <div style="color:#00C0C0;margin-top: 5%;text-align: center;" class="col-12 col-sm-12 col-md-5">
-            <h1 style="font-family:'PT Sans Narrow',sans-serif;font-size: 4rem;">MAKE NEW BOOKING</h1>
+            <h1 style="font-family:'Montserrat';font-size: 4rem;">Make New Booking</h1>
             <div style="margin-top: 20%; margin-bottom: 20%;">               
                 @using (Html.BeginForm("Index", "User", FormMethod.Post))
                 {

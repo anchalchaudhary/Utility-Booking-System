@@ -29,6 +29,7 @@ namespace UtilityBookingSystem.Controllers
                 return RedirectToAction("Index");
             }
             Session["UserLoggedIn"] = null;
+            Session["DeanAdminLoggedIn"] = null;
             return View();
         }
         [HttpPost]
@@ -42,6 +43,15 @@ namespace UtilityBookingSystem.Controllers
                 Session["LoggedInUserID"] = userID;
                 return RedirectToAction("Index");
             }
+            else
+            {
+                if(model.login.loginID=="admin" && model.login.password=="admin123")
+                {
+                    Session["DeanAdminLoggedIn"] = 1;
+                    return RedirectToAction("ViewBookingRequests", "Admin");
+                }
+            }
+
             ViewBag.InvalidCredentials = "Invalid Credentials";
             return View();
         }
@@ -59,8 +69,8 @@ namespace UtilityBookingSystem.Controllers
                 List<Booking> listUserBooking = objBooking.getUserBookingDetails(userID);
                 ViewBag.userBookings = listUserBooking;
 
-                List<BookedDate> listUserPastBookedDate = objBookedDate.getUserPastBookedDate(listUserBooking);
-                ViewBag.userPastBookedDate = listUserPastBookedDate;
+                //List<BookedDate> listUserPastBookedDate = objBookedDate.getUserPastBookedDate(listUserBooking);
+                //ViewBag.userPastBookedDate = listUserPastBookedDate;
 
                 List<BookedDate> listUserFutureBookedDate = objBookedDate.getUserFutureBookedDate(listUserBooking);
                 ViewBag.userFutureBookedDate = listUserFutureBookedDate;

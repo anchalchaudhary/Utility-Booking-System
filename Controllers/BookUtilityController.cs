@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UtilityBookingSystem.Extra_Classes;
 using UtilityBookingSystem.Models;
 
 namespace UtilityBookingSystem.Controllers
@@ -99,19 +100,33 @@ namespace UtilityBookingSystem.Controllers
         #region TESTING
         public ActionResult Testing()
         {
-            List<Hall> listHall = new List<Hall>();
-            listHall = objHall.GetHallDetails();
-            ViewBag.HallDetail = listHall;
-            return View();
+            if (Session["LoggedInUserID"] != null)
+            {
+                if (Session["NewBookingID"] != null)
+                {
+                    List<Hall> listHall = new List<Hall>();
+                    listHall = objHall.GetHallDetails();
+                    ViewBag.HallDetail = listHall;
+                }
+                else
+                {
+                    return RedirectToAction("Index", "User");
+                }
+                return View();
+            }
+            else
+                return RedirectToAction("Login", "User");
         }
         [HttpPost]
         public ActionResult Testing(List<DetailsList> detailsObjList)
         {
-            int bookingID = Convert.ToInt32(Session["NewBookingID"]);
 
             List<Hall> listHall = new List<Hall>();
             listHall = objHall.GetHallDetails();
             ViewBag.HallDetail = listHall;
+
+            int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+            int userID = Convert.ToInt32(Session["LoggedInUserID"]);
 
             foreach (var item in detailsObjList)
             {
@@ -120,8 +135,63 @@ namespace UtilityBookingSystem.Controllers
                 objBookedHall1.SaveSelectedHalls(item.hallsArray, dateID, bookingID);
             }
 
-            return View();
+            tblUser objtblUser = new tblUser();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblUser = context.tblUsers.First(x => x.userID == userID);
+            }
+
+            tblBooking objtblBooking = new tblBooking();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblBooking = context.tblBookings.First(x => x.bookingID == bookingID);
+            }
+            TempData["Requested"] = "<script> alert('Your booking requested has been sent. Please check your email.')</script>";
+            string mailSubject, mailBody;
+
+            mailSubject = "Request Sent";
+            mailBody = objtblUser.name + ", your booking request has been sent. You\'re booking number is " + objtblBooking.bookingNo;
+            Mail.Send_Mail(objtblUser.email, mailBody, mailSubject); //Sends Mail to the registered User.
+
+            return RedirectToAction("ViewApplication");
         }
-            #endregion
+        #endregion
+        [HttpGet]
+        public ActionResult ViewApplication()
+        {
+            if (Session["LoggedInUserID"] != null)
+            {
+                if (Session["NewBookingID"] != null)
+                {
+                    int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+
+                    Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
+                    ViewBag.bookingDetails = bookingDetails;
+
+                    List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
+                    ViewBag.bookedDate = bookingDateList;
+
+                    List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+                    ViewBag.bookedHall = bookedHallList;
+
+                    List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+                    ViewBag.bookedReq = bookedReqList;
+
+                    List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+                    ViewBag.bookingSlot = bookingSlotList;
+
+                    Session["NewBookingID"] = null;
+                }
+                else
+                {
+                    return RedirectToAction("Testing");
+                }
+                return View();
+            }
+            else
+                return RedirectToAction("Login", "User");
         }
+    }
 }

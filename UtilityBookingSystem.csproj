@@ -150,6 +150,7 @@
     <Content Include="images\slide3.jpg" />
     <Content Include="images\slide4.jpg" />
     <Content Include="images\slide5.jpg" />
+    <Content Include="js\booking.js" />
     <Content Include="js\datedropper.js" />
     <Content Include="js\script.js" />
     <Content Include="js\scroll.js" />
@@ -294,6 +295,7 @@
     <Content Include="Views\Admin\ViewApplication.cshtml" />
     <Content Include="Views\BookUtility\Testing.cshtml" />
     <Content Include="Views\User\ViewApplication.cshtml" />
+    <Content Include="Views\BookUtility\ViewApplication.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
