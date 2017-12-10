@@ -15,6 +15,14 @@
     insertHere.parentNode.insertBefore(newFields, insertHere);
 });
 var click = 0;
+var today = new Date();
+$(function () {
+    $("#date" + click).datepicker({
+        minDate: '0',
+        yearRange: '-0:+1',
+        hideIfNoPrevNext: true
+    });
+});
 var addMore = function (index, hall, slot, requirement) {
     click = click + 1;
 
@@ -52,6 +60,14 @@ var addMore = function (index, hall, slot, requirement) {
             k++;
         }
     }
+    var today = new Date();
+    $(function () {
+        $("#date" + click).datepicker({
+            minDate: '0',
+            yearRange: '-0:+1',
+            hideIfNoPrevNext: true
+        });
+    });
 }
 var seeDetails = function (slotID, hallID) {
     if ($("#slotcheck" + slotID + "_" + hallID + "_" + click).is(':disabled')) {
@@ -86,17 +102,16 @@ var slotcheckchange = function (slotid, hallid) {
         if (slotid != 6)
             $("#slotcheck" + 6 + "_" + hallid + "_" + click).prop("disabled", true);
         else {
-            $('.slots'+hallid).each(function () {
-                    $(this).prop('disabled', true);
+            $('.slots' + hallid).each(function () {
+                $(this).prop('disabled', true);
             });
             $("#slotcheck" + 6 + "_" + hallid + "_" + click).prop("disabled", false);
         }
         $(id).val('true');
     }
-    else {        
+    else {
         $("#slotcheck" + 6 + "_" + hallid + "_" + click).prop("disabled", false);
-        if(slotid==6)
-        {
+        if (slotid == 6) {
             $('.slots' + hallid).each(function () {
                 $(this).prop('disabled', false);
             });
@@ -115,28 +130,28 @@ var datechosen = function () {
     //var today = new Date(Date.now()).toLocaleString();
 
     //if (date > today) {
-        $.ajax({
-            type: "POST",
-            data: { 'date': date },
-            dataType: 'JSON',
-            url: "/BookUtility/GetBookedSlotsList",
-            success: function (bookedSlotsList) {
-                var bookedSlotsItem = '';
-                $.each(bookedSlotsList, function (i, bookedSlotsItem) {
-                    $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", false);
-                    $("#slotcheck" + bookedSlotsItem.slotID + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
-                    if (!$("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).attr('disabled')) {
-                        $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
-                    }
-                    else {
-                        $('.slots' + bookedSlotsItem.hallID).each(function () {
-                            $(this).prop('disabled', true);
-                        });
-                    }
-                });
-            }
-        });
-        getRequirementsList();
+    $.ajax({
+        type: "POST",
+        data: { 'date': date },
+        dataType: 'JSON',
+        url: "/BookUtility/GetBookedSlotsList",
+        success: function (bookedSlotsList) {
+            var bookedSlotsItem = '';
+            $.each(bookedSlotsList, function (i, bookedSlotsItem) {
+                $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", false);
+                $("#slotcheck" + bookedSlotsItem.slotID + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
+                if (!$("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).attr('disabled')) {
+                    $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
+                }
+                else {
+                    $('.slots' + bookedSlotsItem.hallID).each(function () {
+                        $(this).prop('disabled', true);
+                    });
+                }
+            });
+        }
+    });
+    getRequirementsList();
     //}
     //else
     //{
