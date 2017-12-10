@@ -23,38 +23,38 @@ namespace UtilityBookingSystem.Controllers
         BookedSlot objBookedSlot = new BookedSlot();
         #endregion
 
-        #region Admin Login
-        public ActionResult Login()
-        {
-            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
-            {
-                return RedirectToAction("Index");
-            }
-            Session["LoggedIn"] = null;
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Login(BigViewModel model)
-        {
-            if (model.login.loginID == "admin" && model.login.password == "admin123")
-            {
-                Session["LoggedIn"] = 1;
-                return RedirectToAction("Index");
-            }
-            ViewBag.InvalidCredentials = "Invalid Credentials";
-            return View();
-        }
-        #endregion
+        //#region Admin Login
+        //public ActionResult Login()
+        //{
+        //    if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //    Session["LoggedIn"] = null;
+        //    return View();
+        //}
+        //[HttpPost]
+        //public ActionResult Login(BigViewModel model)
+        //{
+        //    if (model.login.loginID == "admin" && model.login.password == "admin123")
+        //    {
+        //        Session["LoggedIn"] = 1;
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.InvalidCredentials = "Invalid Credentials";
+        //    return View();
+        //}
+        //#endregion
 
         #region Admin Home
         public ActionResult Index()
         {
-            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1)
             {
                 ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
                 return View();
             }
-            return RedirectToAction("Login");
+            return RedirectToAction("Login","User");
         }
         #region Admin Adds User
         [HttpPost]
@@ -84,14 +84,14 @@ namespace UtilityBookingSystem.Controllers
         #region View Registered Users
         public ActionResult ViewRegisteredUsers()
         {
-            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1)
             {
                 ViewBag.RegisteredUsersList = objUsers.GetRegisteredUsers(); //Fetches Registered Users list from model Users
                 return View();
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login","User");
             }
         }
         #endregion
@@ -99,7 +99,7 @@ namespace UtilityBookingSystem.Controllers
         #region View Booking Requests
         public ActionResult ViewBookingRequests()
         {
-            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1)
             {
                 List<Booking> allBookingsList = objBooking.GetAllBookingsList();
                 //List<BookedDate> allBookedDatesList = objBookedDate.GetAllBookedDatesList();
@@ -110,7 +110,7 @@ namespace UtilityBookingSystem.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login","User");
             }
         }
         #endregion
@@ -118,7 +118,7 @@ namespace UtilityBookingSystem.Controllers
         [HttpGet]
         public ActionResult ViewApplication(int bookingID, int userID)
         {
-            if (Convert.ToInt32(Session["LoggedIn"]) == 1)
+            if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1)
             {
                 Users userDetailsList = objUsers.GetUserDetails(userID);
                 ViewBag.userDetails = userDetailsList;
@@ -142,21 +142,49 @@ namespace UtilityBookingSystem.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login","User");
             }
         }
         #endregion
         #region Approve Booking
-        public ActionResult ApproveBooking(int bookingID)
+        public ActionResult ApproveBooking(int bookingID, int userID)
         {
-            bool result = objBooking.ApproveBooking(bookingID);
+            string mailSubject, mailBody;
+            tblUser objtblUser = new tblUser();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblUser = context.tblUsers.First(x => x.userID == userID);
+            }
 
+            bool result = objBooking.ApproveBooking(bookingID);
+            if(result==true)
+            {
+                mailSubject = "Approval";
+                mailBody = objtblUser.name + ", your Booking has been Approved";
+                Mail.Send_Mail(objtblUser.email, mailBody, mailSubject); //Sends Mail to the registered User.
+
+            }
             return RedirectToAction("ViewBookingRequests", "Admin");
         }
-        public ActionResult UnapproveBooking(int bookingID)
+        public ActionResult UnapproveBooking(int bookingID, int userID)
         {
-            bool result = objBooking.UnapproveBooking(bookingID);
+            string mailSubject, mailBody;
 
+            tblUser objtblUser = new tblUser();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblUser = context.tblUsers.First(x => x.userID == userID);
+            }
+            bool result = objBooking.UnapproveBooking(bookingID);
+            if (result == true)
+            {
+                mailSubject = "Denied";
+                mailBody = objtblUser.name + ", your Booking has been unpproved";
+                Mail.Send_Mail(objtblUser.email, mailBody, mailSubject); //Sends Mail to the registered User.
+
+            }
             return RedirectToAction("ViewBookingRequests", "Admin");
         }
         #endregion
@@ -165,8 +193,8 @@ namespace UtilityBookingSystem.Controllers
         #region Admin Logout
         public ActionResult Logout()
         {
-            Session["LoggedIn"] = null;
-            return RedirectToAction("Login");
+            Session["DeanAdminLoggedIn"] = null;
+            return RedirectToAction("Login","User");
         }
         #endregion
 

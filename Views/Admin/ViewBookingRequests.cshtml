@@ -68,9 +68,11 @@
             <th>Approval</th>
         </tr>
         @{
-            int i = 1;
-            foreach (var item in ViewBag.allBookingsList)
+            if (ViewBag.allBookingsList.Count!=0)
             {
+                int i = 1;
+                foreach (var item in ViewBag.allBookingsList)
+                {
 
                 <tr>
                     <td>@item.bookingNo</td>
@@ -83,17 +85,26 @@
                     @if (item.status == true)
                     {
                         // <td>@Html.ActionLink("Approve", "ApproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>
+                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID, userID = item.userID })">Unapprove</a></td>
                         @*<td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>*@
                     }
                     else
                     {
                         //<td>@Html.ActionLink("Unapprove", "UnapproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>
+                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID, userID = item.userID })">Approve</a></td>
                         @*<td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>*@
                     }
                 </tr>
-                i++;
+                    i++;
+                }
+            }
+            else
+            {
+               <tr> 
+                   <td>
+                       <h3 class="text-center">No Bookings available</h3>
+                   </td>
+                </tr>
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using UtilityBookingSystem.Repository;
@@ -10,7 +11,9 @@ namespace UtilityBookingSystem.Models
     {
         #region tblBookedDate attributes
         public int dateID { get; set; }
+        
         public Nullable<System.DateTime> dateChosen { get; set; }
+
         public Nullable<int> bookingID { get; set; }
         //public List<BookedHall> bookedHalls { get; set; }
         //public List<BookedSlot> bookedSlots { get; set; }

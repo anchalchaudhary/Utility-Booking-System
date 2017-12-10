@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hall Booking System</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Karla|Montserrat|PT+Sans+Narrow" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<link href="css/my-style.css" rel="stylesheet" type="text/css" />
+	<!-- dateDropper lib -->
+
+</head>
+<body>
+	<button onclick="topFunction()" id="myBtn" title="Go to top"><b>^</b></button>
+	<nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
+		<a href="http://www.akgec.in"><img src="images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
+		<a class="navbar-brand" href="index.html">
+			<div style="vertical-align: middle;font-family: 'Karla',sans-serif; font-size: 1.5em" class="d-inline-block">
+				Hall Management system
+			</div>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<b class="navbar-toggler-icon"></b>
+		</button>
+		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+			<ul style="font-family:'Roboto', sans-serif; font-size: 1.2em" class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="#">Logout<span class="sr-only"></span></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div style="color: #ffffff" class="container">
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-5">
+				<div style="margin-top: 50px;">
+					<h1 style="font-family:'Roboto',sans-serif;color: #00C0C0;">Future Bookings.</h1>
+					<div style="height: 380px;overflow-y: scroll;" id="scrollstyle">
+						<table class="table table-striped">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Id</th>
+									<th scope="col">Title</th>
+									<th scope="col">Purpose</th>
+									<th scope="col">Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">001</th>
+									<td>A</td>
+									<td>lorem</td>
+									<td>Passed</td>
+								</tr>
+                                <tr>
+                                    <th scope="row">001</th>
+                                    <td>A</td>
+                                    <td>lorem</td>
+                                    <td>Passed</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">001</th>
+                                    <td>A</td>
+                                    <td>lorem</td>
+                                    <td>Passed</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">001</th>
+                                    <td>A</td>
+                                    <td>lorem</td>
+                                    <td>Passed</td>
+                                </tr>
+								<tr>
+									<th scope="row">001</th>
+									<td>A</td>
+									<td>lorem</td>
+									<td>Passed</td>
+								</tr>
+								<tr>
+									<th scope="row">001</th>
+									<td>A</td>
+									<td>lorem</td>
+									<td>Passed</td>
+								</tr>
+								<tr>
+									<th scope="row">001</th>
+									<td>A</td>
+									<td>lorem</td>
+									<td>Passed</td>
+								</tr>
+								<tr>
+									<th scope="row">001</th>
+									<td>A</td>
+									<td>lorem</td>
+									<td>Passed</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div style="text-align: center;margin-top: 20%;" class="col-12 co-sm-12 col-md-2">
+				<h2>OR</h2>
+			</div>
+			<div style="color:#00C0C0;margin-top: 5%;text-align: center;" class="col-12 col-sm-12 col-md-5">
+				<h1 style="font-family:'PT Sans Narrow',sans-serif;font-size: 4rem;">MAKE NEW BOOKING</h1>
+				<div style="margin-top: 20%; margin-bottom: 20%;">
+					<form>
+						<input class="form-control" type="text" placeholder="Enter Title">
+						<select style="margin-top: 25px;" class="form-control">
+							<option>Select Purpose</option>
+							<option>Option 1</option>
+							<option>Option 2</option>
+						</select>
+						<button style="background-color:#018484;width: 100%;margin-top: 25px;" type="submit" class="btn btn-primary">Proceed To Next Step</button>
+					</form>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="js/scroll.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+
+</body>
+</html>

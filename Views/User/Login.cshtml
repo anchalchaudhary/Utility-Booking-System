@@ -4,8 +4,7 @@
     Layout = null;
 }
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Karla" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Montserrat|Nunito|Roboto|Open+Sans|Karla|Raleway" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 <link rel="stylesheet" type="text/css" href="~/css/style.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -18,13 +17,12 @@
     <img style="width: 100px;" src="~/images/akgeclogo.png">
 </div>
 <div class="container">
-    <div style="margin-top:5%;" class="row justify-content-between">
-        <div style="text-align:center;font-size: 5rem;color:white;font-family: 'Karla', sans-serif;" class="col-md-6 col-12 col-sm-12">
+    <div class="row">
+        <div style="font-size: 5rem;color:white;font-family: 'Raleway', sans-serif;" class="col l8 s12 m12">
             Hall Booking System
         </div>
-        <div class="col-md-1 col-12 col-sm-12" id="login-page">
-            
-            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "login-form" }))
+        <div class="col l4 sm12 m12" id="login-page">
+            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "login-form", @style = "margin-left: 10px;" }))
             {
                 <div class="row">
                     <div class="input-field col s12 center">
@@ -36,8 +34,8 @@
                     <div class="input-field col s12">
                         <!-- <i class="mdi-social-person-outline prefix"></i> -->
                         <i class="material-icons prefix">account_circle</i>
-                        @Html.TextBoxFor(model => model.login.loginID, new { @id = "username", style = "background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); cursor: auto;" })
-                        <label for="username" data-error="wrong" class="center-align" data-success="right">Username</label>
+                        @Html.TextBoxFor(model => model.login.loginID, new { @id = "username", @style = "background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); cursor: auto;" })
+                        <label for="username" data-error="wrong" class="center-align" data-success="">Username</label>
                         @Html.ValidationMessageFor(model => model.login.loginID, "", new { @class = "error" })
                     </div>
                 </div>
@@ -45,12 +43,13 @@
                     <div class="input-field col s12">
                         <!-- <i class="mdi-action-lock-outline prefix"></i> -->
                         <i class="material-icons prefix">vpn_key</i>
-                        @Html.PasswordFor(model => model.login.password, new { @id = "password", @style = "background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;);" })
+                        @Html.PasswordFor(model => model.login.password, new { @id = "password", @style = "background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;" })
                         <label for="password">Password</label>
                         @Html.ValidationMessageFor(model => model.login.password, "", new { @class = "error" })
                     </div>
                 </div>
                 <div class="error">@ViewBag.InvalidCredentials</div>
+
                 <div class="row">
                     <div class="input-field col s12 login-text">
                         <input type="checkbox" id="test6" checked="checked" />
@@ -66,7 +65,7 @@
         </div>
     </div>
 </div>
-<div style="color: white; text-align: center;margin-bottom: 5px;" class="fixed-bottom">
+<div style="color: white; position:fixed;width:300px;bottom:0px;right:25%;left:54%;margin-left:-150px;">
     Powered By
     <img style="width: 50px;" src="~/images/silogo.png">
     Software Incubator
@@ -75,5 +74,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script type="text/javascript" src="~/js/script.js"></script>
