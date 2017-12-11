@@ -198,5 +198,30 @@ namespace UtilityBookingSystem.Controllers
             else
                 return RedirectToAction("Login", "User");
         }
+
+        #region Print
+        public ActionResult Print(int bookingID)
+        {
+            Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
+            ViewBag.bookingDetails = bookingDetails;
+
+            List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
+            ViewBag.bookedDate = bookingDateList;
+
+            List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+            ViewBag.bookedHall = bookedHallList;
+
+            List<Chair> chairsList = objChair.GetChairsList(bookingDateList, bookedHallList, bookingID);
+            ViewBag.chairs = chairsList;
+
+            List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+            ViewBag.bookedReq = bookedReqList;
+
+            List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+            ViewBag.bookingSlot = bookingSlotList;
+
+            return View();
+        }
+        #endregion
     }
 }

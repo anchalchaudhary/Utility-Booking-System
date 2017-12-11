@@ -28,6 +28,9 @@
         </ul>
     </div>
 </nav>
+<div class="right">
+    <a data-path="@Url.Action("Print", "BookUtility", new { bookingID = ViewBag.bookingDetails.bookingID})" id="btnPrint" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
+</div>
 <div>
     <div>
         <h2 class="text-center" style="color:#00C0C0;margin-top: 5%;text-align: center;">Application for @ViewBag.bookingDetails.title</h2>

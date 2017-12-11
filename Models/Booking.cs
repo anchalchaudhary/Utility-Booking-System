@@ -132,6 +132,7 @@ namespace UtilityBookingSystem.Models
                 objtblPurpose = context.tblPurposes.First(x => x.purposeID == objtblBooking.purposeID);
             }
             bookingDetail.bookingNo = objtblBooking.bookingNo;
+            bookingDetail.bookingID = objtblBooking.bookingID;
             bookingDetail.title = objtblBooking.title;
             bookingDetail.bookedAtTime = objtblBooking.bookedAtTime;
             bookingDetail.purpose = objtblPurpose.purpose;

@@ -184,6 +184,7 @@
     <Content Include="css\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="images\akgec.png" />
     <Content Include="images\akgeclogo.png" />
     <Content Include="images\bg.jpg" />
     <Content Include="images\silogo.png" />
@@ -345,6 +346,7 @@
     <Content Include="Views\BookUtility\Testing.cshtml" />
     <Content Include="Views\User\ViewApplication.cshtml" />
     <Content Include="Views\BookUtility\ViewApplication.cshtml" />
+    <Content Include="Views\BookUtility\Print.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
