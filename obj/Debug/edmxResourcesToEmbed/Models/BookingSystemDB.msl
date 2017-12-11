@@ -24,8 +24,8 @@
         <MappingFragment StoreEntitySet="tblBookedRequirement">
           <ScalarProperty Name="bookedReqID" ColumnName="bookedReqID" />
           <ScalarProperty Name="bookingID" ColumnName="bookingID" />
-          <ScalarProperty Name="dateID" ColumnName="dateID" />
           <ScalarProperty Name="reqHallID" ColumnName="reqHallID" />
+          <ScalarProperty Name="dateID" ColumnName="dateID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -41,13 +41,24 @@
     <EntitySetMapping Name="tblBookings">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblBooking">
         <MappingFragment StoreEntitySet="tblBooking">
-          <ScalarProperty Name="bookedAtTime" ColumnName="bookedAtTime" />
-          <ScalarProperty Name="bookingNo" ColumnName="bookingNo" />
-          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="bookingID" ColumnName="bookingID" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="purposeID" ColumnName="purposeID" />
           <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="bookingNo" ColumnName="bookingNo" />
+          <ScalarProperty Name="bookedAtTime" ColumnName="bookedAtTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblChairs">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblChair">
+        <MappingFragment StoreEntitySet="tblChairs">
+          <ScalarProperty Name="chairID" ColumnName="chairID" />
+          <ScalarProperty Name="noOfChairs" ColumnName="noOfChairs" />
+          <ScalarProperty Name="hallID" ColumnName="hallID" />
+          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+          <ScalarProperty Name="dateID" ColumnName="dateID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -109,17 +120,6 @@
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="deptID" ColumnName="deptID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tblChairs">
-      <EntityTypeMapping TypeName="BookingSystemDBModel.tblChair">
-        <MappingFragment StoreEntitySet="tblChairs">
-          <ScalarProperty Name="dateID" ColumnName="dateID" />
-          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
-          <ScalarProperty Name="hallID" ColumnName="hallID" />
-          <ScalarProperty Name="noOfChairs" ColumnName="noOfChairs" />
-          <ScalarProperty Name="chairID" ColumnName="chairID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

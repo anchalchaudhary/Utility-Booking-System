@@ -15,7 +15,7 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> purposeID { get; set; }
         public string title { get; set; }
         public string purpose { get; set; }
-        public Nullable<bool> status { get; set; }
+        public Nullable<int> status { get; set; }
         public string bookingNo { get; set; }
         public Nullable<System.DateTime> bookedAtTime { get; set; }
 
@@ -25,6 +25,7 @@ namespace UtilityBookingSystem.Models
         #region Repository objects
         UserPanelRepository objUserPanelRepository = new UserPanelRepository();
         BookingRepository objBookingRepository = new BookingRepository();
+        AdminPanelRepository objAdminPanelRepository = new AdminPanelRepository();
         #endregion
 
         #region Creates new Booking
@@ -76,7 +77,7 @@ namespace UtilityBookingSystem.Models
                 if (objtblBooking != null)
                 {
                     result = true;
-                    objtblBooking.status = true;
+                    objtblBooking.status = 1;
                     //}
                     context.SaveChanges();
                     //if (objtblBooking != null)
@@ -100,7 +101,7 @@ namespace UtilityBookingSystem.Models
                 if (objtblBooking != null)
                 {
                     result = true;
-                    objtblBooking.status = false;
+                    objtblBooking.status = 0;
                     //}
                     context.SaveChanges();
                     //if (objtblBooking != null)
@@ -194,6 +195,11 @@ namespace UtilityBookingSystem.Models
         {
             bool isCancelled = objUserPanelRepository.CancelBooking(bookingID, userID);
             return isCancelled;
+        }
+        public bool DeleteBooking(int bookingID)
+        {
+            bool isDeleted = objAdminPanelRepository.DeleteBooking(bookingID);
+            return isDeleted;
         }
     }
 }

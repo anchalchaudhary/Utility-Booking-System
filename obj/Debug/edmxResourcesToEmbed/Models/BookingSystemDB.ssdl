@@ -41,7 +41,7 @@
     <Property Name="userID" Type="int" />
     <Property Name="purposeID" Type="int" />
     <Property Name="title" Type="nvarchar(max)" />
-    <Property Name="status" Type="bit" />
+    <Property Name="status" Type="int" />
     <Property Name="bookingNo" Type="nvarchar(max)" />
     <Property Name="bookedAtTime" Type="datetime" />
   </EntityType>

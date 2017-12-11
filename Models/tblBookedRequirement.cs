@@ -16,8 +16,8 @@ namespace UtilityBookingSystem.Models
     {
         public int bookedReqID { get; set; }
         public Nullable<int> bookingID { get; set; }
-        public Nullable<int> dateID { get; set; }
         public Nullable<int> reqHallID { get; set; }
+        public Nullable<int> dateID { get; set; }
     
         public virtual tblBookedDate tblBookedDate { get; set; }
         public virtual tblBooking tblBooking { get; set; }

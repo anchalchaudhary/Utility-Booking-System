@@ -188,6 +188,13 @@ namespace UtilityBookingSystem.Controllers
             return RedirectToAction("ViewBookingRequests", "Admin");
         }
         #endregion
+        #region Delete Booking
+        public ActionResult DeleteBooking(int bookingID)
+        {
+            bool isDeleted = objBooking.DeleteBooking(bookingID);
+            return RedirectToAction("Index", "Admin");
+        }
+        #endregion
         #endregion
 
         #region Admin Logout

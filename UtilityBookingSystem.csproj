@@ -180,6 +180,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="css\datedropper.css" />
     <Content Include="css\my-style.css" />
+    <Content Include="css\print.css" />
     <Content Include="css\src\datedropper.svg" />
     <Content Include="css\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -210,6 +211,9 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="css\src\datedropper.eot" />
+    <Content Include="css\src\datedropper.ttf" />
+    <Content Include="css\src\datedropper.woff" />
     <EntityDeploy Include="Models\BookingSystemDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BookingSystemDB.Designer.cs</LastGenOutput>
@@ -217,9 +221,6 @@
     <Content Include="Models\BookingSystemDB.edmx.diagram">
       <DependentUpon>BookingSystemDB.edmx</DependentUpon>
     </Content>
-    <Content Include="css\src\datedropper.eot" />
-    <Content Include="css\src\datedropper.ttf" />
-    <Content Include="css\src\datedropper.woff" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

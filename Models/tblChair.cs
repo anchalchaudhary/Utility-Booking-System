@@ -20,8 +20,8 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> bookingID { get; set; }
         public Nullable<int> dateID { get; set; }
     
+        public virtual tblBookedDate tblBookedDate { get; set; }
         public virtual tblBooking tblBooking { get; set; }
         public virtual tblHall tblHall { get; set; }
-        public virtual tblBookedDate tblBookedDate { get; set; }
     }
 }

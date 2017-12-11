@@ -54,21 +54,21 @@
                     <td><b>Booked At</b></td>
                     <td><b>@ViewBag.bookingDetails.bookedAtTime</b></td>
                 </tr>
-                @*<tr>
+                <tr>
                         <td><b>Status</b></td>
-                        @if (ViewBag.bookingDetails.status == true)
+                        @if (ViewBag.bookingDetails.status == 1)
                         {
                             <td>
                                 <h4 style="color:#00C0C0;"><b>Confirmed</b> </h4>
                             </td>
                         }
-                        else
+                        else if (ViewBag.bookingDetails.status == 0)
                         {
                             <td>
-                                <h4 style="color:red"><b>Unapproved </b></h4>
+                                <h4 style="color:red"><b>Pending</b></h4>
                             </td>
                         }
-                    </tr>*@
+                    </tr>
             </table>
         </div>
         <h4>Booking Details:</h4>
@@ -122,17 +122,16 @@
                                 </td>
                             </tr>
                             <tr>
-
-                                @foreach (var chairItem in ViewBag.chairs)
-                                {
-                                    <td><b>Number of Chairs</b></td>
-                                    <td>
-                                        if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs>0)
+                                <td><b>Number of Chairs</b></td>                                    
+                                <td>
+                                    @foreach (var chairItem in ViewBag.chairs)
+                                    {
+                                        if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0)
                                         {
                                             <b>@chairItem.noOfChairs</b>
                                         }
-                                    </td>
-                                }
+                                    }
+                                </td>
                             </tr>
                         }
                     }

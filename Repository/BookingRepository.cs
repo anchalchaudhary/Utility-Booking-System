@@ -19,7 +19,7 @@ namespace UtilityBookingSystem.Repository
                 objtblBooking.purposeID = objBooking.purposeID;
                 objtblBooking.userID = objBooking.userID;
                 objtblBooking.bookedAtTime = DateTime.Now;
-                objtblBooking.status = false;
+                objtblBooking.status = 0;
                 db.tblBookings.Add(objtblBooking);
                 db.SaveChanges();
 
