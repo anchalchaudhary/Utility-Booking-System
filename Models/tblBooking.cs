@@ -18,6 +18,7 @@ namespace UtilityBookingSystem.Models
         {
             this.tblBookedDates = new HashSet<tblBookedDate>();
             this.tblBookedRequirements = new HashSet<tblBookedRequirement>();
+            this.tblChairs = new HashSet<tblChair>();
         }
     
         public int bookingID { get; set; }
@@ -32,5 +33,6 @@ namespace UtilityBookingSystem.Models
         public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
         public virtual tblPurpose tblPurpose { get; set; }
         public virtual tblUser tblUser { get; set; }
+        public virtual ICollection<tblChair> tblChairs { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace UtilityBookingSystem.Repository
 
                 tblBooking objtblBookingUpdate = db.tblBookings.SingleOrDefault(x => x.bookingID == bookingID);
                 Random random = new Random();
-                objtblBooking.bookingNo = "UBS" + DateTime.Now.Day+DateTime.Now.Month+DateTime.Now.Year + bookingID;
+                objtblBooking.bookingNo = "UBS" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + bookingID;
 
                 db.SaveChanges();
 
@@ -60,19 +60,18 @@ namespace UtilityBookingSystem.Repository
         {
             int i;
             tblRequirementForHall objtblRequirementForHall = new tblRequirementForHall();
-
             using (var db = new BookingSystemDBEntities())
             {
                 db.Configuration.LazyLoadingEnabled = false;
-                bool flagReq = false, flagSlot=false, flagHall=false;
+                bool flagReq = false, flagSlot = false, flagHall = false;
 
                 foreach (var item in hallsArray)
                 {
                     flagHall = false;
 
-                    if (hallsArray != null && item.hallID!=0)
+                    if (hallsArray != null && item.hallID != 0)
                     {
-                        int bookedHallID=0;
+                        int bookedHallID = 0;
                         if (item.requirementsArray != null)
                         {
                             foreach (var reqItem in item.requirementsArray)
@@ -99,7 +98,7 @@ namespace UtilityBookingSystem.Repository
                                 if (slotItem.isSelected == true)
                                 {
                                     flagSlot = true;
-                                    if(flagReq==true && flagSlot==true && flagHall==false)
+                                    if (flagReq == true && flagSlot == true && flagHall == false)
                                     {
                                         tblBookedHall objtblBookedHall = new tblBookedHall();
 
@@ -127,28 +126,46 @@ namespace UtilityBookingSystem.Repository
                     }
                 }
             }
-        }
-        #endregion
-
-        #region Save selected Requirements
-        public void SaveSelectedRequirements(int[] hallsArray, int[] requirementsArray, int bookingID, int dateID)
-        {
-            int i;
-            tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
-
-            using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+            using (var db = new BookingSystemDBEntities())
             {
-                for (i = 0; i < requirementsArray.Length; i++)
+                db.Configuration.LazyLoadingEnabled = false;
+                foreach (var item in hallsArray)
                 {
-                    objtblBookedRequirement.dateID = dateID;
-                    objtblBookedRequirement.bookingID = bookingID;
-                    objtblBookedRequirement.reqHallID = requirementsArray[i];
+                    tblChair objtblChair = new tblChair();
+                    if (item.noOfChairs != 0)
+                    {
+                        objtblChair.noOfChairs = item.noOfChairs;
+                        objtblChair.hallID = item.hallID;
+                        objtblChair.bookingID = bookingID;
+                        objtblChair.dateID = dateID;
 
-                    db.tblBookedRequirements.Add(objtblBookedRequirement);
-                    db.SaveChanges();
+                        db.tblChairs.Add(objtblChair);
+                        db.SaveChanges();
+                    }
                 }
             }
         }
-        #endregion
+            #endregion
+
+            #region Save selected Requirements
+            public void SaveSelectedRequirements(int[] hallsArray, int[] requirementsArray, int bookingID, int dateID)
+            {
+                int i;
+                tblBookedRequirement objtblBookedRequirement = new tblBookedRequirement();
+
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    for (i = 0; i < requirementsArray.Length; i++)
+                    {
+                        objtblBookedRequirement.dateID = dateID;
+                        objtblBookedRequirement.bookingID = bookingID;
+                        objtblBookedRequirement.reqHallID = requirementsArray[i];
+
+                        db.tblBookedRequirements.Add(objtblBookedRequirement);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            #endregion
+        }
     }
-}

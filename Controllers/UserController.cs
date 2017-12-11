@@ -19,6 +19,8 @@ namespace UtilityBookingSystem.Controllers
         BookedDate objBookedDate = new BookedDate();
         BookedRequirement objBookedRequirement = new BookedRequirement();
         BookedSlot objBookedSlot = new BookedSlot();
+        Chair objChair = new Chair();
+
         #endregion
 
         #region User Login
@@ -95,6 +97,9 @@ namespace UtilityBookingSystem.Controllers
                 List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
                 ViewBag.bookedHall = bookedHallList;
 
+                List<Chair> chairsList = objChair.GetChairsList(bookingDateList,bookedHallList, bookingID);
+                ViewBag.chairs = chairsList;
+
                 List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
                 ViewBag.bookedReq = bookedReqList;
 
@@ -109,6 +114,7 @@ namespace UtilityBookingSystem.Controllers
             }
         }
         #endregion
+
         #region Make new Booking
         [HttpPost]
         public ActionResult Index(BigViewModel model)
@@ -121,6 +127,15 @@ namespace UtilityBookingSystem.Controllers
             ViewBag.purposeList = new SelectList(objPurpose.GetPurposeList(), "purposeID", "purpose"); //Fetches list of purpose for booking from Purpose Model
 
             return RedirectToAction("Testing", "BookUtility");
+        }
+        #endregion
+
+        #region Cancel Booking
+        [HttpGet]
+        public ActionResult CancelBooking(int bookingID, int userID)
+        {
+            bool isCancelled = objBooking.CancelBooking(bookingID, userID);
+            return RedirectToAction("Index", "User");
         }
         #endregion
         #endregion

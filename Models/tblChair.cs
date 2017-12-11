@@ -12,22 +12,16 @@ namespace UtilityBookingSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblBookedDate
+    public partial class tblChair
     {
-        public tblBookedDate()
-        {
-            this.tblBookedHalls = new HashSet<tblBookedHall>();
-            this.tblBookedRequirements = new HashSet<tblBookedRequirement>();
-            this.tblChairs = new HashSet<tblChair>();
-        }
-    
-        public int dateID { get; set; }
-        public Nullable<System.DateTime> dateChosen { get; set; }
+        public int chairID { get; set; }
+        public Nullable<int> noOfChairs { get; set; }
+        public Nullable<int> hallID { get; set; }
         public Nullable<int> bookingID { get; set; }
+        public Nullable<int> dateID { get; set; }
     
         public virtual tblBooking tblBooking { get; set; }
-        public virtual ICollection<tblBookedHall> tblBookedHalls { get; set; }
-        public virtual ICollection<tblBookedRequirement> tblBookedRequirements { get; set; }
-        public virtual ICollection<tblChair> tblChairs { get; set; }
+        public virtual tblHall tblHall { get; set; }
+        public virtual tblBookedDate tblBookedDate { get; set; }
     }
 }

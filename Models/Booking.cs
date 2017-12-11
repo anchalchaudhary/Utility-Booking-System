@@ -188,5 +188,11 @@ namespace UtilityBookingSystem.Models
             }
             return listUserBooking;
         }
+
+        public bool CancelBooking(int bookingID, int userID)
+        {
+            bool isCancelled = objUserPanelRepository.CancelBooking(bookingID, userID);
+            return isCancelled;
+        }
     }
 }

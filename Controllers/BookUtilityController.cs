@@ -21,6 +21,8 @@ namespace UtilityBookingSystem.Controllers
         BookedSlot objBookedSlot = new BookedSlot();
         BookedRequirement objBookedRequirement = new BookedRequirement();
         Booking objBooking = new Booking();
+        Chair objChair = new Chair();
+
         #endregion
 
         #region Start Booking
@@ -175,6 +177,9 @@ namespace UtilityBookingSystem.Controllers
 
                     List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
                     ViewBag.bookedHall = bookedHallList;
+
+                    List<Chair> chairsList = objChair.GetChairsList(bookingDateList, bookedHallList, bookingID);
+                    ViewBag.chairs = chairsList;
 
                     List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
                     ViewBag.bookedReq = bookedReqList;

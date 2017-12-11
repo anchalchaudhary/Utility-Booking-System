@@ -30,6 +30,10 @@
         <AssociationConnector Association="BookingSystemDBModel.FK__tblUser__departm__0519C6AF" ManuallyRouted="false" />
         <AssociationConnector Association="BookingSystemDBModel.FK__tblRequir__hallI__3D5E1FD2" ManuallyRouted="false" />
         <AssociationConnector Association="BookingSystemDBModel.FK__tblRequir__requi__3E52440B" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BookingSystemDBModel.tblChair" Width="1.5" PointX="10.5" PointY="9.625" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblChairs__booki__00200768" />
+        <AssociationConnector Association="BookingSystemDBModel.FK__tblChairs__hallI__7F2BE32F" />
+        <AssociationConnector Association="BookingSystemDBModel.FK_tblChairs_tblBookedDate" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

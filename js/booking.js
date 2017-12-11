@@ -20,7 +20,8 @@ $(function () {
     $("#date" + click).datepicker({
         minDate: '0',
         yearRange: '-0:+1',
-        hideIfNoPrevNext: true
+        hideIfNoPrevNext: true,
+        dateFormat: 'dd-mm-yy',
     });
 });
 var addMore = function (index, hall, slot, requirement) {
@@ -43,7 +44,7 @@ var addMore = function (index, hall, slot, requirement) {
     var iHall = hall;
     for (i = 1; i <= click; i++) {
         $("#date" + click).attr("name", "detailsObjList[" + i + "].date");
-
+        $("#alternateDate" + click).attr("name", "detailsObjList[" + i + "].date");
         for (j = 1; j <= 6; j++) {
             iHall = hall;
             for (p = 1; p <= 4; p++) {
@@ -55,6 +56,7 @@ var addMore = function (index, hall, slot, requirement) {
                 $("#reqcheck" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].requirementsArray[" + (requirement + k) + "].isSelected");
                 $("#reqcheck" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("class", "reqs" + (hall + p));
                 $("#hiddenreq" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].requirementsArray[" + (requirement + k) + "].requirementID");
+                $("#chairs_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].noOfChairs");
                 iHall++;
             }
             k++;
@@ -65,7 +67,8 @@ var addMore = function (index, hall, slot, requirement) {
         $("#date" + click).datepicker({
             minDate: '0',
             yearRange: '-0:+1',
-            hideIfNoPrevNext: true
+            hideIfNoPrevNext: true,
+            dateFormat: 'dd-mm-yy',
         });
     });
 }
@@ -121,15 +124,24 @@ var slotcheckchange = function (slotid, hallid) {
 var reqcheckchange = function (reqid, hallid) {
     var id = "#reqcheck" + reqid + "_" + hallid + "_" + click;
     if ($(id).prop('checked')) {
+        if (reqid == 3)
+        {
+            $("#chairs_" + (hallid) + "_" + click).show();
+        }
         $(id).val('true');
     }
 }
 var datechosen = function () {
-    var id = "date" + click;
+    
+        $("#date"+click).datepicker({
+            dateFormat: 'dd-mm-yy',
+            altFormat: "dd-mm-yy",
+            altField: '#alternateDate'
+    });
+    $('#alternateDate' + click).val(document.getElementById("date" + click).value);
+    var id = "alternateDate" + click;
     var date = document.getElementById(id).value;
-    //var today = new Date(Date.now()).toLocaleString();
 
-    //if (date > today) {
     $.ajax({
         type: "POST",
         data: { 'date': date },

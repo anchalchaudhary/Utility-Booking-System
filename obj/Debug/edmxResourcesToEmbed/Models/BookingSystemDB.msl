@@ -112,5 +112,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tblChairs">
+      <EntityTypeMapping TypeName="BookingSystemDBModel.tblChair">
+        <MappingFragment StoreEntitySet="tblChairs">
+          <ScalarProperty Name="dateID" ColumnName="dateID" />
+          <ScalarProperty Name="bookingID" ColumnName="bookingID" />
+          <ScalarProperty Name="hallID" ColumnName="hallID" />
+          <ScalarProperty Name="noOfChairs" ColumnName="noOfChairs" />
+          <ScalarProperty Name="chairID" ColumnName="chairID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

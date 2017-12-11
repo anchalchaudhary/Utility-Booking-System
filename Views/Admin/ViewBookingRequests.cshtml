@@ -13,7 +13,7 @@
                 <h4 class="modal-title">Confirmation</h4>
             </div>
             <div class="modal-body">
-                Are you sure you want to approve this booking?
+                Are you sure you want to confirm this booking?
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
@@ -31,11 +31,11 @@
                 <h4 class="modal-title">Confirmation</h4>
             </div>
             <div class="modal-body">
-                Are you sure you want to unapprove this booking?
+                Are you sure you want to cancel this booking?
             </div>
             <div class="modal-footer">
-                <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
-                <button id="btnContinueUnapprove" type="button" class="btn btn-danger">Unapprove</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">No</button>
+                <button id="btnContinueUnapprove" type="button" class="btn btn-danger">Yes</button>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
         <h3>Booking Requests</h3>
     </div>
     <div class="col-md-4" style="margin-top: 2%;">
-        <input type="radio" name="selectBookings" value="approved"> Approved
+        <input type="radio" name="selectBookings" value="approved"> Confirmed
         <input type="radio" name="selectBookings" value="pending"> Pending
         <input type="radio" name="selectBookings" value="all" checked> All
     </div>
@@ -85,13 +85,13 @@
                     @if (item.status == true)
                     {
                         // <td>@Html.ActionLink("Approve", "ApproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID, userID = item.userID })">Unapprove</a></td>
+                        <td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID, userID = item.userID })">Cancel</a></td>
                         @*<td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID })">Approve</a></td>*@
                     }
                     else
                     {
                         //<td>@Html.ActionLink("Unapprove", "UnapproveBooking", "Admin", new { bookingID = item.bookingID }, null)</td>
-                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID, userID = item.userID })">Approve</a></td>
+                        <td><a id="approve@(i)" class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = item.bookingID, userID = item.userID })">Confirm</a></td>
                         @*<td><a id="unapprove@(i)" class="unapprove" data-target="#unapprove" data-toggle="modal" data-path="@Url.Action("UnapproveBooking", "Admin", new { bookingID = item.bookingID })">Unapprove</a></td>*@
                     }
                 </tr>
@@ -155,7 +155,7 @@
                 if (td) {
                     //console.log($("#unapprove"+i).text());
                     var msgString = $("#unapprove" + i).text().toUpperCase();
-                    if (msgString.indexOf("UNAPPROVE") !== -1) {
+                    if (msgString.indexOf("CANCEL") !== -1) {
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";
@@ -168,7 +168,7 @@
                 td = tr[i].getElementsByTagName("td")[7];
                 if (td) {
                     var msgString = $("#approve" + i).text().toUpperCase();
-                    if (msgString.indexOf("APPROVE") !== -1) {
+                    if (msgString.indexOf("CONFIRM") !== -1) {
                         tr[i].style.display = "";
                     } else {
                         tr[i].style.display = "none";

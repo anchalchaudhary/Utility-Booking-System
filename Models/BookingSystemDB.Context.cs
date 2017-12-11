@@ -37,5 +37,6 @@ namespace UtilityBookingSystem.Models
         public DbSet<tblRequirementForHall> tblRequirementForHalls { get; set; }
         public DbSet<tblSlot> tblSlots { get; set; }
         public DbSet<tblUser> tblUsers { get; set; }
+        public DbSet<tblChair> tblChairs { get; set; }
     }
 }

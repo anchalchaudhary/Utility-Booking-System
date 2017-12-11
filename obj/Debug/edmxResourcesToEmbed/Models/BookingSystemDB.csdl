@@ -10,6 +10,7 @@
     <NavigationProperty Name="tblBooking" Relationship="Self.FK__tblBooked__booki__239E4DCF" FromRole="tblBookedDate" ToRole="tblBooking" />
     <NavigationProperty Name="tblBookedHalls" Relationship="Self.FK__tblBooked__dateI__29572725" FromRole="tblBookedDate" ToRole="tblBookedHall" />
     <NavigationProperty Name="tblBookedRequirements" Relationship="Self.FK_tblBookedRequirement_tblBookedDate" FromRole="tblBookedDate" ToRole="tblBookedRequirement" />
+    <NavigationProperty Name="tblChairs" Relationship="BookingSystemDBModel.FK_tblChairs_tblBookedDate" FromRole="tblBookedDate" ToRole="tblChair" />
   </EntityType>
   <EntityType Name="tblBookedHall">
     <Key>
@@ -59,6 +60,7 @@
     <Property Name="status" Type="Boolean" />
     <Property Name="bookingNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="bookedAtTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="tblChairs" Relationship="BookingSystemDBModel.FK__tblChairs__booki__00200768" FromRole="tblBooking" ToRole="tblChair" />
   </EntityType>
   <EntityType Name="tblDepartment">
     <Key>
@@ -76,6 +78,7 @@
     <Property Name="hallName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="tblBookedHalls" Relationship="Self.FK__tblBooked__hallI__286302EC" FromRole="tblHall" ToRole="tblBookedHall" />
     <NavigationProperty Name="tblRequirementForHalls" Relationship="Self.FK__tblRequir__hallI__3D5E1FD2" FromRole="tblHall" ToRole="tblRequirementForHall" />
+    <NavigationProperty Name="tblChairs" Relationship="BookingSystemDBModel.FK__tblChairs__hallI__7F2BE32F" FromRole="tblHall" ToRole="tblChair" />
   </EntityType>
   <EntityType Name="tblPurpose">
     <Key>
@@ -366,5 +369,67 @@
       <End Role="tblRequirement" EntitySet="tblRequirements" />
       <End Role="tblRequirementForHall" EntitySet="tblRequirementForHalls" />
     </AssociationSet>
+    <EntitySet Name="tblChairs" EntityType="BookingSystemDBModel.tblChair" />
+    <AssociationSet Name="FK__tblChairs__booki__00200768" Association="BookingSystemDBModel.FK__tblChairs__booki__00200768">
+      <End Role="tblBooking" EntitySet="tblBookings" />
+      <End Role="tblChair" EntitySet="tblChairs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tblChairs__hallI__7F2BE32F" Association="BookingSystemDBModel.FK__tblChairs__hallI__7F2BE32F">
+      <End Role="tblHall" EntitySet="tblHalls" />
+      <End Role="tblChair" EntitySet="tblChairs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblChairs_tblBookedDate" Association="BookingSystemDBModel.FK_tblChairs_tblBookedDate">
+      <End Role="tblBookedDate" EntitySet="tblBookedDates" />
+      <End Role="tblChair" EntitySet="tblChairs" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="tblChair">
+    <Key>
+      <PropertyRef Name="chairID" />
+    </Key>
+    <Property Name="chairID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="noOfChairs" Type="Int32" />
+    <Property Name="hallID" Type="Int32" />
+    <Property Name="bookingID" Type="Int32" />
+    <NavigationProperty Name="tblBooking" Relationship="BookingSystemDBModel.FK__tblChairs__booki__00200768" FromRole="tblChair" ToRole="tblBooking" />
+    <NavigationProperty Name="tblHall" Relationship="BookingSystemDBModel.FK__tblChairs__hallI__7F2BE32F" FromRole="tblChair" ToRole="tblHall" />
+    <Property Name="dateID" Type="Int32" />
+    <NavigationProperty Name="tblBookedDate" Relationship="BookingSystemDBModel.FK_tblChairs_tblBookedDate" FromRole="tblChair" ToRole="tblBookedDate" />
+  </EntityType>
+  <Association Name="FK__tblChairs__booki__00200768">
+    <End Type="BookingSystemDBModel.tblBooking" Role="tblBooking" Multiplicity="0..1" />
+    <End Type="BookingSystemDBModel.tblChair" Role="tblChair" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblBooking">
+        <PropertyRef Name="bookingID" />
+      </Principal>
+      <Dependent Role="tblChair">
+        <PropertyRef Name="bookingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tblChairs__hallI__7F2BE32F">
+    <End Type="BookingSystemDBModel.tblHall" Role="tblHall" Multiplicity="0..1" />
+    <End Type="BookingSystemDBModel.tblChair" Role="tblChair" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblHall">
+        <PropertyRef Name="hallID" />
+      </Principal>
+      <Dependent Role="tblChair">
+        <PropertyRef Name="hallID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblChairs_tblBookedDate">
+    <End Type="BookingSystemDBModel.tblBookedDate" Role="tblBookedDate" Multiplicity="0..1" />
+    <End Type="BookingSystemDBModel.tblChair" Role="tblChair" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblBookedDate">
+        <PropertyRef Name="dateID" />
+      </Principal>
+      <Dependent Role="tblChair">
+        <PropertyRef Name="dateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

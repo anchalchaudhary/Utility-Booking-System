@@ -8,8 +8,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Karla|Montserrat|PT+Sans+Narrow" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 <link rel="stylesheet" type="text/css" href="~/css/style.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+@*<script src="~/Scripts/jquery-3.2.1.min.js"></script>*@
 <link href="~/css/my-style.css" rel="stylesheet" type="text/css" />
 @*@Html.ActionLink("Logout", "Logout", "User")*@
 
@@ -33,6 +35,27 @@
     </div>
 </nav>
 
+<div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this booking?
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button id="btnContinueDelete" type="button" class="btn btn-primary">Yes</button>
+                <button data-dismiss="modal" type="button" class="btn btn-default">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div style="color: #ffffff" class="container">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-5">
@@ -45,7 +68,7 @@
                                 <th></th>
                                 <th scope="col">Id</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Cancel</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +80,7 @@
                                     </td>
                                     <th style="color:#fff" scope="row">@itemBooking.bookingNo</th>
                                     <td style="color:#fff">@itemBooking.title</td>
-                                    @{int count = 0;}
+                                    @*@{int count = 0;}
                                     @foreach (var itemDate in ViewBag.userFutureBookedDate)
                                     {
                                         if (itemDate.bookingID == itemBooking.bookingID)
@@ -65,7 +88,10 @@
                                             count++;
                                             <td style="color:#fff">@itemDate.dateChosen.ToShortDateString()</td>
                                         }
-                                    }
+                                    }*@
+                                    <td style="color:#0094ff">
+                                        <a id="deleteItem" class="deleteItem" data-target="#basic" data-toggle="modal" data-path="@Url.Action("CancelBooking", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID })">Cancel</a>
+                                    </td>
                                 </tr>
                              }
                         </tbody>
@@ -100,3 +126,13 @@
 <script type="text/javascript" src="~/js/scroll.js"></script>
 <script type="text/javascript" src="~/js/script.js"></script>
 
+<script>
+var path_to_delete;
+
+$(".deleteItem").click(function(e) {
+    path_to_delete = $(this).data('path');
+});
+$('#btnContinueDelete').click(function () {
+    window.location = path_to_delete;
+});
+</script>

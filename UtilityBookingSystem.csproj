@@ -275,6 +275,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookingSystemDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Chair.cs" />
     <Compile Include="Models\Departments.cs" />
     <Compile Include="Models\DetailsList.cs" />
     <Compile Include="Models\Hall.cs" />
@@ -296,6 +297,9 @@
       <DependentUpon>BookingSystemDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBooking.cs">
+      <DependentUpon>BookingSystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblChair.cs">
       <DependentUpon>BookingSystemDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblDepartment.cs">

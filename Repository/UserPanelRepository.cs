@@ -25,5 +25,27 @@ namespace UtilityBookingSystem.Repository
             return userID;
         }
         #endregion
+        public bool CancelBooking(int bookingID, int userID)
+        {
+            try
+            {
+                tblBooking objtblBooking = new tblBooking();
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    objtblBooking = db.tblBookings.First(x => x.bookingID == bookingID && x.userID==userID);
+                }
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    db.tblBookings.Attach(objtblBooking);
+                    db.tblBookings.Remove(objtblBooking);
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace UtilityBookingSystem.Models
 
         public List<Requirement> requirementsArray { get; set; }
         public List<Slot> slotsArray { get; set; }
+        public int noOfChairs { get; set; }
         #endregion
         #region Repository objects
         BookingRepository objBookingRepository = new BookingRepository();

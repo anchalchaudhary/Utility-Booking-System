@@ -122,6 +122,18 @@
                                 }
                             </td>
                         </tr>
+                        <tr>
+                            <td><b>Number of Chairs</b></td>
+                            <td>
+                                @foreach(var chairItem in ViewBag.chairs)
+                                {
+                                    if(chairItem.hallID == hallItem.hallID && chairItem.dateID==dateItem.dateID)
+                                    {
+                                        <b>@chairItem.noOfChairs</b>
+                                    }
+                                }
+                            </td>
+                        </tr>
                     }
                 }
                 <tr style="background-color:black">
