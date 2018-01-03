@@ -11,6 +11,9 @@ body{
     left: 0;
     position: absolute;
 }
+.error{
+    color:red;
+}
 .navbar
 {
     background-color: black;

@@ -8,8 +8,45 @@
     var newField = newFields.childNodes;
     for (var i = 0; i < newField.length; i++) {
         var newId = newField[i].id
-        if (newId)
+        if (newId) {
             newField[i].id = newId + click;
+            if (newField[i].nodeName == "TABLE") {
+                var tableChildren = newField[i].childNodes;
+                for (var j = 0; j < tableChildren.length; j++) {
+                    var tableChildId = tableChildren[j].id;
+                    if (tableChildId) {
+                        tableChildren[j].id = tableChildId + click;
+                        if (tableChildren[j].nodeName == "TBODY") {
+                            var tbodyChildren = tableChildren[j].childNodes;
+                            for (var k = 0; k < tbodyChildren.length; k++) {
+                                var tbodyChildId = tbodyChildren[k].id;
+                                if (tbodyChildId) {
+                                    tbodyChildren[k].id = tbodyChildId + click;
+                                    if (tbodyChildren[k].nodeName == "TR") {
+                                        var trChild = tbodyChildren[k].childNodes;
+                                        for (var q = 0; q < trChild.length; q++) {
+                                            var trChildId = trChild[q].id;
+                                            if (trChildId) {
+                                                trChild[q].id = trChildId + click;
+                                                if (trChild[q].nodeName == "TD") {
+                                                    var tdChild = trChild[q].childNodes;
+                                                    for (var r = 0; r < tdChild.length; r++) {
+                                                        var tdChildId = tdChild[r].id;
+                                                        if (tdChildId) {
+                                                            tdChild[r].id = tdChildId + click;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     var insertHere = document.getElementById('writeroot');
     insertHere.parentNode.insertBefore(newFields, insertHere);
@@ -33,8 +70,45 @@ var addMore = function (index, hall, slot, requirement) {
     var newField = newFields.childNodes;
     for (var i = 0; i < newField.length; i++) {
         var newId = newField[i].id
-        if (newId)
+        if (newId) {
             newField[i].id = newId + click;
+            if (newField[i].nodeName == "TABLE") {
+                var tableChildren = newField[i].childNodes;
+                for (var j = 0; j < tableChildren.length; j++) {
+                    var tableChildId = tableChildren[j].id;
+                    if (tableChildId) {
+                        tableChildren[j].id = tableChildId + click;
+                        if (tableChildren[j].nodeName == "TBODY") {
+                            var tbodyChildren = tableChildren[j].childNodes;
+                            for (var k = 0; k < tbodyChildren.length; k++) {
+                                var tbodyChildId = tbodyChildren[k].id;
+                                if (tbodyChildId) {
+                                    tbodyChildren[k].id = tbodyChildId + click;
+                                    if (tbodyChildren[k].nodeName == "TR") {
+                                        var trChild = tbodyChildren[k].childNodes;
+                                        for (var q = 0; q < trChild.length; q++) {
+                                            var trChildId = trChild[q].id;
+                                            if (trChildId) {
+                                                trChild[q].id = trChildId + click;
+                                                if (trChild[q].nodeName == "TD") {
+                                                    var tdChild = trChild[q].childNodes;
+                                                    for (var r = 0; r < tdChild.length; r++) {
+                                                        var tdChildId = tdChild[r].id;
+                                                        if (tdChildId) {
+                                                            tdChild[r].id = tdChildId + click;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     var insertHere = document.getElementById('writeroot');
     insertHere.parentNode.insertBefore(newFields, insertHere);

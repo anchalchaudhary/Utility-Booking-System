@@ -49,41 +49,59 @@
         int hall = 0, slot = 0, requirement = 0;
         <input type="text" id="date" required onchange="datechosen();" />
         <input type="hidden" name="detailsObjList[@index].date" id="alternateDate" />
+        <span id="invalidDate" style="color:indianred;"></span>
 
-        foreach (var item in ViewBag.HallDetail)
-        {
-            slot = 0;
-            requirement = 0;
-            <hr />
-            <span id="invalidDate" style="color:indianred;"></span>
-            <br />
-            <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(item.hallID)" id="hiddenhall@(hall)_" />
-            <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallName" value="@item.hallName" id="hiddenhallname@(hall)_" />
-            <label>@item.hallName :</label>
-            <!--SLOTS-->
-            foreach (var slotItem in item.slotsArray)
+        <table id="tableBooking_" style="color:white;" class="table table-bordered">
+            <tbody id="tbodyBooking_">
+            @foreach (var item in ViewBag.HallDetail)
             {
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slotItem.slotID)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
-                <label id="lblSlot@(slot+1)_@(hall + 1)_" onmouseover="seeDetails(@(slot+1),@(hall+1))">@slotItem.slot</label>
-                <input type="checkbox" class="slots@(hall+1)" data-toggle="tooltip" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" />
-                <span id="span@(slot+1)_@(hall + 1)_" style="color:indianred;"></span>
-                slot = slot + 1;
-                <br />
+                slot = 0;
+                requirement = 0;
+                @*<hr />*@
+                @*<br />*@
+                <tr id="booking_@(index)_row1_">
+                    <td id="booking_@(index)_column_hall_1_">
+                        <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallID" value="@(item.hallID)" id="hiddenhall@(hall)_" />
+                        <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].hallName" value="@item.hallName" id="hiddenhallname@(hall)_" />
+                        <label>@item.hallName :</label>
+                    </td>
+                    <!--SLOTS-->
+                    @foreach (var slotItem in item.slotsArray)
+                    {
+                        <td id="booking_@(index)_column_slot_@(slot)_">
+                            <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].slotID" value="@(slotItem.slotID)" id="hiddenslot@(slot + 1)_@(hall + 1)_" />
+                            <label id="lblSlot@(slot+1)_@(hall + 1)_" onmouseover="seeDetails(@(slot+1),@(hall+1))">@slotItem.slot</label>
+                            <input type="checkbox" class="slots@(hall+1)" data-toggle="tooltip" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" />
+                            <span id="span@(slot+1)_@(hall + 1)_" style="color:indianred;"></span>
+                        </td>
+                        slot = slot + 1;
+                    @*<br />*@
+                    }
+                    </tr>
+                    <tr  id="booking_@(index)_row2_">
+                        <td id="emptycolumn1_"></td>
+                        <!--REQUIREMENTS-->
+                        @foreach (var reqItem in item.requirementsArray)
+                        {
+                            <td id="booking_@(index)_column_req_@(requirement)_">
+                                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(reqItem.requirementID)" id="hiddenreq@(requirement + 1)_@(hall + 1)_" />
+                                <label>@reqItem.requirementName</label>
+                                <input type="checkbox" class="reqs@(hall + 1)" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement + 1)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 1), @(hall + 1));" />
+                                @{
+                                    requirement = requirement + 1;
+                                }
+                                @if (reqItem.requirementName == "Chairs")
+                                {
+                                    <input type="text" name="detailsObjList[@index].hallsArray[@hall].noOfChairs" id="chairs_@(hall+1)_" style="display:none;" placeholder="Enter no. of chairs" />
+                                }
+                            </td>
+
+                        }
+                </tr>
+                hall = hall + 1;
             }
-            <!--REQUIREMENTS-->
-            foreach (var reqItem in item.requirementsArray)
-            {
-                <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(reqItem.requirementID)" id="hiddenreq@(requirement + 1)_@(hall + 1)_" />
-                <label>@reqItem.requirementName</label>
-                <input type="checkbox" class="reqs@(hall+1)" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement + 1)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 1), @(hall + 1));" />
-                requirement = requirement + 1;
-                if (@reqItem.requirementName == "Chairs")
-                {
-                    <input type="text" name="detailsObjList[@index].hallsArray[@hall].noOfChairs" id="chairs_@(hall+1)_" style="display:none;" placeholder="Enter no. of chairs"/>
-                }
-            }
-            hall = hall + 1;
-        }
+            </tbody>
+        </table>
         hall = 0;
         slot = 0;
         requirement = 0;
@@ -92,7 +110,8 @@
 </div>
 @using (Html.BeginForm("Testing", "BookUtility", FormMethod.Post))
 {
-    <span id="writeroot"></span>
+    <span id="writeroot">
+    </span>
     @*<button class="btn btn-success"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>*@
 
     <button class="btn btn-success"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>

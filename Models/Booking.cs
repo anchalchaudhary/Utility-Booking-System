@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using UtilityBookingSystem.Extra_Classes;
@@ -12,7 +13,9 @@ namespace UtilityBookingSystem.Models
         #region tblBooking attributes
         public int bookingID { get; set; }
         public Nullable<int> userID { get; set; }
+        [Required(ErrorMessage = "Choose one")]
         public Nullable<int> purposeID { get; set; }
+        [Required(ErrorMessage = "Title is required.")]
         public string title { get; set; }
         public string purpose { get; set; }
         public Nullable<int> status { get; set; }
