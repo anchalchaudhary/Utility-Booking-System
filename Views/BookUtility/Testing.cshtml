@@ -15,7 +15,6 @@
 <link href="~/css/my-style.css" rel="stylesheet" type="text/css" />
 <script src="~/Scripts/modernizr-2.6.2.js"></script>
 
-@Html.Raw(TempData["Requested"])
 
 <nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
     <a href="http://www.akgec.in"><img src="~/images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
@@ -47,9 +46,12 @@
     @{
         int index = 0;
         int hall = 0, slot = 0, requirement = 0;
-        <input type="text" id="date" required onchange="datechosen();" />
+        <b style="font-size:xx-large">Select Date: &nbsp;</b>
+        <input type="text" id="date" onchange="datechosen();"  autofocus required title="Select a date" />
         <input type="hidden" name="detailsObjList[@index].date" id="alternateDate" />
+
         <span id="invalidDate" style="color:indianred;"></span>
+        <br />
 
         <table id="tableBooking_" style="color:white;" class="table table-bordered">
             <tbody id="tbodyBooking_">
@@ -92,6 +94,7 @@
                                 }
                                 @if (reqItem.requirementName == "Chairs")
                                 {
+                                    <br />
                                     <input type="text" name="detailsObjList[@index].hallsArray[@hall].noOfChairs" id="chairs_@(hall+1)_" style="display:none;" placeholder="Enter no. of chairs" />
                                 }
                             </td>
@@ -107,6 +110,7 @@
         requirement = 0;
         <br />
     }
+    <span id="detailsErr" class="error"></span>
 </div>
 @using (Html.BeginForm("Testing", "BookUtility", FormMethod.Post))
 {
@@ -114,7 +118,7 @@
     </span>
     @*<button class="btn btn-success"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>*@
 
-    <button class="btn btn-success"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>
+    <button class="btn btn-success" onclick="testAllInput(@hall, @slot, @requirement);"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>
 }
 @*<button class="btn btn-danger"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add More</button>*@
 

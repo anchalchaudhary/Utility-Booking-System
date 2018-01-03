@@ -52,6 +52,7 @@
     insertHere.parentNode.insertBefore(newFields, insertHere);
 });
 var click = 0;
+var submitClick = 0;
 var today = new Date();
 $(function () {
     $("#date" + click).datepicker({
@@ -194,6 +195,14 @@ var slotcheckchange = function (slotid, hallid) {
             });
         }
     }
+    if (submitClick > 0) {
+        if ($("input.slots" + hallid + "[type=checkbox]:checked").val()) {
+            $("#detailsErr" + click).hide();
+        }
+        else {
+            $("#detailsErr" + click).show();
+        }
+    }
 }
 var reqcheckchange = function (reqid, hallid) {
     var id = "#reqcheck" + reqid + "_" + hallid + "_" + click;
@@ -203,6 +212,9 @@ var reqcheckchange = function (reqid, hallid) {
             $("#chairs_" + (hallid) + "_" + click).show();
         }
         $(id).val('true');
+    }
+    else {
+        $("#chairs_" + (hallid) + "_" + click).hide();
     }
 }
 var datechosen = function () {
@@ -215,28 +227,30 @@ var datechosen = function () {
     $('#alternateDate' + click).val(document.getElementById("date" + click).value);
     var id = "alternateDate" + click;
     var date = document.getElementById(id).value;
-
-    $.ajax({
-        type: "POST",
-        data: { 'date': date },
-        dataType: 'JSON',
-        url: "/BookUtility/GetBookedSlotsList",
-        success: function (bookedSlotsList) {
-            var bookedSlotsItem = '';
-            $.each(bookedSlotsList, function (i, bookedSlotsItem) {
-                $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", false);
-                $("#slotcheck" + bookedSlotsItem.slotID + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
-                if (!$("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).attr('disabled')) {
-                    $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
-                }
-                else {
-                    $('.slots' + bookedSlotsItem.hallID).each(function () {
-                        $(this).prop('disabled', true);
-                    });
-                }
-            });
-        }
-    });
+    if (date != "") {
+        $("#invalidDate" + click).hide();
+        $.ajax({
+            type: "POST",
+            data: { 'date': date },
+            dataType: 'JSON',
+            url: "/BookUtility/GetBookedSlotsList",
+            success: function (bookedSlotsList) {
+                var bookedSlotsItem = '';
+                $.each(bookedSlotsList, function (i, bookedSlotsItem) {
+                    $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", false);
+                    $("#slotcheck" + bookedSlotsItem.slotID + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
+                    if (!$("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).attr('disabled')) {
+                        $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
+                    }
+                    else {
+                        $('.slots' + bookedSlotsItem.hallID).each(function () {
+                            $(this).prop('disabled', true);
+                        });
+                    }
+                });
+            }
+        });
+    }
     getRequirementsList();
     //}
     //else
@@ -256,4 +270,34 @@ var getRequirementsList = function () {
             })
         }
     });
+}
+
+
+var testAllInput = function (hall, slot, requirement) {
+    submitClick = submitClick + 1;
+    var dateId = new Array();
+    var date = new Array();
+    var dateFlag = 1, hallFlag = 0;
+    for (var i = 0; i <= click; i++) {
+        dateId[i] = "alternateDate" + i;
+        date[i] = document.getElementById(dateId[i]).value;
+        if (date[i] == "") {
+            document.getElementById("invalidDate" + i).innerHTML = "Enter Date";
+            $("#invalidDate" + i).show();
+            dateFlag = 0;
+        }
+
+        for (var j = 0; j < hall; j++) {
+            var checkedSlot = $("input.slots" + (hall + 1) + "[type=checkbox]:checked").val();
+            var checkedRequirement = $("input.reqs" + (hall + 1) + "[type=checkbox]:checked").val();
+            if (checkedSlot && checkedRequirement) {
+                hallFlag = 1;
+                break;
+            }
+        }
+        if (dateFlag != 1 && hallFlag != 1) {
+            document.getElementById("detailsErr" + i).innerHTML = "Select details of atleast one hall";
+            $("#detailsErr"+i).show();
+        }
+    }
 }

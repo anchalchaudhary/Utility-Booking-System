@@ -150,7 +150,6 @@ namespace UtilityBookingSystem.Controllers
                 context.Configuration.LazyLoadingEnabled = false;
                 objtblBooking = context.tblBookings.First(x => x.bookingID == bookingID);
             }
-            TempData["Requested"] = "<script> alert('Your booking requested has been sent. Please check your email.')</script>";
             string mailSubject, mailBody;
 
             mailSubject = "Request Sent";
@@ -167,6 +166,8 @@ namespace UtilityBookingSystem.Controllers
             {
                 if (Session["NewBookingID"] != null)
                 {
+                    TempData["Requested"] = "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Your booking requested has been sent. Please check your email.')</script>";
+
                     int bookingID = Convert.ToInt32(Session["NewBookingID"]);
 
                     Booking bookingDetails = objBooking.GetBookingDetails(bookingID);

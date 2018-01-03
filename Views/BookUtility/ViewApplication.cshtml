@@ -10,6 +10,8 @@
 <link rel="stylesheet" type="text/css" href="~/css/style.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <link href="~/css/my-style.css" rel="stylesheet" type="text/css" />
+
+
 <nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
     <a href="http://www.akgec.in"><img src="~/images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
     <a class="navbar-brand" href="index.php">
@@ -147,4 +149,5 @@
         </table>
     </div>
 </div>
+@Html.Raw(TempData["Requested"])
 
