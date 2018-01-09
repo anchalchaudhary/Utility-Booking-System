@@ -15,6 +15,7 @@
     <Property Name="bookedHallID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="hallID" Type="int" />
     <Property Name="dateID" Type="int" />
+    <Property Name="otherRequirements" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="tblBookedRequirement">
     <Key>

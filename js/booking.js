@@ -164,10 +164,10 @@ var seeDetails = function (slotID, hallID) {
                 if (department != "") {
                     var title = "Booked By " + department;
                     //$("#slotcheck" + slotID + "_" + hallID + "_" + click).attr("title", title).tooltip({ trigger: 'hover' });
-                    //$("#lblSlot" + slotID + "_" + hallID + "_" + click).attr("title", title).tooltip({ trigger: 'mouseover' });
-                    //$("#slotcheck" + slotID + "_" + hallID + "_" + click).attr("title", title).tooltip({ trigger: 'mouseover' });
+                    $("#lblSlot" + slotID + "_" + hallID + "_" + click).attr("title", title).tooltip({ trigger: 'mouseover' });
+                    $("#slotcheck" + slotID + "_" + hallID + "_" + click).attr("title", title).tooltip({ trigger: 'mouseover' });
                     document.getElementById("span" + slotID + "_" + hallID + "_" + click).innerHTML = title;
-                    //$('[data-toggle="tooltip"]').tooltip();
+                    $('[data-toggle="tooltip"]').tooltip();
                     console.log(title);
                 }
             }
@@ -198,6 +198,7 @@ var slotcheckchange = function (slotid, hallid) {
     if (submitClick > 0) {
         if ($("input.slots" + hallid + "[type=checkbox]:checked").val()) {
             $("#detailsErr" + click).hide();
+            $("#btnSubmit").removeAttr("disabled");
         }
         else {
             $("#detailsErr" + click).show();
@@ -297,7 +298,8 @@ var testAllInput = function (hall, slot, requirement) {
         }
         if (dateFlag != 1 && hallFlag != 1) {
             document.getElementById("detailsErr" + i).innerHTML = "Select details of atleast one hall";
-            $("#detailsErr"+i).show();
+            $("#detailsErr" + i).show();
+            $("#btnSubmit").attr("disabled", true);
         }
     }
 }

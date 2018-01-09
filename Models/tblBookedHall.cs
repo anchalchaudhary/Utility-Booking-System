@@ -22,6 +22,7 @@ namespace UtilityBookingSystem.Models
         public int bookedHallID { get; set; }
         public Nullable<int> hallID { get; set; }
         public Nullable<int> dateID { get; set; }
+        public string otherRequirements { get; set; }
     
         public virtual tblBookedDate tblBookedDate { get; set; }
         public virtual ICollection<tblBookedSlot> tblBookedSlots { get; set; }

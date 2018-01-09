@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UtilityBookingSystem.Extra_Classes;
 using UtilityBookingSystem.Models;
 using UtilityBookingSystem.Repository;
 
@@ -139,7 +140,36 @@ namespace UtilityBookingSystem.Controllers
         }
         #endregion
         #endregion
+        #region Change password
+        public ActionResult AccountSettings()
+        {
+            if(Session["LoggedInUserID"]!=null)
+                return View();
+            return RedirectToAction("Login");
+        }
+        [HttpPost]
+        public ActionResult AccountSettings(Users model)
+        {
+            int userID = Convert.ToInt32(Session["LoggedInUserID"]);
+            BookingSystemDBEntities db = new BookingSystemDBEntities();
 
+            tblUser objtblUser = db.tblUsers.SingleOrDefault(x => x.userID == userID);
+            if (objtblUser != null)
+            {
+                objtblUser.password = Encryption.Encrypt(model.password);
+                db.SaveChanges();
+
+                TempData["ChangedPassword"] = "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Your password was changed successfully.')</script>";
+            }
+            else
+            {
+                TempData["ChangedPassword"] = "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Some error occurred. Please try again')</script>";
+            }
+            return View();
+        }
+
+
+        #endregion
         #region User Logout
         public ActionResult Logout()
         {

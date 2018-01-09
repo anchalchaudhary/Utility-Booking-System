@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookingSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookingSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblBookedDate">
           <Key>
             <PropertyRef Name="dateID" />
@@ -20,6 +20,7 @@
           <Property Name="bookedHallID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="hallID" Type="int" />
           <Property Name="dateID" Type="int" />
+          <Property Name="otherRequirements" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tblBookedRequirement">
           <Key>
@@ -413,8 +414,7 @@
             <End Role="tblChairs" EntitySet="tblChairs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookingSystemDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -440,6 +440,7 @@
           <NavigationProperty Name="tblBookedDate" Relationship="Self.FK__tblBooked__dateI__29572725" FromRole="tblBookedHall" ToRole="tblBookedDate" />
           <NavigationProperty Name="tblBookedSlots" Relationship="Self.FK__tblBooked__booke__31EC6D26" FromRole="tblBookedHall" ToRole="tblBookedSlot" />
           <NavigationProperty Name="tblHall" Relationship="Self.FK__tblBooked__hallI__286302EC" FromRole="tblBookedHall" ToRole="tblHall" />
+          <Property Name="otherRequirements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblBookedRequirement">
           <Key>
@@ -876,6 +877,7 @@
           <EntitySetMapping Name="tblBookedHalls">
             <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedHall">
               <MappingFragment StoreEntitySet="tblBookedHall">
+                <ScalarProperty Name="otherRequirements" ColumnName="otherRequirements" />
                 <ScalarProperty Name="bookedHallID" ColumnName="bookedHallID" />
                 <ScalarProperty Name="hallID" ColumnName="hallID" />
                 <ScalarProperty Name="dateID" ColumnName="dateID" />

@@ -15,12 +15,13 @@
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <link href="~/css/my-style.css" rel="stylesheet" type="text/css" />
+
 @*@Html.ActionLink("Logout", "Logout", "User")*@
 
 <button onclick="topFunction()" id="myBtn" title="Go to top"><b>^</b></button>
 <nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
     <a href="http://www.akgec.in"><img src="~/images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
-    <a class="navbar-brand" href="index.html">
+    <a class="navbar-brand" href="@Url.Action("Index","User")">
         <div style="vertical-align: middle;font-family: 'Karla',sans-serif; font-size: 1.5em" class="d-inline-block">
             Hall Management system
         </div>
@@ -30,6 +31,12 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul style="font-family:'Roboto', sans-serif; font-size: 1.2em" class="navbar-nav">
+            <li class="nav-item active">
+                @Html.ActionLink("Home", "Index", "User", new { @class = "nav-link" })
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Account Settings", "AccountSettings", "User", new { @class = "nav-link" })
+            </li>
             <li class="nav-item">
                 @Html.ActionLink("Logout", "Logout", "User", new { @class = "nav-link" })
             </li>
@@ -60,16 +67,15 @@
 
 <div style="color: #ffffff" class="container">
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-5">
+        <div class="col-12 col-sm-12 col-md-6">
             <div style="margin-top: 50px;">
                 <h1 style="font-family:'Roboto',sans-serif;color: #00C0C0;">Future Bookings</h1>
                 <div style="height: 380px;overflow-y: scroll;" id="scrollstyle">
                     <table class="table table-striped">
                         <thead class="thead-dark">
                             <tr>
-                                <th></th>
-                                <th scope="col">Id</th>
                                 <th scope="col">Title</th>
+                                <th scope="col">Dates</th>
                                 <th scope="col">Cancel</th>
                             </tr>
                         </thead>
@@ -78,21 +84,16 @@
                             {
                                 <tr>
                                     <td style="color:#fff">
-                                        @Html.ActionLink("Application", "ViewApplication", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID }, new { target = "_blank" })
+                                        @Html.ActionLink((string)(itemBooking.title), "ViewApplication", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID }, new { target = "_blank" })
                                     </td>
-                                    <th style="color:#fff" scope="row">@itemBooking.bookingNo</th>
-                                    <td style="color:#fff">@itemBooking.title</td>
-                                    @*@{int count = 0;}
-                                    @foreach (var itemDate in ViewBag.userFutureBookedDate)
-                                    {
-                                        if (itemDate.bookingID == itemBooking.bookingID)
+                                    <td  style="color:#fff">
+                                        @foreach (var itemDate in ViewBag.userFutureBookedDate)
                                         {
-                                            count++;
-                                            <td style="color:#fff">@itemDate.dateChosen.ToShortDateString()</td>
+                                            @itemDate.dateChosen.ToShortDateString() <br />
                                         }
-                                    }*@
+                                    </td>
                                     <td style="color:#0094ff">
-                                        <a id="deleteItem" class="deleteItem" data-target="#basic" data-toggle="modal" data-path="@Url.Action("CancelBooking", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID })">Cancel</a>
+                                        <a id="deleteItem" class="deleteItem" data-target="#basic" data-toggle="modal" data-path="@Url.Action("CancelBooking", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID })" style="cursor: pointer;">Cancel</a>
                                     </td>
                                 </tr>
                              }
@@ -101,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div style="text-align: center;margin-top: 20%;" class="col-12 co-sm-12 col-md-2">
+        <div style="text-align: center;margin-top: 20%;" class="col-12 co-sm-12 col-md-1">
             <h2>OR</h2>
         </div>
         <div style="color:#00C0C0;margin-top: 5%;text-align: center;" class="col-12 col-sm-12 col-md-5">

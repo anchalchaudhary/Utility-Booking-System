@@ -14,6 +14,8 @@ namespace UtilityBookingSystem.Models
         public int bookedHallID { get; set; }
         public Nullable<int> hallID { get; set; }
         public Nullable<int> dateID { get; set; }
+        public string otherRequirements { get; set; }
+
         #endregion
 
         public string hallName { get; set; }
@@ -36,7 +38,8 @@ namespace UtilityBookingSystem.Models
                         bookedHallID = x.bookedHallID,
                         hallID = x.hallID,
                         dateID = x.dateID,
-                        hallName = x.tblHall.hallName
+                        hallName = x.tblHall.hallName,
+                        otherRequirements = x.otherRequirements
                     }).ToList();
                     bookedHallsList.AddRange(bookedHalls);
                 }

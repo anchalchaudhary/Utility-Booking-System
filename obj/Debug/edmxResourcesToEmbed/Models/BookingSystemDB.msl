@@ -13,6 +13,7 @@
     <EntitySetMapping Name="tblBookedHalls">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedHall">
         <MappingFragment StoreEntitySet="tblBookedHall">
+          <ScalarProperty Name="otherRequirements" ColumnName="otherRequirements" />
           <ScalarProperty Name="bookedHallID" ColumnName="bookedHallID" />
           <ScalarProperty Name="hallID" ColumnName="hallID" />
           <ScalarProperty Name="dateID" ColumnName="dateID" />

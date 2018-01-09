@@ -348,6 +348,7 @@
     <Content Include="Views\User\ViewApplication.cshtml" />
     <Content Include="Views\BookUtility\ViewApplication.cshtml" />
     <Content Include="Views\BookUtility\Print.cshtml" />
+    <Content Include="Views\User\AccountSettings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -376,9 +377,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57171</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57174/</IISUrl>
+          <IISUrl>http://localhost:57184/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:57174/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:57184/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

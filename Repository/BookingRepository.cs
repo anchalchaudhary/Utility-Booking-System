@@ -104,6 +104,7 @@ namespace UtilityBookingSystem.Repository
 
                                         objtblBookedHall.hallID = item.hallID;
                                         objtblBookedHall.dateID = dateID;
+                                        objtblBookedHall.otherRequirements = item.otherRequirements;
 
                                         db.tblBookedHalls.Add(objtblBookedHall);
 

@@ -22,6 +22,7 @@
     <NavigationProperty Name="tblBookedDate" Relationship="Self.FK__tblBooked__dateI__29572725" FromRole="tblBookedHall" ToRole="tblBookedDate" />
     <NavigationProperty Name="tblBookedSlots" Relationship="Self.FK__tblBooked__booke__31EC6D26" FromRole="tblBookedHall" ToRole="tblBookedSlot" />
     <NavigationProperty Name="tblHall" Relationship="Self.FK__tblBooked__hallI__286302EC" FromRole="tblBookedHall" ToRole="tblHall" />
+    <Property Name="otherRequirements" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="tblBookedRequirement">
     <Key>

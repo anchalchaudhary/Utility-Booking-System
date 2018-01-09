@@ -28,6 +28,9 @@ namespace UtilityBookingSystem.Models
 
         public string dept { get; set; }
         #endregion
+        [Required(ErrorMessage = "Re-Enter Password")]
+        [Compare("password", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; }
 
         #region Repository objects
         AdminPanelRepository objAdminPanelRepository = new AdminPanelRepository();
@@ -88,6 +91,7 @@ namespace UtilityBookingSystem.Models
                 context.Configuration.LazyLoadingEnabled = false;
                 objtblDepartment = context.tblDepartments.First(x => x.deptID == objtblUser.deptID);
             }
+            userDetail.userID = objtblUser.userID;
             userDetail.name = objtblUser.name;
             userDetail.email = objtblUser.email;
             userDetail.contact = objtblUser.contact;

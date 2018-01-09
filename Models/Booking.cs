@@ -52,7 +52,7 @@ namespace UtilityBookingSystem.Models
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                allBookingsList = context.tblBookings.Select(x => new Booking
+                allBookingsList = context.tblBookings.OrderByDescending(x=>x.bookingID).Select(x => new Booking
                 {
                     bookingID = x.bookingID,
                     bookingNo = x.bookingNo,

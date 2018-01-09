@@ -2,6 +2,27 @@
 @{
     ViewBag.Title = "ViewApplication";
 }
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+
+<div class="modal fade" id="approve" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to confirm this booking?
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">No</button>
+                <button id="btnContinueApprove" type="button" class="btn btn-success">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div>
     <div>
         <h2>Application for @ViewBag.bookingDetails.title</h2>
@@ -46,17 +67,18 @@
                 <td><b>@ViewBag.bookingDetails.bookedAtTime</b></td>
             </tr>
             <tr>
-                <td><h3>Status</h3></td>
+                <td><b>Status</b></td>
                 @if (ViewBag.bookingDetails.status == 1)
-            {
-                    <td>
-                        <h3 style="color:lawngreen"><b>Approved</b> </h3>
-                    </td>
-                }
-                else if(ViewBag.bookingDetails.status == 0)
                 {
                     <td>
-                        <h3 style="color:red"><b>Unapproved </b></h3>
+                        <h4 style="color:lawngreen"><b>Acknowledged</b> </h4>
+                    </td>
+                }
+                else if (ViewBag.bookingDetails.status == 0)
+                {
+                    <td>
+                        <h4 style="color:red"><b>Not yet Acknowledged</b></h4>
+                        <a class="approve" data-target="#approve" data-toggle="modal" data-path="@Url.Action("ApproveBooking", "Admin", new { bookingID = ViewBag.bookingDetails.bookingID, userID = ViewBag.userDetails.userID })">Acknowledge</a>
                     </td>
                 }
             </tr>
@@ -112,6 +134,25 @@
                                 }
                             </td>
                         </tr>
+                        <tr>
+                            <td><b>Number of Chairs</b></td>
+                            <td>
+                                @foreach (var chairItem in ViewBag.chairs)
+                                {
+                                    if (chairItem.hallID == hallItem.hallID && chairItem.dateID == dateItem.dateID)
+                                    {
+                                        <b>@chairItem.noOfChairs</b>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                        if (hallItem.otherRequirements != null)
+                        {
+                            <tr>
+                                <td><b>Other Requirements:</b></td>
+                                <td>@hallItem.otherRequirements</td>
+                            </tr>
+                        }
                     }
                 }
                 <tr style="background-color:black">
@@ -122,4 +163,13 @@
         </table>
     </div>
 </div>
+<script>
+    var path_to_approve, path_to_unapprove, path_to_delete;
 
+    $(".approve").click(function (e) {
+        path_to_approve = $(this).data('path');
+    });
+    $('#btnContinueApprove').click(function () {
+        window.location = path_to_approve;
+    });
+</script>

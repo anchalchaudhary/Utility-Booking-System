@@ -35,6 +35,10 @@ namespace UtilityBookingSystem.Models
             return hallsList;
         }
         #endregion
+
+        public string otherRequirements { get; set; }
+
+
         public List<Hall> GetHallDetails()
         {
             List<Hall> hallsList = new List<Hall>();
