@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="~/css/print.css" media="print" />
 
 <div class="noprint">
-    @Html.ActionLink("Home", "Index", "User", new { area = "" }, new { @class = "nav-link" })
+    @Html.ActionLink("Home", "ViewBookingRequests", "Admin", new { area = "" }, new { @class = "nav-link" })
 </div>
 <div style="float:right; margin-top:0;" class="noprint">
     <a href="javascript:window.print()"><i class="fa fa-print" aria-hidden="true"></i>Print This Page</a>
@@ -32,7 +32,7 @@
 
     <div>
         <div>
-            <h2 class="text-center" style="color:#00C0C0;margin-top: 5%;text-align: center;">Application for @ViewBag.bookingDetails.title</h2>
+            <h2 class="text-center" style="color:#000;margin-top: 2%;text-align: center;">Application for @ViewBag.bookingDetails.title</h2>
         </div>
 
     </div>
@@ -68,7 +68,7 @@
                     else if (ViewBag.bookingDetails.status == 0)
                     {
                         <td>
-                            <h6 style="color:red"><b>Not Yet Acknowledged</b></h6>
+                            <h6 style="color:red"><b>Not yet Acknowledged</b></h6>
                         </td>
                     }
                 </tr>
@@ -159,7 +159,7 @@
                 <tr>
                     <td><b>Remarks</b></td>
                     <td colspan="2">
-                       <textarea cols="100" rows="6"></textarea>
+                        <textarea cols="100" rows="6"></textarea>
                     </td>
                 </tr>
             </table>

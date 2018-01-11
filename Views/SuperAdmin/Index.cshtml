@@ -1,0 +1,50 @@
+﻿@model UtilityBookingSystem.Models.BigViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .error {
+        color: red;
+    }
+</style>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@Html.Raw(TempData["AddedUser"])
+
+@Html.ActionLink("Logout", "Logout", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand", @style="float:right;" })
+
+<div class="container">
+
+    <h2>Add New User</h2>
+    <br />
+    @using (Html.BeginForm("Index", "SuperAdmin", FormMethod.Post))
+    {
+        <div>
+            @Html.TextBoxFor(model => model.users.name, new { @placeholder = "Name", @class = "form-control input-lg" })
+            @Html.ValidationMessageFor(model => model.users.name, "", new { @class = "error" })
+        </div>
+        <br />
+        <div>
+            @Html.TextBoxFor(model => model.users.contact, new { @placeholder = "Contact Number", @class = "form-control input-lg" })
+            @Html.ValidationMessageFor(model => model.users.contact, "", new { @class = "error" })
+        </div>
+        <br />
+        <div>
+            @Html.TextBoxFor(model => model.users.email, new { @placeholder = "Email", @class = "form-control input-lg" })
+            @Html.ValidationMessageFor(model => model.users.email, "", new { @class = "error" })
+        </div>
+        <br />
+        <div>
+            @Html.PasswordFor(model => model.users.password, new { @placeholder = "Password", @class = "form-control input-lg" })
+            @Html.ValidationMessageFor(model => model.users.password, "", new { @class = "error" })
+        </div>
+        <br />
+        <div>
+            @Html.DropDownListFor(model => model.users.deptID, ViewBag.deptList as SelectList, "--Select Department--", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.users.deptID, "", new { @class = "error" })
+        </div>
+        <br />
+        <button id="btnSubmit" class="btn btn-primary">Submit</button>
+    }
+</div>

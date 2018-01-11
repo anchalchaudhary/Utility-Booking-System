@@ -7,6 +7,7 @@
     <Property Name="dateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="dateChosen" Type="date" />
     <Property Name="bookingID" Type="int" />
+    <Property Name="nonWorkingHours" Type="bit" />
   </EntityType>
   <EntityType Name="tblBookedHall">
     <Key>

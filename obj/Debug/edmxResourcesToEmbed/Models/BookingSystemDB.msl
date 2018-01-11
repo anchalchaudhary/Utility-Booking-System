@@ -4,6 +4,7 @@
     <EntitySetMapping Name="tblBookedDates">
       <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedDate">
         <MappingFragment StoreEntitySet="tblBookedDate">
+          <ScalarProperty Name="nonWorkingHours" ColumnName="nonWorkingHours" />
           <ScalarProperty Name="dateID" ColumnName="dateID" />
           <ScalarProperty Name="dateChosen" ColumnName="dateChosen" />
           <ScalarProperty Name="bookingID" ColumnName="bookingID" />

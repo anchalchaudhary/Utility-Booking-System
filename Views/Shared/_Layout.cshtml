@@ -17,21 +17,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("HMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <label class="navbar-brand">HMS</label>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-right">
                     @{
                         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                     }
-                    @if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1 && controllerName.ToLower()=="admin")
+                    @if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1 && controllerName.ToLower() == "admin")
                     {
-                        <div style="padding-left:350px">
-                            @Html.ActionLink("Add Users", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                            @Html.ActionLink("Registered Users", "ViewRegisteredUsers", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+
+                            @*@Html.ActionLink("Add Users", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })*@
+                        <li>
+                            @*@Html.ActionLink("Registered Users", "ViewRegisteredUsers", "Admin", new { area = "" }, new { @class = "navbar-brand" })*@
                             @Html.ActionLink("View Booking Requests", "ViewBookingRequests", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                        <li>
                             @Html.ActionLink("Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
-                        </div>
+                        </li>
                     }
                 </ul>
             </div>

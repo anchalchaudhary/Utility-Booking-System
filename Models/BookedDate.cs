@@ -15,6 +15,9 @@ namespace UtilityBookingSystem.Models
         public Nullable<System.DateTime> dateChosen { get; set; }
 
         public Nullable<int> bookingID { get; set; }
+
+        public Nullable<bool> nonWorkingHours { get; set; }
+
         //public List<BookedHall> bookedHalls { get; set; }
         //public List<BookedSlot> bookedSlots { get; set; }
         //public List<BookedRequirement> bookedRequirements { get; set; }

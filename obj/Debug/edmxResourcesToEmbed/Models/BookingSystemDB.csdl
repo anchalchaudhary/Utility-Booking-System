@@ -11,6 +11,7 @@
     <NavigationProperty Name="tblBookedHalls" Relationship="Self.FK__tblBooked__dateI__29572725" FromRole="tblBookedDate" ToRole="tblBookedHall" />
     <NavigationProperty Name="tblBookedRequirements" Relationship="Self.FK_tblBookedRequirement_tblBookedDate" FromRole="tblBookedDate" ToRole="tblBookedRequirement" />
     <NavigationProperty Name="tblChairs" Relationship="Self.FK_tblChairs_tblBookedDate" FromRole="tblBookedDate" ToRole="tblChairs" />
+    <Property Name="nonWorkingHours" Type="Boolean" />
   </EntityType>
   <EntityType Name="tblBookedHall">
     <Key>

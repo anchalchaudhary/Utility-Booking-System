@@ -12,6 +12,7 @@
           <Property Name="dateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dateChosen" Type="date" />
           <Property Name="bookingID" Type="int" />
+          <Property Name="nonWorkingHours" Type="bit" />
         </EntityType>
         <EntityType Name="tblBookedHall">
           <Key>
@@ -429,6 +430,7 @@
           <NavigationProperty Name="tblBookedHalls" Relationship="Self.FK__tblBooked__dateI__29572725" FromRole="tblBookedDate" ToRole="tblBookedHall" />
           <NavigationProperty Name="tblBookedRequirements" Relationship="Self.FK_tblBookedRequirement_tblBookedDate" FromRole="tblBookedDate" ToRole="tblBookedRequirement" />
           <NavigationProperty Name="tblChairs" Relationship="Self.FK_tblChairs_tblBookedDate" FromRole="tblBookedDate" ToRole="tblChairs" />
+          <Property Name="nonWorkingHours" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblBookedHall">
           <Key>
@@ -868,6 +870,7 @@
           <EntitySetMapping Name="tblBookedDates">
             <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedDate">
               <MappingFragment StoreEntitySet="tblBookedDate">
+                <ScalarProperty Name="nonWorkingHours" ColumnName="nonWorkingHours" />
                 <ScalarProperty Name="dateID" ColumnName="dateID" />
                 <ScalarProperty Name="dateChosen" ColumnName="dateChosen" />
                 <ScalarProperty Name="bookingID" ColumnName="bookingID" />

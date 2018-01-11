@@ -1,0 +1,27 @@
+﻿@model UtilityBookingSystem.Models.BigViewModel
+@{
+    ViewBag.Title = "Login";
+}
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<h2>Login</h2>
+<br />
+
+@using (Html.BeginForm("Login", "SuperAdmin", FormMethod.Post))
+{
+    <div>
+        @Html.TextBoxFor(model => model.login.loginID, new { @class = "form-control", @placeholder = "Enter Login ID" })
+        @Html.ValidationMessageFor(model => model.login.loginID, "", new { @class = "error" })
+    </div>
+    <br />
+    <div>
+        @Html.PasswordFor(model => model.login.password, new { @class = "form-control", @placeholder = "Enter Password" })
+        @Html.ValidationMessageFor(model => model.login.password, "", new { @class = "error" })
+    </div>
+    <br />
+    <div class="error">@ViewBag.InvalidCredentials</div>
+    <div class="input-field">
+        <button class="btn btn-primary">LOGIN</button>
+    </div>
+}

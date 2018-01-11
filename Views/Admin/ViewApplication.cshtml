@@ -1,9 +1,9 @@
 ﻿@model UtilityBookingSystem.Models.BigViewModel
 @{
-    ViewBag.Title = "ViewApplication";
+    ViewBag.Title = "ViewApplication"; 
 }
 <script src="~/Scripts/jquery-3.2.1.js"></script>
-
+<link href="~/css/print.css" rel="stylesheet" />
 <div class="modal fade" id="approve" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -21,7 +21,9 @@
         </div>
     </div>
 </div>
-
+<div class="right">
+    <a href="@Url.Action("Print", "Admin", new { bookingID = ViewBag.bookingDetails.bookingID})" id="btnPrint" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
+</div>
 
 <div>
     <div>
@@ -71,7 +73,7 @@
                 @if (ViewBag.bookingDetails.status == 1)
                 {
                     <td>
-                        <h4 style="color:lawngreen"><b>Acknowledged</b> </h4>
+                        <h4 style="color:forestgreen"><b>Acknowledged</b> </h4>
                     </td>
                 }
                 else if (ViewBag.bookingDetails.status == 0)
@@ -137,14 +139,21 @@
                         <tr>
                             <td><b>Number of Chairs</b></td>
                             <td>
+                                @{ int count = 0;}
                                 @foreach (var chairItem in ViewBag.chairs)
                                 {
-                                    if (chairItem.hallID == hallItem.hallID && chairItem.dateID == dateItem.dateID)
+                                    if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
                                     {
                                         <b>@chairItem.noOfChairs</b>
+                                        count = count + 1;
                                     }
                                 }
+                                @if (count == 0)
+                                {
+                                    <h6>NIL</h6>
+                                }
                             </td>
+
                         </tr>
                         if (hallItem.otherRequirements != null)
                         {

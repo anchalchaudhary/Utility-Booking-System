@@ -24,6 +24,7 @@ namespace UtilityBookingSystem.Models
         public int dateID { get; set; }
         public Nullable<System.DateTime> dateChosen { get; set; }
         public Nullable<int> bookingID { get; set; }
+        public Nullable<bool> nonWorkingHours { get; set; }
     
         public virtual tblBooking tblBooking { get; set; }
         public virtual ICollection<tblBookedHall> tblBookedHalls { get; set; }

@@ -101,7 +101,6 @@
                                 if (itemDate.bookingID == item.bookingID)
                                 {
                                    <h5>@itemDate.dateChosen.ToShortDateString()</h5>
-                                   <br />
                                 }
                             }
                         }
@@ -212,7 +211,7 @@
         }
         else {
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[7];
+                td = tr[i].getElementsByTagName("td")[3];
                 if (td) {
                     tr[i].style.display = "";
                 }

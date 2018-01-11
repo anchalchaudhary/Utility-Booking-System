@@ -12,6 +12,7 @@ namespace UtilityBookingSystem.Models
         public DateTime date { get; set; }
         [Required(ErrorMessage = "Select a hall and corresponding details.")]
         public List<Hall> hallsArray { get; set; }
-        
+        public Nullable<bool> nonWorkingHours { get; set; }
+
     }
 }

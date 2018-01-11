@@ -62,6 +62,13 @@ $(function () {
         dateFormat: 'dd-mm-yy',
     });
 });
+
+var nonWokingHours = function () {
+    if ($("#nonWorkingHours_"+click).prop('checked')) {
+        $("#nonWorkingHours_" + click).val('true');
+        $('#myModal').modal('show')
+    }
+}
 var addMore = function (index, hall, slot, requirement) {
     click = click + 1;
 
@@ -114,6 +121,7 @@ var addMore = function (index, hall, slot, requirement) {
     var insertHere = document.getElementById('writeroot');
     insertHere.parentNode.insertBefore(newFields, insertHere);
     //document.getElementById("bookingForm" + click).reset();
+    $("#removenode_" + click).show();
 
     var j = 1, k = 0;
     var iHall = hall;
@@ -123,7 +131,7 @@ var addMore = function (index, hall, slot, requirement) {
         for (j = 1; j <= 6; j++) {
             iHall = hall;
             for (p = 1; p <= 4; p++) {
-                $("#removenode_" + click).show();
+                $("#nonWorkingHours_" + click).attr("name", "detailsObjList[" + (index + i) + "].nonWorkingHours");
                 $("#hiddenhall" + (hall + p - 1) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].hallID");
                 $("#hiddenhallname" + (hall + p - 1) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].hallName");
                 $("#slotcheck" + (slot + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].slotsArray[" + (slot + k) + "].isSelected");

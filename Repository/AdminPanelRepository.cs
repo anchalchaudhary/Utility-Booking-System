@@ -13,7 +13,7 @@ namespace UtilityBookingSystem.Repository
             bool checkEmailCount;
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
-                checkEmailCount = db.tblUsers.Any(m => m.email == model.email); //checking if the email already exists for any user
+                checkEmailCount = db.tblUsers.Any(m => m.email == model.email && m.deptID == model.deptID); //checking if the email already exists for any user
             }
             if (checkEmailCount == false)
             {

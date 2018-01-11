@@ -48,39 +48,39 @@ namespace UtilityBookingSystem.Controllers
         //#endregion
 
         #region Admin Home
-        public ActionResult Index()
-        {
-            if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1)
-            {
-                ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
-                return View();
-            }
-            return RedirectToAction("Login","User");
-        }
-        #region Admin Adds User
-        [HttpPost]
-        public ActionResult Index(BigViewModel model)
-        {
-            bool detailsSaved = objUsers.AddNewUser(model); //Saves New User data to DB
+        //public ActionResult Index()
+        //{
+        //    if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1)
+        //    {
+        //        ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
+        //        return View();
+        //    }
+        //    return RedirectToAction("Login","User");
+        //}
+        //#region Admin Adds User
+        //[HttpPost]
+        //public ActionResult Index(BigViewModel model)
+        //{
+        //    bool detailsSaved = objUsers.AddNewUser(model); //Saves New User data to DB
 
-            ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
+        //    ViewBag.deptList = new SelectList(objDepartments.GetDepartmentsList(), "deptID", "department"); //Fetches Department List from Model Departments
 
-            string mailSubject, mailBody;
+        //    string mailSubject, mailBody;
 
-            if (detailsSaved == true)
-            {
-                mailSubject = "Added";
-                mailBody = "Hello " + model.users.name + ".You have been added.";
-                Mail.Send_Mail(model.users.email, mailBody, mailSubject); //Sends Mail to the registered User.
+        //    if (detailsSaved == true)
+        //    {
+        //        mailSubject = "Added";
+        //        mailBody = "Hello " + model.users.name + ".You have been added.";
+        //        Mail.Send_Mail(model.users.email, mailBody, mailSubject); //Sends Mail to the registered User.
 
-                TempData["AddedUser"] = "<script> alert('User added');</script>";
-            }
-            else
-                TempData["AddedUser"] = "<script> alert('Email already registered with us');</script>";
+        //        TempData["AddedUser"] = "<script> alert('User added');</script>";
+        //    }
+        //    else
+        //        TempData["AddedUser"] = "<script> alert('Email already registered with us');</script>";
 
-            return View();
-        }
-        #endregion
+        //    return View();
+        //}
+        //#endregion
 
         #region View Registered Users
         public ActionResult ViewRegisteredUsers()
@@ -216,5 +216,28 @@ namespace UtilityBookingSystem.Controllers
             bool isDeleted = objUsers.DeleteUser(userID);
             return RedirectToAction("ViewRegisteredUsers", "Admin");
         }
+        public ActionResult Print(int bookingID)
+        {
+            Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
+            ViewBag.bookingDetails = bookingDetails;
+
+            List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
+            ViewBag.bookedDate = bookingDateList;
+
+            List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+            ViewBag.bookedHall = bookedHallList;
+
+            List<Chair> chairsList = objChair.GetChairsList(bookingDateList, bookedHallList, bookingID);
+            ViewBag.chairs = chairsList;
+
+            List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+            ViewBag.bookedReq = bookedReqList;
+
+            List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+            ViewBag.bookingSlot = bookingSlotList;
+
+            return View();
+        }
+
     }
 }
