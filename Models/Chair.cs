@@ -20,11 +20,11 @@ namespace UtilityBookingSystem.Models
             using (var db = new BookingSystemDBEntities())
             {
                 db.Configuration.LazyLoadingEnabled = false;
-                foreach (var dateItem in bookingDateList)
-                {
+                //foreach (var dateItem in bookingDateList)
+                //{
                     foreach (var hallItem in bookedHallList)
                     {
-                        chairList = db.tblChairs.Where(x => x.hallID == hallItem.hallID && x.bookingID == bookingID && x.dateID==dateItem.dateID).Select(x => new Chair
+                        chairList = db.tblChairs.Where(x => x.hallID == hallItem.hallID && x.bookingID == bookingID && x.dateID==hallItem.dateID).Select(x => new Chair
                         {
                             noOfChairs = x.noOfChairs,
                             hallID = x.hallID,
@@ -35,7 +35,7 @@ namespace UtilityBookingSystem.Models
 
                     }
                 }
-            }
+            //}
             return noOfChairList;
         }
     }

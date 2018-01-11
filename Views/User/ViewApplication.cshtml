@@ -30,7 +30,7 @@
 </nav>
 
 <div class="right">
-    <a href="@Url.Action("Print", "BookUtility", new { bookingID = @ViewBag.bookingDetails.bookingID})" id="btnPrint" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
+    <a href="@Url.Action("Print", "User", new { bookingID = @ViewBag.bookingDetails.bookingID})" id="btnPrint" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
 </div>
 <div>
     <div>
@@ -89,7 +89,7 @@
 
                 <tr>
                     <td><h3>Date</h3></td>
-                    <td><h3>@dateItem.dateChosen</h3></td>
+                    <td><h3>@dateItem.dateChosen.ToShortDateString()</h3></td>
                 </tr>
 
                 foreach (var hallItem in ViewBag.bookedHall)
@@ -131,7 +131,7 @@
                             <td>
                                 @foreach (var chairItem in ViewBag.chairs)
                                 {
-                                    if (chairItem.hallID == hallItem.hallID)
+                                    if (chairItem.hallID == hallItem.hallID && chairItem.dateID == hallItem.dateID)
                                     {
                                         <b>@chairItem.noOfChairs</b>
                                     }

@@ -349,6 +349,7 @@
     <Content Include="Views\BookUtility\ViewApplication.cshtml" />
     <Content Include="Views\BookUtility\Print.cshtml" />
     <Content Include="Views\User\AccountSettings.cshtml" />
+    <Content Include="Views\User\Print.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

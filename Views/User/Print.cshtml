@@ -55,20 +55,20 @@
                     <td><b>@ViewBag.bookingDetails.bookedAtTime</b></td>
                 </tr>
                 <tr>
-                        <td><b>Status</b></td>
-                        @if (ViewBag.bookingDetails.status == 1)
-                        {
-                            <td>
-                                <h4 style="color:#00C0C0;"><b>Confirmed</b> </h4>
-                            </td>
-                        }
-                        else if (ViewBag.bookingDetails.status == 0)
-                        {
-                            <td>
-                                <h4 style="color:red"><b>Pending</b></h4>
-                            </td>
-                        }
-                    </tr>
+                    <td><b>Status</b></td>
+                    @if (ViewBag.bookingDetails.status == 1)
+                    {
+                        <td>
+                            <h4 style="color:#00C0C0;"><b>Confirmed</b> </h4>
+                        </td>
+                    }
+                    else if (ViewBag.bookingDetails.status == 0)
+                    {
+                        <td>
+                            <h4 style="color:red"><b>Pending</b></h4>
+                        </td>
+                    }
+                </tr>
             </table>
         </div>
         <h4>Booking Details:</h4>
@@ -84,7 +84,7 @@
 
                     <tr>
                         <td><h4>Date</h4></td>
-                        <td><h4>@dateItem.dateChosen</h4></td>
+                        <td><h4>@dateItem.dateChosen.ToShortDateString()</h4></td>
                     </tr>
 
                     foreach (var hallItem in ViewBag.bookedHall)
@@ -143,7 +143,7 @@
                 <tr>
                     <td><b>Remarks</b></td>
                     <td colspan="2">
-                        <textarea cols="100" rows="6"></textarea>
+                       <textarea cols="100" rows="6"></textarea>
                     </td>
                 </tr>
             </table>

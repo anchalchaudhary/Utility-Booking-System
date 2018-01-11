@@ -38,7 +38,7 @@ namespace UtilityBookingSystem.Models
         }
         #endregion
         #region Get All Booked Dates
-        public List<BookedDate> GetAllBookedDatesList()
+        public List<BookedDate> GetAllBookingDateList()
         {
             List<BookedDate> allBookedDateList;
             using (var context = new BookingSystemDBEntities())

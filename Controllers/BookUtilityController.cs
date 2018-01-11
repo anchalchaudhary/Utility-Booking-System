@@ -130,6 +130,37 @@ namespace UtilityBookingSystem.Controllers
             int bookingID = Convert.ToInt32(Session["NewBookingID"]);
             int userID = Convert.ToInt32(Session["LoggedInUserID"]);
 
+            bool slotFlag = false, reqFlag=false;
+            foreach(var item in detailsObjList)
+            {
+                if(item.date!=null)
+                {
+                    foreach(var hallItem in item.hallsArray)
+                    {
+                        if(hallItem!=null)
+                        {
+                            foreach(var slotItem in hallItem.slotsArray)
+                            {
+                                if (slotItem.isSelected == true)
+                                    slotFlag = true;
+                            }
+                            foreach(var reqItem in hallItem.requirementsArray)
+                            {
+                                if (reqItem.isSelected == true)
+                                    reqFlag = true;
+                            }
+                            if (hallItem.otherRequirements != null)
+                                reqFlag = true;
+                        }
+                    }
+                }
+            }
+            if(slotFlag == false || reqFlag == false)
+            {
+                ViewBag.EnterAllDetails = "You must enter all details";
+                return View();
+            }
+
             foreach (var item in detailsObjList)
             {
                 BookedHall objBookedHall1 = new BookedHall();
@@ -156,7 +187,7 @@ namespace UtilityBookingSystem.Controllers
             mailBody = objtblUser.name + ", your booking request has been sent. You\'re booking number is " + objtblBooking.bookingNo;
             Mail.Send_Mail(objtblUser.email, mailBody, mailSubject); //Sends Mail to the registered User.
 
-            return RedirectToAction("ViewApplication");
+            return RedirectToAction("Print");
         }
         #endregion
         [HttpGet]
@@ -201,8 +232,10 @@ namespace UtilityBookingSystem.Controllers
         }
 
         #region Print
-        public ActionResult Print(int bookingID)
+        public ActionResult Print()
         {
+            int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+
             Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
             ViewBag.bookingDetails = bookingDetails;
 

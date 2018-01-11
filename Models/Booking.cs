@@ -48,7 +48,8 @@ namespace UtilityBookingSystem.Models
         #region Get All Bookings List
         public List<Booking> GetAllBookingsList()
         {
-            List<Booking> allBookingsList;
+            List<Booking> completedBookingsList = new List<Booking>();
+            IEnumerable<Booking> allBookingsList = null;
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
@@ -65,7 +66,32 @@ namespace UtilityBookingSystem.Models
                     status = x.status
                 }).ToList();
             }
-            return allBookingsList;
+
+
+            tblBookedDate objtblBookedDate = new tblBookedDate();
+            foreach (var item in allBookingsList)
+            {
+                using (var context = new BookingSystemDBEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    objtblBookedDate = context.tblBookedDates.FirstOrDefault(x => x.bookingID == item.bookingID);
+                }
+
+                if (objtblBookedDate == null)
+                {
+                    BookingSystemDBEntities db = new BookingSystemDBEntities();
+                    tblBooking objtblBooking = db.tblBookings.SingleOrDefault(x => x.bookingID == item.bookingID);
+                    db.tblBookings.Remove(objtblBooking);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    completedBookingsList.Add(item);
+                }
+            }
+
+
+            return completedBookingsList;
         }
         #endregion
 
@@ -177,11 +203,12 @@ namespace UtilityBookingSystem.Models
         }
         public List<Booking> getUserBookingDetails(int userID)
         {
-            List<Booking> listUserBooking = new List<Booking>();
+            List<Booking> completedBooking = new List<Booking>();
+            IEnumerable<Booking> listUserAllBooking = null;
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                listUserBooking = context.tblBookings.Where(x => x.userID == userID).Select(x=>new Booking
+                listUserAllBooking = context.tblBookings.Where(x => x.userID == userID).Select(x=>new Booking
                 {
                     bookingID=x.bookingID,
                     userID = x.userID,
@@ -191,7 +218,29 @@ namespace UtilityBookingSystem.Models
                     status = x.status
                 }).ToList();
             }
-            return listUserBooking;
+            tblBookedDate objtblBookedDate = new tblBookedDate();
+            foreach (var item in listUserAllBooking)
+            {
+                using (var context = new BookingSystemDBEntities())
+                {
+                    context.Configuration.LazyLoadingEnabled = false;
+                    objtblBookedDate = context.tblBookedDates.FirstOrDefault(x => x.bookingID == item.bookingID);
+                }
+
+                if (objtblBookedDate == null)
+                {
+                    BookingSystemDBEntities db = new BookingSystemDBEntities();
+                    tblBooking objtblBooking = db.tblBookings.SingleOrDefault(x => x.bookingID == item.bookingID);
+                    db.tblBookings.Remove(objtblBooking);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    completedBooking.Add(item);
+                }
+            }
+                return completedBooking;
+            
         }
 
         public bool CancelBooking(int bookingID, int userID)

@@ -84,12 +84,15 @@
                             {
                                 <tr>
                                     <td style="color:#fff">
-                                        @Html.ActionLink((string)(itemBooking.title), "ViewApplication", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID }, new { target = "_blank" })
+                                        @Html.ActionLink((string)(itemBooking.title), "Print", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID }, new { target = "_blank" })
                                     </td>
                                     <td  style="color:#fff">
                                         @foreach (var itemDate in ViewBag.userFutureBookedDate)
                                         {
-                                            @itemDate.dateChosen.ToShortDateString() <br />
+                                            if (itemDate.bookingID == itemBooking.bookingID)
+                                            {
+                                                @itemDate.dateChosen.ToShortDateString() <br />
+                                            }
                                         }
                                     </td>
                                     <td style="color:#0094ff">

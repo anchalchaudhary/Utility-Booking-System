@@ -123,6 +123,7 @@ var addMore = function (index, hall, slot, requirement) {
         for (j = 1; j <= 6; j++) {
             iHall = hall;
             for (p = 1; p <= 4; p++) {
+                $("#removenode_" + click).show();
                 $("#hiddenhall" + (hall + p - 1) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].hallID");
                 $("#hiddenhallname" + (hall + p - 1) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].hallName");
                 $("#slotcheck" + (slot + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].slotsArray[" + (slot + k) + "].isSelected");
@@ -132,6 +133,7 @@ var addMore = function (index, hall, slot, requirement) {
                 $("#reqcheck" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("class", "reqs" + (hall + p));
                 $("#hiddenreq" + (requirement + j) + "_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].requirementsArray[" + (requirement + k) + "].requirementID");
                 $("#chairs_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].noOfChairs");
+                $("#others_" + (hall + p) + "_" + click).attr("name", "detailsObjList[" + (index + i) + "].hallsArray[" + iHall + "].otherRequirements");
                 iHall++;
             }
             k++;

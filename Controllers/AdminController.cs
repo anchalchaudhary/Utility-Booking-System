@@ -107,6 +107,8 @@ namespace UtilityBookingSystem.Controllers
 
                 ViewBag.allBookingsList = allBookingsList;
 
+                List<BookedDate> bookingDateList = objBookedDate.GetAllBookingDateList();
+                ViewBag.bookedDate = bookingDateList;
                 return View();
             }
             else

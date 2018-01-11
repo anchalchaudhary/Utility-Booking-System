@@ -38,7 +38,7 @@
     </div>
 </nav>
 
-
+<span class="error">@ViewBag.EnterAllDetails</span>
 <div id="bookingForm" style="display:none; color:#fff;">
     @{
         int index = 0;
@@ -46,9 +46,12 @@
         <b id="selectdate" style="font-size:xx-large">Select Date: &nbsp;</b>
         <input type="text" id="date" onchange="datechosen();"  autofocus required title="Select a date" />
         <input type="hidden" name="detailsObjList[@index].date" id="alternateDate" />
-
+        
         <span id="invalidDate" style="color:indianred;"></span>
         <br />
+
+        <input id="removenode_" type="button" value="Delete" style="display:none;"
+               onclick="this.parentNode.parentNode.removeChild(this.parentNode);" /><br /><br />
 
         <table id="tableBooking_" style="color:white;" class="table table-bordered">
             <tbody id="tbodyBooking_">
@@ -101,10 +104,10 @@
 
                         }
                 </tr>
-                <tr  style="border-bottom:1px solid white; border-top:0;">
-                    <td style="border-top:0;">&nbsp;</td>
-                    <td  style="border-left:0; border-right: 0; border-top:0;">Other Requirements:</td>
-                    <td colspan="5"  style="border:0;"><input type="text" id="others_@(index)_@(hall)" name="detailsObjList[@index].hallsArray[@hall].otherRequirements"/></td>
+                <tr id="booking_@(index)_row3_" style="border-bottom:1px solid white; border-top:0;">
+                    <td id="emptycolumn2_" style="border-top:0;">&nbsp;</td>
+                    <td id="other_@(hall)_" style="border-left:0; border-right: 0; border-top:0;">Other Requirements:</td>
+                    <td colspan="5" id="otherreq_@(hall)_" style="border:0;"><input type="text" id="others_@(hall+1)_" name="detailsObjList[@index].hallsArray[@hall].otherRequirements"/></td>
                 </tr>
                 hall = hall + 1;
             }
