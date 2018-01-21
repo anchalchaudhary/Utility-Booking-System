@@ -4,74 +4,88 @@
     Layout = null;
 }
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="https://fonts.googleapis.com/css?family=Montserrat|Nunito|Roboto|Open+Sans|Karla|Raleway" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-<link rel="stylesheet" type="text/css" href="~/css/style.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="~/css/newstyle.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
 <script src="~/Scripts/jquery-3.2.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-<div style="text-align: center;">
-    <img style="width: 100px;" src="~/images/akgeclogo.png">
-</div>
-<div class="container">
-    <div class="row">
-        <div style="font-size: 5rem;color:white;font-family: 'Raleway', sans-serif;" class="col l8 s12 m12">
-            Hall Booking System
-        </div>
-        <div class="col l4 sm12 m12" id="login-page">
-            @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "login-form", @style = "margin-left: 10px;" }))
-            {
-                <div class="row">
-                    <div class="input-field col s12 center">
-                        <!-- <img src="images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login"/> -->
-                        <p class="center login-form-text">LOGIN</p>
-                    </div>
-                </div>
-                <div class="row margin">
-                    <div class="input-field col s12">
-                        <!-- <i class="mdi-social-person-outline prefix"></i> -->
-                        <i class="material-icons prefix">account_circle</i>
-                        @Html.TextBoxFor(model => model.login.loginID, new { @id = "username", @style = "background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); cursor: auto;" })
-                        <label for="username" data-error="wrong" class="center-align" data-success="">Username</label>
-                        @Html.ValidationMessageFor(model => model.login.loginID, "", new { @class = "error" })
-                    </div>
-                </div>
-                <div class="row margin">
-                    <div class="input-field col s12">
-                        <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-                        <i class="material-icons prefix">vpn_key</i>
-                        @Html.PasswordFor(model => model.login.password, new { @id = "password", @style = "background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;" })
-                        <label for="password">Password</label>
-                        @Html.ValidationMessageFor(model => model.login.password, "", new { @class = "error" })
-                    </div>
-                </div>
-                <div class="error">@ViewBag.InvalidCredentials</div>
+<div class="container-fluid">
+    <div class="top">
+        <img src="~/images/akgeclogo.png"> <span>AJAY KUMAR GARG ENGINEERING COLLEGE GHAZIABAD</span>
+    </div>
 
-                <div class="row">
-                    <div class="input-field col s12 login-text">
-                        <input type="checkbox" id="test6" checked="checked" />
-                        <label for="test6" class="pointer-events">Remember me</label>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="left_section">
+                <div class="heading">
+                    HALL BOOKING
+                </div>
+                <div class="sub_heading">
+                    You can now book seminar hall online
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="right_section">
+                <!-- form-main -->
+                <div class="form">
+                    <h1>LOGIN FORM</h1>
+                    <div id="login">
+                        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                        {
+                            <div class="field-wrap">
+                                <label> Enter Your Email<span class="req">*</span> </label>
+                                @Html.TextBoxFor(model => model.login.loginID, new { @id = "username"})
+                                @Html.ValidationMessageFor(model => model.login.loginID, "", new { @class = "error" })
+                            </div>
+                            <div class="field-wrap">
+                                <label> Your Password<span class="req">*</span> </label>
+                                @Html.PasswordFor(model => model.login.password, new { @id = "password"})
+                                @Html.ValidationMessageFor(model => model.login.password, "", new { @class = "error" })
+                            </div>
+                            <div class="error">@ViewBag.InvalidCredentials</div>
+                            <input type="submit" class="button button-block" value="Login"/>
+                        }
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <button type="submit" class="btn waves-effect waves-light col s12">Login</button>
-                    </div>
-                </div>
-            }
+            </div>
+        </div>
+        <div class="footer">
+            Powered By || <span class="yellow"><a href="http://www.silive.in">SOFTWARE INCUBATOR</a></span>
         </div>
     </div>
-</div>
-<div style="color: white; position:fixed;width:300px;bottom:0px;right:25%;left:54%;margin-left:-150px;">
-    Powered By
-    <img style="width: 50px;" src="~/images/silogo.png">
-    Software Incubator
-</div>
+    </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script type="text/javascript" src="~/js/script.js"></script>
+<script>
+    $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+        var $this = $(this),
+            label = $this.prev('label');
+
+        if (e.type === 'keyup') {
+            if ($this.val() === '') {
+                label.removeClass('active highlight');
+            } else {
+                label.addClass('active highlight');
+            }
+        } else if (e.type === 'blur') {
+            if ($this.val() === '') {
+                label.removeClass('active highlight');
+            } else {
+                label.removeClass('highlight');
+            }
+        } else if (e.type === 'focus') {
+
+            if ($this.val() === '') {
+                label.removeClass('highlight');
+            }
+            else if ($this.val() !== '') {
+                label.addClass('highlight');
+            }
+        }
+
+    });
+</script>

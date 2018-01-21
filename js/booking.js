@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     var detailsArray = new Array();
     detailsArray = '@Html.Raw(Json.Encode(ViewBag.HallDetail))';
+    console.log(detailsArray);
     $("#date").attr("name", "detailsObjList[" + 0 + "].date");
     var newFields = document.getElementById('bookingForm').cloneNode(true);
     newFields.id = '';
@@ -161,6 +162,7 @@ var seeDetails = function (slotID, hallID) {
     if ($("#slotcheck" + slotID + "_" + hallID + "_" + click).is(':disabled')) {
         var id = "date" + click;
         var date = document.getElementById(id).value;
+        var detailsURL = $("#detailsURL").val();
         $.ajax({
             type: "POST",
             data: {
@@ -169,7 +171,7 @@ var seeDetails = function (slotID, hallID) {
                 'hallID': hallID
             },
             dataType: 'JSON',
-            url: "/BookUtility/GetBookedByDetails",
+            url: detailsURL,
             success: function (department) {
                 if (department != "") {
                     var title = "Booked By " + department;
@@ -238,27 +240,38 @@ var datechosen = function () {
     $('#alternateDate' + click).val(document.getElementById("date" + click).value);
     var id = "alternateDate" + click;
     var date = document.getElementById(id).value;
+    var dateURL = $("#dateURL").val();
+
     if (date != "") {
         $("#invalidDate" + click).hide();
         $.ajax({
             type: "POST",
             data: { 'date': date },
             dataType: 'JSON',
-            url: "/BookUtility/GetBookedSlotsList",
+            url: dateURL,
             success: function (bookedSlotsList) {
                 var bookedSlotsItem = '';
-                $.each(bookedSlotsList, function (i, bookedSlotsItem) {
-                    $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", false);
-                    $("#slotcheck" + bookedSlotsItem.slotID + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
-                    if (!$("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).attr('disabled')) {
-                        $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
-                    }
-                    else {
-                        $('.slots' + bookedSlotsItem.hallID).each(function () {
-                            $(this).prop('disabled', true);
+                if (bookedSlotsList.length != 0) {
+                    $.each(bookedSlotsList, function (i, bookedSlotsItem) {
+                        $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", false);
+                        $("#slotcheck" + bookedSlotsItem.slotID + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
+                        if (!$("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).attr('disabled')) {
+                            $("#slotcheck" + 6 + "_" + bookedSlotsItem.hallID + "_" + click).prop("disabled", true);
+                        }
+                        else {
+                            $('.slots' + bookedSlotsItem.hallID).each(function () {
+                                $(this).prop('disabled', true);
+                            });
+                        }
+                    });
+                }
+                else {
+                    for (var i = 1; i <= 4; i++) {
+                        $('.slots' + i).each(function () {
+                            $(this).removeAttr("disabled");
                         });
                     }
-                });
+                }
             }
         });
     }
@@ -270,10 +283,11 @@ var datechosen = function () {
     //}
 }
 var getRequirementsList = function () {
+    var reqURL = $("#reqURL").val();
     $.ajax({
         type: "GET",
         dataType: 'JSON',
-        url: "/BookUtility/GetRequirementsList",
+        url: reqURL,
         success: function (requirementsList) {
             var requirementsItem = '';
             $.each(requirementsList, function (i, requirementsItem) {

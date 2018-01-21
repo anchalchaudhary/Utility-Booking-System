@@ -16,20 +16,20 @@
 <script src="~/Scripts/modernizr-2.6.2.js"></script>
 
 
-<nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top" style="background:none;">
     <a href="http://www.akgec.in"><img src="~/images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
     <a class="navbar-brand" href="@Url.Action("Index","User")">
-        <div style="vertical-align: middle;font-family: 'Karla',sans-serif; font-size: 1.5em" class="d-inline-block">
-            HMS Step 2.
+        <div style="vertical-align: middle; font-size: 1.2em" class="d-inline-block">
+            Hall Management system
         </div>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <b class="navbar-toggler-icon"></b>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul style="font-family:'Roboto', sans-serif; font-size: 1.2em" class="navbar-nav">
+        <ul style="font-family:'Roboto', sans-serif; font-size: 1.0em" class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index","User")">Home<span class="sr-only"></span></a>
+                <a class="nav-link" href="@Url.Action("Index","User")">Home</a>
             </li>
             <li class="nav-item">
                 @Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = "nav-link" })
@@ -50,18 +50,20 @@
                 You should send the director approval for non working hours to dean admin.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-secondary" style="background-color: #F0A830;  border:none;" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
 </div>
+<br/>
 <span class="error">@ViewBag.EnterAllDetails</span>
 <div id="bookingForm" style="display:none; color:#fff;">
     @{
         int index = 0;
         int hall = 0, slot = 0, requirement = 0;
-        <b id="selectdate" style="font-size:xx-large">Select Date: &nbsp;</b>
+        <b id="selectdate" style="font-size:x-large;">Select Date: &nbsp;</b>
         <input type="text" id="date" onchange="datechosen();"  autofocus required title="Select a date" />
+        @Html.Hidden("dateURL", Url.Action("GetBookedSlotsList","BookUtility"))
         <input type="hidden" name="detailsObjList[@index].date" id="alternateDate" />
         
         <span id="invalidDate" style="color:indianred;"></span>
@@ -95,6 +97,7 @@
                             <label id="lblSlot@(slot+1)_@(hall + 1)_" onmouseover="seeDetails(@(slot+1),@(hall+1))">@slotItem.slot</label>
                             @*<input type="checkbox" class="slots@(hall+1)" data-toggle="tooltip" name="detailsObjList[@index].hallsArray[@hall].slotsArray[@slot].isSelected" id="slotcheck@(slot + 1)_@(hall + 1)_" onchange="slotcheckchange(@(slot + 1), @(hall + 1));" />*@
                             <br />
+                            @Html.Hidden("detailsURL", Url.Action("GetBookedByDetails","BookUtility"))
                             <span id="span@(slot+1)_@(hall + 1)_" style="color:indianred;"></span>
                         </td>
                         slot = slot + 1;
@@ -104,6 +107,7 @@
                     <tr  id="booking_@(index)_row2_"  style="border:0;">
                         <td id="emptycolumn1_"  style="border-bottom: 0; border-top:0;"></td>
                         <!--REQUIREMENTS-->
+                        @Html.Hidden("reqURL", Url.Action("GetRequirementsList", "BookUtility"))
                         @foreach (var reqItem in item.requirementsArray)
                         {
                             <td id="booking_@(index)_column_req_@(requirement)_" style="border:0;">

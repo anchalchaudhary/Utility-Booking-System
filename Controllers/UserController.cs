@@ -48,7 +48,7 @@ namespace UtilityBookingSystem.Controllers
             }
             else
             {
-                if(model.login.loginID=="admin" && model.login.password=="admin123")
+                if(model.login.loginID=="deanadmin" && model.login.password=="deanadmin123")
                 {
                     Session["DeanAdminLoggedIn"] = 1;
                     return RedirectToAction("ViewBookingRequests", "Admin");

@@ -21,6 +21,9 @@ namespace UtilityBookingSystem.Controllers
         BookedSlot objBookedSlot = new BookedSlot();
         Chair objChair = new Chair();
         #endregion
+
+        BookingSystemDBEntities db = new BookingSystemDBEntities();
+
         // GET: SuperAdmin
         #region Admin Login
         public ActionResult Login()
@@ -70,10 +73,10 @@ namespace UtilityBookingSystem.Controllers
                 mailBody = "Hello " + model.users.name + ".You have been added.";
                 Mail.Send_Mail(model.users.email, mailBody, mailSubject); //Sends Mail to the registered User.
 
-                TempData["AddedUser"] = "<script> alert('User added');</script>";
+                TempData["AddedUser"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('User added');</script>";
             }
             else
-                TempData["AddedUser"] = "<script> alert('Email already registered with us');</script>";
+                TempData["AddedUser"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('This user is already added in same department.');</script>";
 
             return View();
         }
@@ -98,6 +101,63 @@ namespace UtilityBookingSystem.Controllers
             bool isDeleted = objUsers.DeleteUser(userID);
             return RedirectToAction("ViewRegisteredUsers", "SuperAdmin");
         }
+        public ActionResult AddNewDepartment()
+        {
+
+            if (Convert.ToInt32(Session["AdminLoggedIn"]) == 1)
+            {
+                List<tblDepartment> listtblDepartment = objDepartments.GetDepartmentsList();
+                ViewBag.departments = listtblDepartment;
+                return View();
+            }
+            return RedirectToAction("Login");
+        }
+        [HttpPost]
+        public ActionResult AddNewDepartment(Departments model)
+        {
+            List<tblDepartment> listtblDepartment = objDepartments.GetDepartmentsList();
+            ViewBag.departments = listtblDepartment;
+            tblDepartment objtblDepartment = db.tblDepartments.FirstOrDefault(x => x.department.ToUpper() == model.department.ToUpper());
+            if (objtblDepartment == null)
+            {
+                tblDepartment objtblDepartment1 = new tblDepartment();
+                objtblDepartment1.department = model.department;
+                db.tblDepartments.Add(objtblDepartment1);
+                db.SaveChanges();
+
+                TempData["AddedDept"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Department added');</script>";
+
+            }
+            else
+            {
+                TempData["AddedDept"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('This Department is already added.')";
+            }
+            return RedirectToAction("AddNewDepartment");
+        }
+        public ActionResult DeleteDepartment(int deptID)
+        {
+            try
+            {
+                //int deptID = 1;
+                tblDepartment objtblDepartment = new tblDepartment();
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    objtblDepartment = db.tblDepartments.First(x => x.deptID == deptID);
+                }
+                using (BookingSystemDBEntities db = new BookingSystemDBEntities())
+                {
+                    db.tblDepartments.Attach(objtblDepartment);
+                    db.tblDepartments.Remove(objtblDepartment);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["DeletedDept"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Department Deleted')";
+            }
+            return RedirectToAction("AddNewDepartment", "SuperAdmin");
+        }
+
         #region Admin Logout
         public ActionResult Logout()
         {

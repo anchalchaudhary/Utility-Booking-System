@@ -36,6 +36,21 @@
                             @Html.ActionLink("Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })
                         </li>
                     }
+                    @if (Convert.ToInt32(Session["AdminLoggedIn"]) == 1 && controllerName.ToLower() == "superadmin")
+                    {
+                        <li>
+                            @Html.ActionLink("Add Users", "Index", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand", @style = "float:right;" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("View Users", "ViewRegisteredUsers", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand", @style = "float:right;" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Departments", "AddNewDepartment", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand", @style = "float:right;" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Logout", "Logout", "SuperAdmin", new { area = "" }, new { @class = "navbar-brand", @style = "float:right;" })
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -44,7 +59,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="footer" style="position: fixed;">
             <p>&copy; @DateTime.Now.Year - Powered by SOFTWARE INCUBATOR</p>
         </footer>
     </div>

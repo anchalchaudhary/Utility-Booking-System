@@ -1,0 +1,74 @@
+﻿@model UtilityBookingSystem.Models.Departments
+@{
+    ViewBag.Title = "AddNewDepartment";
+    // Layout = null;
+}
+
+<style>
+    .error {
+        color: red;
+    }
+</style>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@Html.Raw(TempData["AddedDept"])
+@Html.Raw(TempData["DeletedDept"])
+<div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this item?
+                <br />
+                <b>Deleting a Department will delete all booking made by the Department.</b>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">Cancel</button>
+                <button id="btnContinueDelete" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Add New Department</h2>
+            @using (Html.BeginForm("AddNewDepartment", "SuperAdmin", FormMethod.Post))
+            {
+                <div>
+                    @Html.TextBoxFor(model => model.department, new { @placeholder = "Name", @class = "form-control input-lg" })
+                    @Html.ValidationMessageFor(model => model.department, "", new { @class = "error" })
+                </div>
+                <br />
+                <button id="btnSubmit" class="btn btn-primary">Add</button>
+            }
+        </div>
+        <div class="col-md-6">
+            <h2>Departments</h2>
+            <table class="table table-bordered">
+                @foreach (var item in ViewBag.departments)
+                {
+                    <tr>
+                        <td>@item.department</td>
+                        <td><a id="deleteItem" class="deleteItem" data-target="#basic" data-toggle="modal" data-path="@Url.Action("DeleteDepartment", "SuperAdmin", new { deptID = item.deptID })" style="cursor: pointer;">Delete</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    var path_to_delete;
+
+    $(".deleteItem").click(function (e) {
+        path_to_delete = $(this).data('path');
+    });
+    $('#btnContinueDelete').click(function () {
+        window.location = path_to_delete;
+    });
+</script>
