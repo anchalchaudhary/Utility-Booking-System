@@ -77,5 +77,22 @@ namespace UtilityBookingSystem.Models
             return listBookedDateID;
         }
         #endregion
+
+        public List<BookedHall> GetAllBookedHalls()
+        {
+            List<BookedHall> allBookedHallsList;
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                allBookedHallsList = context.tblBookedHalls.Select(x => new BookedHall
+                {
+                    dateID = x.dateID,
+                    hallName = x.tblHall.hallName,
+                    hallID = x.hallID,
+                    bookedHallID = x.bookedHallID
+                }).ToList();
+            }
+            return allBookedHallsList;
+        }
     }
 }

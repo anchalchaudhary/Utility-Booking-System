@@ -24,13 +24,13 @@
                     @{
                         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                     }
-                    @if (Convert.ToInt32(Session["DeanAdminLoggedIn"]) == 1 && controllerName.ToLower() == "admin")
+                    @if (Session["DeanAdminLoggedIn"] != null && controllerName.ToLower() == "admin")
                     {
-
-                            @*@Html.ActionLink("Add Users", "Index", "Admin", new { area = "" }, new { @class = "navbar-brand" })*@
                         <li>
-                            @*@Html.ActionLink("Registered Users", "ViewRegisteredUsers", "Admin", new { area = "" }, new { @class = "navbar-brand" })*@
                             @Html.ActionLink("View Booking Requests", "ViewBookingRequests", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Make Booking", "Index", "User", new { area = "" }, new { @class = "navbar-brand" })
                         </li>
                         <li>
                             @Html.ActionLink("Logout", "Logout", "Admin", new { area = "" }, new { @class = "navbar-brand" })

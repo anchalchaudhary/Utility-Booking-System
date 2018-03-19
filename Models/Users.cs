@@ -65,10 +65,9 @@ namespace UtilityBookingSystem.Models
         public int UserLogin(BigViewModel model)
         {
             Users objUsers = new Users();
-            objUsers.email = model.login.loginID;
+            objUsers.dept = model.login.loginID.ToUpper();
             objUsers.password = Encryption.Encrypt(model.login.password); //encrypts the password
 
-            //bool isLoggedIn = objUserPanelRepository.UserLogin(objUsers);
             int userID = objUserPanelRepository.UserLogin(objUsers); //Verifies User's login details from UserPanel Repository and fetches his userID
 
             return userID;
@@ -99,27 +98,23 @@ namespace UtilityBookingSystem.Models
             return userDetail;
         }
         #endregion
-        //public Users GetBookedByUser(DateTime date)
-        //{
-        //    List<BookedDate> bookedDateList = new List<BookedDate>();
-        //    List<Booking> booking = new List<Booking>();
-        //    List<Users> usersList = new List<Users>();
-        //    //tblBookedDate objtblBookedDate = new tblBookedDate();
-        //    using (var context = new BookingSystemDBEntities())
-        //    {
-        //        context.Configuration.LazyLoadingEnabled = false;
-        //        bookedDateList = context.tblBookedDates.Where(x=>x.dateChosen==date).Select(x=> new BookedDate {
-        //            dateID=x.dateID,
-        //            bookingID = x.bookingID,
-        //            dateChosen = x.dateChosen
-        //        }).ToList();
-        //        foreach(var dateItem in bookedDateList)
-        //        {
-                    
-        //        }
-        //    }
-        //}
 
+        public int getUserID(string email, int deptID)
+        {
+            int userID;
+            Users userDetail = new Users();
+            tblUser objtblUser = new tblUser();
+            using (var context = new BookingSystemDBEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                objtblUser = context.tblUsers.First(x => x.email == email && x.deptID == deptID);
+            }
+            if (objtblUser != null)
+                userID = objtblUser.userID;
+            else
+                userID = 0;
+            return userID;
+        }
         public bool DeleteUser(int id)
         {
             bool isDeleted = objAdminPanelRepository.DeleteUser(id);

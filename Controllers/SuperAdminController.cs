@@ -76,11 +76,10 @@ namespace UtilityBookingSystem.Controllers
                 TempData["AddedUser"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('User added');</script>";
             }
             else
-                TempData["AddedUser"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('This user is already added in same department.');</script>";
+                TempData["AddedUser"] = "<script src =\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('This Department already has a user.');</script>";
 
             return View();
         }
-        #endregion
         #endregion
         #region View Registered Users
         public ActionResult ViewRegisteredUsers()
@@ -157,6 +156,7 @@ namespace UtilityBookingSystem.Controllers
             }
             return RedirectToAction("AddNewDepartment", "SuperAdmin");
         }
+        #endregion
 
         #region Admin Logout
         public ActionResult Logout()

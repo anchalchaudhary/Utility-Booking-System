@@ -21,10 +21,13 @@ namespace UtilityBookingSystem.Models
         public Nullable<int> status { get; set; }
         public string bookingNo { get; set; }
         public Nullable<System.DateTime> bookedAtTime { get; set; }
+        public Nullable<bool> isConfirmed { get; set; }
 
         #endregion
         public string name { get; set; }
         public string department { get; set; }
+        public string bookingStatus { get; set; }
+
         #region Repository objects
         UserPanelRepository objUserPanelRepository = new UserPanelRepository();
         BookingRepository objBookingRepository = new BookingRepository();
@@ -38,6 +41,7 @@ namespace UtilityBookingSystem.Models
             objBooking.title = model.booking.title;
             objBooking.purposeID = model.booking.purposeID;
             objBooking.userID = userID;
+            objBooking.isConfirmed = (model.booking.bookingStatus == "Tentative" ? false : true);
 
             int bookingID = objBookingRepository.CreateNewBooking(objBooking); //Saves new Booking details to db (Booking repository) and fetches new bookingID
 
@@ -53,7 +57,7 @@ namespace UtilityBookingSystem.Models
             using (var context = new BookingSystemDBEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                allBookingsList = context.tblBookings.OrderByDescending(x=>x.bookingID).Select(x => new Booking
+                allBookingsList = context.tblBookings.Select(x => new Booking
                 {
                     bookingID = x.bookingID,
                     bookingNo = x.bookingNo,
@@ -63,7 +67,8 @@ namespace UtilityBookingSystem.Models
                     title = x.title,
                     purpose = x.tblPurpose.purpose,
                     bookedAtTime = x.bookedAtTime,
-                    status = x.status
+                    status = x.status,
+                    isConfirmed = x.isConfirmed
                 }).ToList();
             }
 
@@ -167,7 +172,7 @@ namespace UtilityBookingSystem.Models
             bookingDetail.bookedAtTime = objtblBooking.bookedAtTime;
             bookingDetail.purpose = objtblPurpose.purpose;
             bookingDetail.status = objtblBooking.status;
-
+            bookingDetail.userID = objtblBooking.userID;
             return bookingDetail;
         }
         public string GetUserDetail(int bookingID)

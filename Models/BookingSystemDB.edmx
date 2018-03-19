@@ -13,6 +13,8 @@
           <Property Name="dateChosen" Type="date" />
           <Property Name="bookingID" Type="int" />
           <Property Name="nonWorkingHours" Type="bit" />
+          <Property Name="annexeRequired" Type="bit" />
+          <Property Name="photographer" Type="bit" />
         </EntityType>
         <EntityType Name="tblBookedHall">
           <Key>
@@ -51,6 +53,7 @@
           <Property Name="status" Type="int" />
           <Property Name="bookingNo" Type="nvarchar(max)" />
           <Property Name="bookedAtTime" Type="datetime" />
+          <Property Name="isConfirmed" Type="bit" />
         </EntityType>
         <EntityType Name="tblChairs">
           <Key>
@@ -431,6 +434,8 @@
           <NavigationProperty Name="tblBookedRequirements" Relationship="Self.FK_tblBookedRequirement_tblBookedDate" FromRole="tblBookedDate" ToRole="tblBookedRequirement" />
           <NavigationProperty Name="tblChairs" Relationship="Self.FK_tblChairs_tblBookedDate" FromRole="tblBookedDate" ToRole="tblChairs" />
           <Property Name="nonWorkingHours" Type="Boolean" />
+          <Property Name="annexeRequired" Type="Boolean" />
+          <Property Name="photographer" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblBookedHall">
           <Key>
@@ -482,6 +487,7 @@
           <NavigationProperty Name="tblPurpose" Relationship="Self.FK__tblBookin__purpo__117F9D94" FromRole="tblBooking" ToRole="tblPurpose" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK__tblBookin__userI__108B795B" FromRole="tblBooking" ToRole="tblUser" />
           <NavigationProperty Name="tblChairs" Relationship="Self.FK__tblChairs__booki__00200768" FromRole="tblBooking" ToRole="tblChairs" />
+          <Property Name="isConfirmed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblChair">
           <Key>
@@ -870,6 +876,8 @@
           <EntitySetMapping Name="tblBookedDates">
             <EntityTypeMapping TypeName="BookingSystemDBModel.tblBookedDate">
               <MappingFragment StoreEntitySet="tblBookedDate">
+                <ScalarProperty Name="photographer" ColumnName="photographer" />
+                <ScalarProperty Name="annexeRequired" ColumnName="annexeRequired" />
                 <ScalarProperty Name="nonWorkingHours" ColumnName="nonWorkingHours" />
                 <ScalarProperty Name="dateID" ColumnName="dateID" />
                 <ScalarProperty Name="dateChosen" ColumnName="dateChosen" />
@@ -909,6 +917,7 @@
           <EntitySetMapping Name="tblBookings">
             <EntityTypeMapping TypeName="BookingSystemDBModel.tblBooking">
               <MappingFragment StoreEntitySet="tblBooking">
+                <ScalarProperty Name="isConfirmed" ColumnName="isConfirmed" />
                 <ScalarProperty Name="bookingID" ColumnName="bookingID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="purposeID" ColumnName="purposeID" />

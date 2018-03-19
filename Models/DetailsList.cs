@@ -13,6 +13,8 @@ namespace UtilityBookingSystem.Models
         [Required(ErrorMessage = "Select a hall and corresponding details.")]
         public List<Hall> hallsArray { get; set; }
         public Nullable<bool> nonWorkingHours { get; set; }
+        public Nullable<bool> annexeRequired { get; set; }
+        public Nullable<bool> photographer { get; set; }
 
     }
 }

@@ -21,8 +21,9 @@
         </div>
     </div>
 </div>
+<br />
 <div class="right">
-    <a href="@Url.Action("Print", "Admin", new { bookingID = ViewBag.bookingDetails.bookingID})" id="btnPrint" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
+    <a href="@Url.Action("Print", "Admin", new { bookingID = ViewBag.bookingDetails.bookingID})" id="btnPrint" class="btn btn-success center"><i class="fa fa-print" aria-hidden="true"></i>Print</a>
 </div>
 
 <div>
@@ -98,9 +99,30 @@
                 int i = 0;
 
                 <tr>
-                    <td><h3>Date</h3></td>
-                    <td><h3>@dateItem.dateChosen.ToShortDateString()</h3></td>
+                    <td><h4><b>Date</b></h4></td>
+                    <td><h4>@dateItem.dateChosen.ToShortDateString()</h4></td>
                 </tr>
+                if (dateItem.annexeRequired == true)
+                {
+                    <tr>
+                        <td><h6><b>Annexe</b></h6></td>
+                        <td><h6><b>Yes</b></h6></td>
+                    </tr>
+                }
+                if (dateItem.photographer == true)
+                {
+                    <tr>
+                        <td><h6><b>Photographer</b></h6></td>
+                        <td><h6>Yes</h6></td>
+                    </tr>
+                }
+                if (dateItem.nonWorkingHours == true)
+                {
+                    <tr>
+                        <td><h6><b>Non-working Hours</b></h6></td>
+                        <td><h6><b>Yes</b></h6></td>
+                    </tr>
+                }
 
                 foreach (var hallItem in ViewBag.bookedHall)
                 {
@@ -109,8 +131,8 @@
                     {
                         ++i;
                         <tr>
-                            <td><h4><b>Hall-@i</b></h4></td>
-                            <td><h4><b>@hallItem.hallName</b></h4></td>
+                            <td><h5><b>Hall-@i</b></h5></td>
+                            <td><h5><b>@hallItem.hallName</b></h5></td>
                         </tr>
                         <tr>
                             <td><b>Slots:</b></td>
@@ -136,25 +158,27 @@
                                 }
                             </td>
                         </tr>
-                        <tr>
-                            <td><b>Number of Chairs</b></td>
-                            <td>
-                                @{ int count = 0;}
-                                @foreach (var chairItem in ViewBag.chairs)
-                                {
-                                    if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
+                        if (ViewBag.chairs.Count != 0)
+                        {
+                            <tr>
+                                <td><b>Number of Chairs</b></td>
+                                <td>
+                                    @{ int count = 0;}
+                                    @foreach (var chairItem in ViewBag.chairs)
                                     {
-                                        <b>@chairItem.noOfChairs</b>
-                                        count = count + 1;
+                                        if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
+                                        {
+                                            <b>@chairItem.noOfChairs</b>
+                                            count = count + 1;
+                                        }
                                     }
-                                }
-                                @if (count == 0)
-                                {
-                                    <h6>NIL</h6>
-                                }
-                            </td>
-
-                        </tr>
+                                    @if (count == 0)
+                                    {
+                                        <h5>NIL</h5>
+                                    }
+                                </td>
+                            </tr>
+                        }
                         if (hallItem.otherRequirements != null)
                         {
                             <tr>

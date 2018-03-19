@@ -21,7 +21,9 @@ namespace UtilityBookingSystem.Models
 
                 requirementsList = context.tblRequirementForHalls.Where(x=>x.hallID==hallID).Select(x=> new Requirement{
                     requirementID = x.tblRequirement.requirementID,
-                    requirementName = x.tblRequirement.requirementName
+                    requirementName = x.tblRequirement.requirementName,
+                    //changes start here 15/03/2018
+                    hallID = x.tblHall.hallID,
                 }).ToList();
             }
             return requirementsList;

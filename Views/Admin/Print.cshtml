@@ -44,6 +44,11 @@
                     <td><b>@ViewBag.bookingDetails.bookingNo</b></td>
                 </tr>
                 <tr>
+                    <td><b>Department</b></td>
+                    <td><b>@ViewBag.userDept</b></td>
+                </tr>
+                ViewBag.userDept
+                <tr>
                     <td><b>Title</b></td>
                     <td><b>@ViewBag.bookingDetails.title</b></td>
                 </tr>
@@ -86,10 +91,30 @@
                     int i = 0;
 
                     <tr>
-                        <td><h4>Date</h4></td>
-                        <td><h4>@dateItem.dateChosen.ToShortDateString()</h4></td>
+                        <td><h5>Date</h5></td>
+                        <td><h5>@dateItem.dateChosen.ToShortDateString()</h5></td>
                     </tr>
-
+                    if (dateItem.annexeRequired == true)
+                    {
+                        <tr>
+                            <td><h6><b>Annexe</b></h6></td>
+                            <td><h6><b>Yes</b></h6></td>
+                        </tr>
+                    }
+                    if (dateItem.photographer == true)
+                    {
+                        <tr>
+                            <td><h6><b>Photographer</b></h6></td>
+                            <td><h6><b>Yes</b>z</h6></td>
+                        </tr>
+                    }
+                    if (dateItem.nonWorkingHours == true)
+                    {
+                        <tr>
+                            <td><h6><b>Non-working Hours</b></h6></td>
+                            <td><h6><b>Yes</b></h6></td>
+                        </tr>
+                    }
                     foreach (var hallItem in ViewBag.bookedHall)
                     {
 
@@ -97,8 +122,8 @@
                         {
                             ++i;
                             <tr>
-                                <td><h5><b>Hall-@i</b></h5></td>
-                                <td><h5><b>@hallItem.hallName</b></h5></td>
+                                <td><h6><b>Hall-@i</b></h6></td>
+                                <td><h6><b>@hallItem.hallName</b></h6></td>
                             </tr>
                             <tr>
                                 <td><b>Slots:</b></td>
@@ -124,24 +149,27 @@
                                     }
                                 </td>
                             </tr>
-                            <tr>
-                                <td><b>Number of Chairs</b></td>
-                                <td>
-                                    @{ int count = 0;}
-                                    @foreach (var chairItem in ViewBag.chairs)
-                                    {
-                                        if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
+                            if (ViewBag.chairs.Count != 0)
+                            {
+                                <tr>
+                                    <td><b>Number of Chairs</b></td>
+                                    <td>
+                                        @{ int count = 0;}
+                                        @foreach (var chairItem in ViewBag.chairs)
                                         {
-                                            <b>@chairItem.noOfChairs</b>
-                                            count = count + 1;
+                                            if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
+                                            {
+                                                <b>@chairItem.noOfChairs</b>
+                                                count = count + 1;
+                                            }
                                         }
-                                    }
-                                    @if (count == 0)
-                                    {
-                                        <h6>NIL</h6>
-                                    }
-                                </td>
-                            </tr>
+                                        @if (count == 0)
+                                        {
+                                            <h6>NIL</h6>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                             if (hallItem.otherRequirements != null)
                             {
                                 <tr>
@@ -156,7 +184,7 @@
                         <td style="background-color:black"></td>
                     </tr>
                 }
-                <tr>
+                <tr class="remarks">
                     <td><b>Remarks</b></td>
                     <td colspan="2">
                         <textarea cols="100" rows="6"></textarea>

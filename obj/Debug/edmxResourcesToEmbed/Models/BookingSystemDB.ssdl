@@ -8,6 +8,8 @@
     <Property Name="dateChosen" Type="date" />
     <Property Name="bookingID" Type="int" />
     <Property Name="nonWorkingHours" Type="bit" />
+    <Property Name="annexeRequired" Type="bit" />
+    <Property Name="photographer" Type="bit" />
   </EntityType>
   <EntityType Name="tblBookedHall">
     <Key>
@@ -46,6 +48,7 @@
     <Property Name="status" Type="int" />
     <Property Name="bookingNo" Type="nvarchar(max)" />
     <Property Name="bookedAtTime" Type="datetime" />
+    <Property Name="isConfirmed" Type="bit" />
   </EntityType>
   <EntityType Name="tblChairs">
     <Key>

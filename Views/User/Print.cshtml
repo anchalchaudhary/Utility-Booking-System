@@ -32,7 +32,7 @@
 
     <div>
         <div>
-            <h2 class="text-center" style="color:#F0A830;margin-top: 5%;text-align: center;">Application for @ViewBag.bookingDetails.title</h2>
+            <h2 class="text-center" style="color:#F0A830;margin-top: 4%;text-align: center;">Application for @ViewBag.bookingDetails.title</h2>
         </div>
 
     </div>
@@ -42,6 +42,10 @@
                 <tr>
                     <td><b>Booking No.</b></td>
                     <td><b>@ViewBag.bookingDetails.bookingNo</b></td>
+                </tr>
+                <tr>
+                    <td><b>Department</b></td>
+                    <td><b>@ViewBag.userDept</b></td>
                 </tr>
                 <tr>
                     <td><b>Title</b></td>
@@ -86,10 +90,30 @@
                     int i = 0;
 
                     <tr>
-                        <td><h4>Date</h4></td>
-                        <td><h4>@dateItem.dateChosen.ToShortDateString()</h4></td>
+                        <td><h5>Date</h5></td>
+                        <td><h6>@dateItem.dateChosen.ToShortDateString()</h6></td>                        
                     </tr>
-
+                    if(dateItem.annexeRequired==true)
+                    {
+                        <tr>
+                            <td><h6>Annexe</h6></td>
+                            <td><h6>Yes</h6></td>
+                        </tr>
+                    }
+                    if (dateItem.photographer == true)
+                    {
+                        <tr>
+                            <td><h6>Photographer</h6></td>
+                            <td><h6>Yes</h6></td>
+                        </tr>
+                    }
+                    if (dateItem.nonWorkingHours == true)
+                    {
+                        <tr>
+                            <td><h6>Non-working Hours</h6></td>
+                            <td><h6>Yes</h6></td>
+                        </tr>
+                    }
                     foreach (var hallItem in ViewBag.bookedHall)
                     {
 
@@ -97,8 +121,8 @@
                         {
                             ++i;
                             <tr>
-                                <td><h5><b>Hall-@i</b></h5></td>
-                                <td><h5><b>@hallItem.hallName</b></h5></td>
+                                <td><h6><b>Hall-@i</b></h6></td>
+                                <td><h6><b>@hallItem.hallName</b></h6></td>
                             </tr>
                             <tr>
                                 <td><b>Slots:</b></td>
@@ -124,24 +148,27 @@
                                     }
                                 </td>
                             </tr>
-                            <tr>
-                                <td><b>Number of Chairs</b></td>
-                                <td>
-                                    @{ int count = 0;}
-                                    @foreach (var chairItem in ViewBag.chairs)
-                                    {
-                                        if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
+                            if (ViewBag.chairs.Count != 0)
+                            {
+                                <tr>
+                                    <td><b>Number of Chairs</b></td>
+                                    <td>
+                                        @{ int count = 0;}
+                                        @foreach (var chairItem in ViewBag.chairs)
                                         {
-                                            <b>@chairItem.noOfChairs</b>
-                                            count = count + 1;
+                                            if (chairItem.hallID == hallItem.hallID && chairItem.noOfChairs > 0 && chairItem.dateID == hallItem.dateID)
+                                            {
+                                                <b>@chairItem.noOfChairs</b>
+                                                count = count + 1;
+                                            }
                                         }
-                                    }
-                                    @if (count == 0)
-                                    {
-                                        <h6>NIL</h6>
-                                    }
-                                </td>
-                            </tr>
+                                        @if (count == 0)
+                                        {
+                                            <h6>NIL</h6>
+                                        }
+                                    </td>
+                                </tr>
+                            }
                             if (hallItem.otherRequirements != null)
                             {
                                 <tr>
@@ -151,6 +178,10 @@
                             }
                         }
                     }
+                 <tr style="background-color:black">
+                    <td style="background-color:black"></td>
+                    <td style="background-color:black"></td>
+                 </tr>
                 }
             </table>
         </div>

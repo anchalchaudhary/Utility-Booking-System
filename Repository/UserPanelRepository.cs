@@ -11,15 +11,13 @@ namespace UtilityBookingSystem.Repository
         #region Verify User Login Details
         public int UserLogin(Users objUser)
         {
-            //bool isLoggedIn = false;
-            int userID=0;
+            int userID = 0;
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
-                tblUser objtblUser = db.tblUsers.SingleOrDefault(x => x.email == objUser.email && x.password == objUser.password); //Verifies Login details with DB
+                tblUser objtblUser = db.tblUsers.SingleOrDefault(x => x.tblDepartment.department == objUser.dept && x.password == objUser.password); //Verifies Login details with DB
                 if (objtblUser != null)
                 {
-                    //isLoggedIn = true;
-                    userID = objtblUser.userID; //fetches logged in userID
+                    userID = objtblUser.userID;
                 }
             }
             return userID;
@@ -32,7 +30,7 @@ namespace UtilityBookingSystem.Repository
                 tblBooking objtblBooking = new tblBooking();
                 using (BookingSystemDBEntities db = new BookingSystemDBEntities())
                 {
-                    objtblBooking = db.tblBookings.First(x => x.bookingID == bookingID && x.userID==userID);
+                    objtblBooking = db.tblBookings.First(x => x.bookingID == bookingID && x.userID == userID);
                 }
                 using (BookingSystemDBEntities db = new BookingSystemDBEntities())
                 {

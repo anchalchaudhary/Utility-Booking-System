@@ -26,7 +26,7 @@ namespace UtilityBookingSystem.Controllers
         #endregion
 
         #region Start Booking
-        public ActionResult Index()
+        public ActionResult Index() //not used
         {
             List<tblHall> listHall = new List<tblHall>();
             listHall = objHall.GetHallsList();
@@ -34,7 +34,7 @@ namespace UtilityBookingSystem.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(List<DetailsList> detailsObjList)
+        public ActionResult Index(List<DetailsList> detailsObjList) //not used
         {
             return RedirectToAction("Index");
         }
@@ -99,10 +99,10 @@ namespace UtilityBookingSystem.Controllers
         #endregion
         #endregion
 
-        #region TESTING
+        #region Booking step 2
         public ActionResult Testing()
         {
-            if (Session["LoggedInUserID"] != null)
+            if (Session["LoggedInUserID"] != null || Session["DeanAdminLoggedIn"]!=null)
             {
                 if (Session["NewBookingID"] != null)
                 {
@@ -128,7 +128,11 @@ namespace UtilityBookingSystem.Controllers
             ViewBag.HallDetail = listHall;
 
             int bookingID = Convert.ToInt32(Session["NewBookingID"]);
-            int userID = Convert.ToInt32(Session["LoggedInUserID"]);
+            int userID = 0;
+            if(Session["LoggedInUserID"] != null)
+                userID = Convert.ToInt32(Session["LoggedInUserID"]);
+            else if(Session["DeanAdminLoggedIn"] != null)
+                userID = Convert.ToInt32(Session["DeanAdminLoggedIn"]);
 
             bool slotFlag = false, reqFlag=false;
             foreach(var item in detailsObjList)
@@ -164,7 +168,10 @@ namespace UtilityBookingSystem.Controllers
             foreach (var item in detailsObjList)
             {
                 BookedHall objBookedHall1 = new BookedHall();
-                int dateID = objBookedDate.SaveBookingDate(item.date, bookingID);
+                //                int dateID = objBookedDate.SaveBookingDate(item.date, bookingID);
+
+                int dateID = objBookedDate.SaveBookingDate(item, bookingID);
+
                 objBookedHall1.SaveSelectedHalls(item.hallsArray, dateID, bookingID);
             }
 
@@ -190,51 +197,60 @@ namespace UtilityBookingSystem.Controllers
             return RedirectToAction("Print");
         }
         #endregion
+        #region View Application
         [HttpGet]
-        public ActionResult ViewApplication()
-        {
-            if (Session["LoggedInUserID"] != null)
-            {
-                if (Session["NewBookingID"] != null)
-                {
-                    TempData["Requested"] = "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Your booking requested has been sent. Please check your email.')</script>";
+        //public ActionResult ViewApplication()
+        //{
+        //    if (Session["LoggedInUserID"] != null || Session["DeanAdminLoggedIn"] != null)
+        //    {
+        //        if (Session["NewBookingID"] != null)
+        //        {
+        //            TempData["Requested"] = "<script src=\"https://unpkg.com/sweetalert/dist/sweetalert.min.js \"></script><script> swal('Your booking requested has been sent. Please check your email.')</script>";
 
-                    int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+        //            int bookingID = Convert.ToInt32(Session["NewBookingID"]);
 
-                    Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
-                    ViewBag.bookingDetails = bookingDetails;
+        //            Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
+        //            ViewBag.bookingDetails = bookingDetails;
 
-                    List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
-                    ViewBag.bookedDate = bookingDateList;
+        //            List<BookedDate> bookingDateList = objBookedDate.GetBookingDateList(bookingID);
+        //            ViewBag.bookedDate = bookingDateList;
 
-                    List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
-                    ViewBag.bookedHall = bookedHallList;
+        //            List<BookedHall> bookedHallList = objBookedHall.GetBookedHallsList(bookingDateList);
+        //            ViewBag.bookedHall = bookedHallList;
 
-                    List<Chair> chairsList = objChair.GetChairsList(bookingDateList, bookedHallList, bookingID);
-                    ViewBag.chairs = chairsList;
+        //            List<Chair> chairsList = objChair.GetChairsList(bookingDateList, bookedHallList, bookingID);
+        //            ViewBag.chairs = chairsList;
 
-                    List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
-                    ViewBag.bookedReq = bookedReqList;
+        //            List<BookedRequirement> bookedReqList = objBookedRequirement.GetBookedRequirementList(bookingID);
+        //            ViewBag.bookedReq = bookedReqList;
 
-                    List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
-                    ViewBag.bookingSlot = bookingSlotList;
+        //            List<BookedSlot> bookingSlotList = objBookedSlot.GetBookingSlotsList(bookedHallList);
+        //            ViewBag.bookingSlot = bookingSlotList;
 
-                    Session["NewBookingID"] = null;
-                }
-                else
-                {
-                    return RedirectToAction("Testing");
-                }
-                return View();
-            }
-            else
-                return RedirectToAction("Login", "User");
-        }
-
+        //            Session["NewBookingID"] = null;
+        //        }
+        //        else
+        //        {
+        //            return RedirectToAction("Testing");
+        //        }
+        //        return View();
+        //    }
+        //    else
+        //        return RedirectToAction("Login", "User");
+        //}
+    #endregion 
         #region Print
         public ActionResult Print()
         {
             int bookingID = Convert.ToInt32(Session["NewBookingID"]);
+            int userID = 0;
+            if (Session["LoggedInUserID"] != null)
+                userID = Convert.ToInt32(Session["LoggedInUserID"]);
+            else if (Session["DeanAdminLoggedIn"] != null)
+                userID = Convert.ToInt32(Session["DeanAdminLoggedIn"]);
+
+            Users userDetails = objUsers.GetUserDetails(userID);
+            ViewBag.userDept = userDetails.dept;
 
             Booking bookingDetails = objBooking.GetBookingDetails(bookingID);
             ViewBag.bookingDetails = bookingDetails;

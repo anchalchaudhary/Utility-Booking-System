@@ -20,6 +20,7 @@ namespace UtilityBookingSystem.Repository
                 objtblBooking.userID = objBooking.userID;
                 objtblBooking.bookedAtTime = DateTime.Now;
                 objtblBooking.status = 0;
+                objtblBooking.isConfirmed = objBooking.isConfirmed;
                 db.tblBookings.Add(objtblBooking);
                 db.SaveChanges();
 
@@ -37,14 +38,18 @@ namespace UtilityBookingSystem.Repository
         #endregion
 
         #region Save Booking Date
-        public int SaveBookingDate(DateTime date, int bookingID)
+        //public int SaveBookingDate(DateTime date, int bookingID)
+        public int SaveBookingDate(DetailsList item, int bookingID)
         {
             tblBookedDate objtblBookedDate = new tblBookedDate();
 
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
                 objtblBookedDate.bookingID = bookingID;
-                objtblBookedDate.dateChosen = date.Date;
+                objtblBookedDate.dateChosen = item.date.Date;
+                objtblBookedDate.annexeRequired = item.annexeRequired;
+                objtblBookedDate.photographer = item.photographer;
+                objtblBookedDate.nonWorkingHours = item.nonWorkingHours;
 
                 db.tblBookedDates.Add(objtblBookedDate);
 

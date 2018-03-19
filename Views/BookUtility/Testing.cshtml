@@ -47,7 +47,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                You should send the director approval for non working hours to dean admin.
+                Please take the Director approval for non working hours.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" style="background-color: #F0A830;  border:none;" data-dismiss="modal">Okay</button>
@@ -66,12 +66,17 @@
         @Html.Hidden("dateURL", Url.Action("GetBookedSlotsList","BookUtility"))
         <input type="hidden" name="detailsObjList[@index].date" id="alternateDate" />
         
-        <span id="invalidDate" style="color:indianred;"></span>
+        <span id="invalidDate" style="color:red;"></span>
         <input type="checkbox" id="nonWorkingHours_" name="detailsObjList[@index].nonWorkingHours" onchange="nonWokingHours();" />
         <label id="lblnonWorkingHours_">Non Working Hours</label>
         <input id="removenode_" class="btn-danger btn" type="button" value="Delete" style="display:none; float:right; margin: 1% 5% 1% 0;"
                onclick="this.parentNode.parentNode.removeChild(this.parentNode);" />
         <br />
+        <input type="checkbox" id="annexe_" style="margin-left:2%;" name="detailsObjList[@index].annexeRequired" onchange="annexeRequired();" />
+        <label id="lblannexe_">Annexe</label>
+        <input type="checkbox" id="photographer_" style="margin-left:2%;" name="detailsObjList[@index].photographer" onchange="photographer();" />
+        <label id="lblphotographer_">Photographer</label>
+        <br/>
 
 
         <table id="tableBooking_" style="color:white;" class="table table-bordered">
@@ -113,20 +118,19 @@
                             <td id="booking_@(index)_column_req_@(requirement)_" style="border:0;">
                                 <input type="hidden" name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].requirementID" value="@(reqItem.requirementID)" id="hiddenreq@(requirement + 1)_@(hall + 1)_" />
                                 <input type="checkbox" class="reqs@(hall + 1)" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement + 1)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 1), @(hall + 1));" />
-                                <label>@reqItem.requirementName</label>
+                                <label id="req@(requirement + 1)_@(hall + 1)_">@reqItem.requirementName</label>
                                 @*<input type="checkbox" class="reqs@(hall + 1)" disabled name="detailsObjList[@index].hallsArray[@hall].requirementsArray[@requirement].isSelected" id="reqcheck@(requirement + 1)_@(hall + 1)_" onchange="reqcheckchange(@(requirement + 1), @(hall + 1));" />*@
                                 @{
                                     requirement = requirement + 1;
                                 }
                                 @if (reqItem.requirementName == "Chairs")
-                                {
-                                    <br />
-                                    <input type="text" name="detailsObjList[@index].hallsArray[@hall].noOfChairs" id="chairs_@(hall+1)_" style="display:none;" placeholder="Enter no. of chairs" />
+                                {                      
+                                    <br/>
+                                    <input type="number" name="detailsObjList[@index].hallsArray[@hall].noOfChairs" id="chairs_@(hall + 1)_" style="display:none;"/>
                                 }
                             </td>
-
                         }
-                </tr>
+                    </tr>
                 <tr id="booking_@(index)_row3_" style="border-bottom:1px solid white; border-top:0;">
                     <td id="emptycolumn2_" style="border-top:0;">&nbsp;</td>
                     <td id="other_@(hall)_" style="border-left:0; border-right: 0; border-top:0;">Other Requirements:</td>
@@ -134,11 +138,12 @@
                 </tr>
                 hall = hall + 1;
             }
+
             </tbody>
         </table>
-        hall = 0;
-        slot = 0;
-        requirement = 0;
+                                    //hall = 0;
+                                    //slot = 0;
+                                    //requirement = 0;
         <br />
     }
     <span id="detailsErr" class="error"></span>
@@ -149,7 +154,7 @@
     </span>
     @*<button class="btn btn-success"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>*@
 
-    <button class="btn btn-success btn-block" id="btnSubmit" style="width:30%; margin:0 auto;" onclick="testAllInput(@hall, @slot, @requirement);"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>
+    <button class="btn btn-success btn-block" id="btnSubmit" style="width:30%; margin:0 auto;" onclick="testAllInput(4,6,6);"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Submit</button>
 }
 @*<button class="btn btn-danger"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;Add More</button>*@
 

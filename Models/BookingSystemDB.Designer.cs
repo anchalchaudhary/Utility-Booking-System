@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\SDC\Desktop\PROJECTS\UtilityBookingSystem all\UBS 10012018\UtilityBookingSystem 10012018\UtilityBookingSystem 10012018\UtilityBookingSystem\Models\BookingSystemDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\SDC\Desktop\UBS 06032018\UtilityBookingSystem\UtilityBookingSystem\Models\BookingSystemDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

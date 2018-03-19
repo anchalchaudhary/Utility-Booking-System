@@ -10,12 +10,12 @@ namespace UtilityBookingSystem.Repository
         #region Save New User Details
         public bool SaveUserDetails(Users model)    //Save User details
         {
-            bool checkEmailCount;
+            bool checkDeptCount;
             using (BookingSystemDBEntities db = new BookingSystemDBEntities())
             {
-                checkEmailCount = db.tblUsers.Any(m => m.email == model.email && m.deptID == model.deptID); //checking if the email already exists for any user
+                checkDeptCount = db.tblUsers.Any(m => m.deptID == model.deptID); //checking if the department already has a user
             }
-            if (checkEmailCount == false)
+            if (checkDeptCount == false)
             {
                 using (BookingSystemDBEntities db = new BookingSystemDBEntities()) // Save details to DB
                 {

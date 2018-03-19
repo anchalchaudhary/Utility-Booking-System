@@ -21,12 +21,12 @@
 
 @*@Html.ActionLink("Logout", "Logout", "User")*@
 
-@*<button onclick="topFunction()" id="myBtn" title="Go to top"><b>^</b></button>*@
+<button onclick="topFunction()" id="myBtn" title="Go to top" style="display:none;"><b>^</b></button>
 <nav id="navbaar" class="navbar navbar-expand-lg navbar-dark sticky-top">
     <a href="http://www.akgec.in"><img src="~/images/akgeclogo.png" height="50px" class="d-inline-block align-top" alt=""></a>
     <a class="navbar-brand" href="@Url.Action("Index", "User")">
         <div style="vertical-align: middle; font-size: 1.2em" class="d-inline-block">
-            Hall Management system
+            Seminar Hall Management system
         </div>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,7 @@
             <li class="nav-item">
                 @Html.ActionLink("Account Settings", "AccountSettings", "User", new { @class = "nav-link" })
             </li>
+
             <li class="nav-item">
                 @Html.ActionLink("Logout", "Logout", "User", new { @class = "nav-link" })
             </li>
@@ -72,7 +73,7 @@
     <div class="row">
         <div class="col-12 col-sm-12 col-md-6">
             <div style="margin-top: 10%;">
-                <h1 style="color: #F0A830; font-size: 2.5em;">Future Bookings</h1>
+                <h1 style="color: #F0A830; font-size: 2.5em;">Existing Bookings</h1>
                 <div style="height: 15%;margin-top: 10%;" id="scrollstyle">
                     <table class="table table-striped" style="overflow-y: scroll;">
                         <thead class="thead-dark">
@@ -83,27 +84,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @{int count = 0;}
+
+                            @{int count = 0; int noOfFutureBookings = 0;}
                             @foreach (var itemBooking in ViewBag.userBookings)
                             {
                                 count = 0;
+
                                 foreach (var itemDate in ViewBag.userFutureBookedDate)
                                 {
                                     //count = 0;
-                                    if (itemBooking.bookingID == itemDate.bookingID)
+                                    if (itemBooking.bookingID == itemDate.bookingID) //Counting number of days with date in future for each booking
                                     {
                                         count = count + 1;
                                     }
                                 }
                                 if (count != 0)
                                 {
+                                    noOfFutureBookings = noOfFutureBookings + 1;
                                     <tr>
                                         <td style="color:#F0A830">
                                                 @Html.ActionLink((string)(itemBooking.title), "Print", "User", new { bookingID = itemBooking.bookingID, userID = itemBooking.userID }, new { target = "_blank", style = "color: F0A830;" })
                                         </td>
                                         <td  style="color:#fff">
                                             @foreach (var itemDate in ViewBag.userFutureBookedDate)
-                                                        {
+                                                {
                                                     if (itemDate.bookingID == itemBooking.bookingID)
                                                     {
                                                         @itemDate.dateChosen.ToShortDateString() <br />
@@ -115,6 +119,14 @@
                                         </td>
                                     </tr>
                                 }
+                            }
+                            @if(noOfFutureBookings==0)
+                            {
+                                <tr>
+                                    <td colspan="3" style="color:#fff;">
+                                        <center style="font-size:1.5em;"> No Bookings</center>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -134,6 +146,10 @@
 
                     @Html.DropDownListFor(model => model.booking.purposeID, ViewBag.purposeList as SelectList, "--Select Purpose--", new { @class = "form-control", style = "margin-top: 25px;" })
                     @Html.ValidationMessageFor(model => model.booking.purposeID, "", new { @class = "error" })
+                    <br/>
+                    @Html.RadioButtonFor(model => model.booking.bookingStatus, "Tentative", new { @class = "radio", style = "width: 10%; display:inline;" })<span style= "color: #fff !important;">Tentative</span>
+                    <br/>
+                    @Html.RadioButtonFor(model => model.booking.bookingStatus, "Confirmed", new { @class = "radio", style = "width: 10%; display:inline;" })<span style= "color: #fff !important;">Confirmed</span>
 
                     <button style="background-color:#F0A830;width: 100%;margin-top: 25px;" type="submit" class="button button-block">Proceed To Next Step</button>
                 }

@@ -1,0 +1,57 @@
+﻿@model UtilityBookingSystem.Models.BigViewModel
+
+<table class="table table-condensed">
+    @if (ViewBag.allBookingsList != null)
+    {
+        <tr>
+            <th>Department</th>
+            <th>Dates</th>
+            <th>Halls</th>
+            <th>Slots</th>
+            <th>Confirmed/Tentative</th>
+        </tr>
+
+        foreach (var bookingItem in ViewBag.allBookingsList)
+        {
+            <tr>
+                <td>@bookingItem.department</td>
+                @if (ViewBag.bookedDate != null)
+                    {
+                        foreach (var itemDate in ViewBag.bookedDate)
+                        {
+                            if (itemDate.bookingID == bookingItem.bookingID)
+                            {
+                        <tr>
+                            <td></td>
+                            <td>@itemDate.dateChosen.ToShortDateString()</td>
+
+                            @foreach (var itemHall in ViewBag.bookedHalls)
+                            {
+                                if (itemHall.dateID == itemDate.dateID)
+                                {
+                                    <td>@itemHall.hallName</td>
+                                    foreach (var itemSlot in ViewBag.bookedSlots)
+                                    {
+                                        if (itemSlot.bookedHallID == itemHall.bookedHallID)
+                                        {
+                                            <td> @itemSlot.slot</td>
+                                        }
+                                    }
+                                }
+                            }
+                        </tr>
+                        }
+                    }
+                }
+                @if (bookingItem.isConfirmed == false)
+                {
+                    <td style="color:cadetblue;">Tentative</td>
+                }
+                else
+                {
+                    <td style="color:red;">Confirmed</td>
+                }
+                </tr>
+        }
+    }
+</table>

@@ -91,7 +91,27 @@
                     <td><h3>Date</h3></td>
                     <td><h3>@dateItem.dateChosen.ToShortDateString()</h3></td>
                 </tr>
-
+                if (dateItem.annexeRequired == true)
+                {
+                    <tr>
+                        <td><h6>Annexe</h6></td>
+                        <td><h6>Yes</h6></td>
+                    </tr>
+                }
+                if (dateItem.photographer == true)
+                {
+                    <tr>
+                        <td><h6>Photographer</h6></td>
+                        <td><h6>Yes</h6></td>
+                    </tr>
+                }
+                if (dateItem.nonWorkingHours == true)
+                {
+                    <tr>
+                        <td><h6>Non-working Hours</h6></td>
+                        <td><h6>Yes</h6></td>
+                    </tr>
+                }
                 foreach (var hallItem in ViewBag.bookedHall)
                 {
 
@@ -126,18 +146,21 @@
                                 }
                             </td>
                         </tr>
-                        <tr>
-                            <td><b>Number of Chairs</b></td>
-                            <td>
-                                @foreach (var chairItem in ViewBag.chairs)
-                                {
-                                    if (chairItem.hallID == hallItem.hallID && chairItem.dateID == hallItem.dateID)
+                        if (ViewBag.chairs.Count != 0)
+                        {
+                            <tr>
+                                <td><b>Number of Chairs</b></td>
+                                <td>
+                                    @foreach (var chairItem in ViewBag.chairs)
                                     {
-                                        <b>@chairItem.noOfChairs</b>
+                                        if (chairItem.hallID == hallItem.hallID && chairItem.dateID == hallItem.dateID)
+                                        {
+                                            <b>@chairItem.noOfChairs</b>
+                                        }
                                     }
-                                }
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        }
                         if(hallItem.otherRequirements!=null)
                         {
                             <tr>
